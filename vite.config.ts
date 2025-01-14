@@ -1,34 +1,16 @@
-import { defineConfig, Plugin } from "vite";
-import path from "path";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [
-    {
-      name: "",
-      load: (id) => {
-        if (/\.test\.ts/.test(id)) {
-          return "";
-        }
-        return null;
-      },
-    },
-  ],
   build: {
+    sourcemap: true,
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "RailToy", // グローバル変数名
-      fileName: (format) => `rpgdatatools.${format}.js`, // 出力ファイル名
+      entry: "src/index.ts",
+      name: "RpgDataTools",
+      fileName: (format) => `rpgdatatools.${format}.js`,
+      formats: ["es", "cjs"],
     },
-
     rollupOptions: {
-      // 外部モジュール指定 (バンドルしない)
-      external: ["react", "react-dom"], // 必要に応じて追加
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
+      external: [], // 必要に応じて外部モジュールを指定
     },
   },
 });
