@@ -1,16 +1,21 @@
 import { defineConfig } from "vite";
+import path from "path";
 
 export default defineConfig({
   build: {
-    sourcemap: true,
     lib: {
-      entry: "src/index.ts",
+      entry: path.resolve(__dirname, "src/index.ts"),
       name: "RpgDataTools",
-      fileName: (format) => `rpgdatatools.${format}.js`,
       formats: ["es", "cjs"],
+      fileName: (format) => `rpgdatatools.${format}.js`,
     },
     rollupOptions: {
-      external: [], // 必要に応じて外部モジュールを指定
+      external: ["@sigureya/rpgtypes"],
+      output: {
+        globals: {
+          "@sigureya/rpgtypes": "RpgTypes",
+        },
+      },
     },
   },
 });
