@@ -1,6 +1,6 @@
 {
   "name": "rpg-data-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "RpgMaker MockLibrary",
   "main": "dist/rpgdatatools.cjs.js",
   "module": "dist/rpgdatatools.esm.js",
@@ -16,8 +16,7 @@
   "exports": {
     ".": {
       "require": "./dist/rpgdatatools.cjs.js",
-      "import": "./dist/rpgdatatools.esm.js",
-      "types": "./dist/types/index.d.ts"
+      "import": "./dist/rpgdatatools.esm.js"
     }
   },
   "scripts": {
