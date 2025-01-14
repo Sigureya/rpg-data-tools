@@ -23,7 +23,9 @@ export const createSystemData = () => {
         elements: [],
         variables: [],
         equipTypes: [],
-        sounds: [],
+        sounds: Array(24)
+            .fill(null)
+            .map(() => createAudio()),
         titleBgm: createAudio(),
         gameoverMe: createAudio(),
         battleBgm: createAudio(),
