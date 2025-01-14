@@ -5,12 +5,11 @@ import type {
   System_Message,
   System_Terms,
 } from "@sigureya/rpgtypes";
-// import type { System_Terms } from "@sigureya/rpgtypes";
-import { createAudio } from "./createAudio";
+import { createAudio } from "./audio/createAudio";
 
-// proto?: Partial<Data_System>
-
-export const createSystemData = (): Data_System => {
+export const createSystemData = (
+  system?: Partial<Data_System>
+): Data_System => {
   return {
     local: "",
     gameTitle: "",
@@ -34,7 +33,9 @@ export const createSystemData = (): Data_System => {
     elements: [],
     variables: [],
     equipTypes: [],
-    sounds: [],
+    sounds: Array(24)
+      .fill(null)
+      .map(() => createAudio()) as any,
     titleBgm: createAudio(),
     gameoverMe: createAudio(),
     battleBgm: createAudio(),
@@ -57,10 +58,13 @@ export const createSystemData = (): Data_System => {
     boat: createVehicle(),
     ship: createVehicle(),
     airship: createVehicle(),
+    ...system,
   };
 };
 
-export const createAdvanced = (): System_Advanced => ({
+export const createAdvanced = (
+  proto?: Partial<System_Advanced>
+): System_Advanced => ({
   gameId: 0,
   screenWidth: 0,
   screenHeight: 0,
@@ -72,16 +76,18 @@ export const createAdvanced = (): System_Advanced => ({
   mainFontFilename: "",
   fallbackFonts: "",
   fontSize: 0,
+  ...proto,
 });
 
-export const createVehicle = (): Data_Vehicle => {
+export const createVehicle = (proto?: Partial<Data_Vehicle>): Data_Vehicle => {
   return {
-    bgm: { name: "", pan: 0, pitch: 0, volume: 0 },
+    bgm: createAudio(),
     characterIndex: 0,
     characterName: "",
     startMapId: 0,
     startX: 0,
     startY: 0,
+    ...proto,
   };
 };
 
@@ -98,7 +104,9 @@ export const createParamNames = (): System_Terms["params"] => {
   return ["mhp", "mmp", "atk", "def", "mat", "mdf", "agi", "luk", "hit", "eva"];
 };
 
-export const createMessages = (): System_Message => {
+export const createMessages = (
+  proto?: Partial<System_Message>
+): System_Message => {
   return {
     alwaysDash: "",
     commandRemember: "",
@@ -153,5 +161,6 @@ export const createMessages = (): System_Message => {
     debuffAdd: "",
     buffRemove: "",
     actionFailure: "",
+    ...proto,
   };
 };
