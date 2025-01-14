@@ -1,10 +1,16 @@
-import type { Data_System } from "@sigureya/rpgtypes";
-import type { System_Vehicle } from "@sigureya/rpgtypes/src/schema/data/types/system/vehicles";
+import type {
+  Data_System,
+  Data_Vehicle,
+  System_Advanced,
+  System_Message,
+  System_Terms,
+} from "@sigureya/rpgtypes";
+// import type { System_Terms } from "@sigureya/rpgtypes";
 import { createAudio } from "./createAudio";
 
 // proto?: Partial<Data_System>
 
-export const createSystemData = () => {
+export const createSystemData = (): Data_System => {
   return {
     local: "",
     gameTitle: "",
@@ -23,7 +29,7 @@ export const createSystemData = () => {
     testTroopId: 0,
     testBattlers: [],
     versionId: 0,
-    advanced: undefined,
+    advanced: createAdvanced(),
     armorTypes: [],
     elements: [],
     variables: [],
@@ -54,7 +60,21 @@ export const createSystemData = () => {
   };
 };
 
-const createVehicle = (): System_Vehicle => {
+export const createAdvanced = (): System_Advanced => ({
+  gameId: 0,
+  screenWidth: 0,
+  screenHeight: 0,
+  uiAreaWidth: 0,
+  uiAreaHeight: 0,
+  windowOpacity: 0,
+  screenScale: 0,
+  numberFontFilename: "",
+  mainFontFilename: "",
+  fallbackFonts: "",
+  fontSize: 0,
+});
+
+export const createVehicle = (): Data_Vehicle => {
   return {
     bgm: { name: "", pan: 0, pitch: 0, volume: 0 },
     characterIndex: 0,
@@ -65,7 +85,7 @@ const createVehicle = (): System_Vehicle => {
   };
 };
 
-export const createTerms = (): Data_System["terms"] => {
+export const createTerms = (): System_Terms => {
   return {
     messages: createMessages(),
     commands: [],
@@ -74,11 +94,11 @@ export const createTerms = (): Data_System["terms"] => {
   };
 };
 
-export const createParamNames = (): Data_System["terms"]["params"] => {
+export const createParamNames = (): System_Terms["params"] => {
   return ["mhp", "mmp", "atk", "def", "mat", "mdf", "agi", "luk", "hit", "eva"];
 };
 
-export const createMessages = (): Data_System["terms"]["messages"] => {
+export const createMessages = (): System_Message => {
   return {
     alwaysDash: "",
     commandRemember: "",
