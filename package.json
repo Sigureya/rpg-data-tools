@@ -1,4 +1,11 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sigureya/rpg-data-tools"
+  },
+  "exports": {
+    "./*": "./dist/*.js"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "dist/rpgdatatools.cjs.js",
