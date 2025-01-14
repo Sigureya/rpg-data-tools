@@ -17,7 +17,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "RailToy", // グローバル変数名
-      fileName: (format) => `railtoy.${format}.js`, // 出力ファイル名
+      fileName: (format) => `rpgdatatools.${format}.js`, // 出力ファイル名
     },
 
     rollupOptions: {
