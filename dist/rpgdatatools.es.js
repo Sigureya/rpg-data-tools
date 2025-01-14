@@ -341,4 +341,3 @@ export {
   c as createTerms,
   f as createWeapon
 };
-//# sourceMappingURL=rpgdatatools.es.js.map
