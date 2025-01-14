@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "description": "",
-  "main": "dist/libname.cjs.js",
-  "module": "dist/libname.esm.js",
+  "main": "dist/rpgdatatools.cjs.js",
+  "module": "dist/rpgdatatools.esm.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
     "build": "vite build",
