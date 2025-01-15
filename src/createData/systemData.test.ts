@@ -112,6 +112,12 @@ describe("createTerms", () => {
       params: createParamNamesArray({}),
       basic: createBasicTerms({}),
     });
+    expect(result).toEqual({
+      messages: createMessages(undefined),
+      commands: createCommandsArray(undefined),
+      params: createParamNamesArray(undefined),
+      basic: createBasicTerms(undefined),
+    });
   });
 
   it("should override default terms with provided arguments", () => {
