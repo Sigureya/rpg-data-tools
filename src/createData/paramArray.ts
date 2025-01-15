@@ -1,4 +1,4 @@
-import type { ParamArray } from "@sigureya/rpgtypes";
+import type { ParamArray, Terms_ParamNamesArray } from "@sigureya/rpgtypes";
 
 export interface ParamArray2<T> {
   mhp: T;
@@ -12,10 +12,6 @@ export interface ParamArray2<T> {
   hit: T;
   eva: T;
 }
-
-export const createParamNamesArray = (
-  names: Partial<ParamArray2<string>>
-) => {};
 
 export const createParamArray = (
   params: Partial<ParamArray2<number>>

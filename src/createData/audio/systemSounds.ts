@@ -13,8 +13,8 @@ export interface SystemSounds {
   enemyAttack: AudioFileParams;
   enemyDamage: AudioFileParams;
   enemyCollapse: AudioFileParams;
-  bossCollapes1: AudioFileParams;
-  bossCollapes2: AudioFileParams;
+  bossCollapse1: AudioFileParams;
+  bossCollapse2: AudioFileParams;
   actorDamage: AudioFileParams;
   actorCollapse: AudioFileParams;
   playRecovery: AudioFileParams;

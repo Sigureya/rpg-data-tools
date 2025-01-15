@@ -1,5 +1,3 @@
-import type { BasicTerms as BasicTermsArray } from "@sigureya/rpgtypes";
-
 export interface BasicTerms {
   level: string;
   levelA: string;
@@ -12,18 +10,31 @@ export interface BasicTerms {
   experience: string;
   exp: string;
 }
-
-export const createBasicTerms = (
-  proto?: Partial<BasicTerms>
-): BasicTermsArray => [
-  proto?.level ?? "",
-  proto?.levelA ?? "",
-  proto?.hp ?? "",
-  proto?.hpA ?? "",
-  proto?.mp ?? "",
-  proto?.mpA ?? "",
-  proto?.tp ?? "",
-  proto?.tpA ?? "",
-  proto?.experience ?? "",
-  proto?.exp ?? "",
-];
+export interface Terms_Commands {
+  fight: string;
+  escape: string;
+  attack: string;
+  guard: string;
+  item: string;
+  skill: string;
+  equip: string;
+  status: string;
+  formation: string;
+  save: string;
+  gameEnd: string;
+  options: string;
+  weapon: string;
+  armor: string;
+  keyItem: string;
+  equip2: string;
+  optimize: string;
+  clear: string;
+  newGame: string;
+  continue_: string;
+  notUsed20: string;
+  toTitle: string;
+  cancel: string;
+  notUsed23: string;
+  buy: string;
+  sell: string;
+}
