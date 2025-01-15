@@ -1,1 +1,1 @@
-export * from "./systemSounds";
+export * from "./basicTerms";

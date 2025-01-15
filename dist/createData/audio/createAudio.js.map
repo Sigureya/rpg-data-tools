@@ -1,0 +1,1 @@
+{"version":3,"file":"createAudio.js","sourceRoot":"","sources":["../../../src/createData/audio/createAudio.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,WAAW,GAAG,GAAoB,EAAE;IAC/C,OAAO;QACL,IAAI,EAAE,EAAE;QACR,GAAG,EAAE,CAAC;QACN,KAAK,EAAE,GAAG;QACV,MAAM,EAAE,EAAE;KACX,CAAC;AACJ,CAAC,CAAC"}

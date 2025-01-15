@@ -1,2 +1,2 @@
-export * from "./systemSounds";
+export * from "./basicTerms";
 //# sourceMappingURL=index.js.map
