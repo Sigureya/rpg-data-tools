@@ -4,7 +4,7 @@ export const createAudio = (): AudioFileParams => {
   return {
     name: "",
     pan: 0,
-    pitch: 0,
-    volume: 0,
+    pitch: 100,
+    volume: 90,
   };
 };
