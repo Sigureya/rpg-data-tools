@@ -1,2 +1,2 @@
-export * from "./createData";
+export * from "./constructData";
 //# sourceMappingURL=index.js.map
