@@ -10,11 +10,11 @@ import type {
   ParamArray,
 } from "@sigureya/rpgtypes";
 
-export const createParamArray = (): ParamArray => {
+export const constructParamArray = (): ParamArray => {
   return [0, 0, 0, 0, 0, 0, 0, 0];
 };
 
-export const createActor = (proto?: Partial<Data_Actor>): Data_Actor => {
+export const constructActor = (proto?: Partial<Data_Actor>): Data_Actor => {
   return {
     id: 0,
     name: "",
@@ -35,7 +35,7 @@ export const createActor = (proto?: Partial<Data_Actor>): Data_Actor => {
   };
 };
 
-export const createEnemy = (proto?: Partial<Data_Enemy>): Data_Enemy => {
+export const constructEnemy = (proto?: Partial<Data_Enemy>): Data_Enemy => {
   return {
     battlerHue: 0,
     id: 0,
@@ -43,7 +43,7 @@ export const createEnemy = (proto?: Partial<Data_Enemy>): Data_Enemy => {
     note: "",
     battlerName: "",
     traits: [],
-    params: createParamArray(),
+    params: constructParamArray(),
     exp: 0,
     gold: 0,
     dropItems: [],
@@ -53,7 +53,7 @@ export const createEnemy = (proto?: Partial<Data_Enemy>): Data_Enemy => {
   };
 };
 
-export const createArmor = (proto?: Partial<Data_Armor>): Data_Armor => {
+export const constructArmor = (proto?: Partial<Data_Armor>): Data_Armor => {
   return {
     price: 0,
     id: 0,
@@ -62,13 +62,13 @@ export const createArmor = (proto?: Partial<Data_Armor>): Data_Armor => {
     iconIndex: 0,
     description: "",
     etypeId: 0,
-    params: createParamArray(),
+    params: constructParamArray(),
     traits: [],
 
     ...proto,
   };
 };
-export const createWeapon = (proto?: Partial<Data_Weapon>): Data_Weapon => {
+export const constructWeapon = (proto?: Partial<Data_Weapon>): Data_Weapon => {
   return {
     price: 0,
     id: 0,
@@ -78,28 +78,28 @@ export const createWeapon = (proto?: Partial<Data_Weapon>): Data_Weapon => {
     description: "",
     etypeId: 0,
     wtypeId: 0,
-    params: createParamArray(),
+    params: constructParamArray(),
     traits: [],
-    damage: createDamage(),
+    damage: constructDamage(),
 
     ...proto,
   };
 };
 
-export const createClass = (proto?: Partial<Data_Class>): Data_Class => {
+export const constructClass = (proto?: Partial<Data_Class>): Data_Class => {
   return {
     id: 0,
     name: "",
     note: "",
     traits: [],
     learnings: [],
-    params: createParamArray(),
+    params: constructParamArray(),
     expParams: [],
     ...proto,
   };
 };
 
-export const createDamage = (
+export const constructDamage = (
   proto?: Partial<Data_Skill["damage"]>
 ): Data_Skill["damage"] => {
   return {
@@ -112,7 +112,7 @@ export const createDamage = (
   };
 };
 
-export const createItem = (proto?: Partial<Data_Item>): Data_Item => {
+export const constructItem = (proto?: Partial<Data_Item>): Data_Item => {
   return {
     id: 0,
     name: "",
@@ -129,16 +129,16 @@ export const createItem = (proto?: Partial<Data_Item>): Data_Item => {
     tpGain: 0,
     hitType: 0,
     animationId: 0,
-    damage: createDamage(),
+    damage: constructDamage(),
     effects: [],
     ...proto,
   };
 };
 
-export const createSkill = (proto?: Partial<Data_Skill>): Data_Skill => {
+export const constructSkill = (proto?: Partial<Data_Skill>): Data_Skill => {
   return {
     animationId: 0,
-    damage: createDamage(),
+    damage: constructDamage(),
     description: "",
     hitType: 0,
     iconIndex: 0,
@@ -165,7 +165,7 @@ export const createSkill = (proto?: Partial<Data_Skill>): Data_Skill => {
   };
 };
 
-export const createState = (proto?: Partial<Data_State>): Data_State => {
+export const constructState = (proto?: Partial<Data_State>): Data_State => {
   return {
     id: 0,
     name: "",
