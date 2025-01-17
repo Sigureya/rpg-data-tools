@@ -13,9 +13,9 @@ const showMessage2: ArrayToObjectMapper<
   EventCommandTypes["SHOW_MESSAGE"]["parameters"],
   ShowMessage
 > = {
-  faceIndex: 1,
   facename: 0,
-  background: 1,
-  positionType: 2,
+  faceIndex: 1,
+  background: 2,
+  positionType: 3,
   speakerName: 4,
 };
