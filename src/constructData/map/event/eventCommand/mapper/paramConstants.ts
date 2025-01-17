@@ -1,82 +1,137 @@
 import type { EventCommandTypes } from "@sigureya/rpgtypes";
 import type { EventParameterFactory } from "./mappingObjecToMZ";
-import type { ChangeName, ShowMessage, ShowMessageBody } from "./paramTypes";
+import { ParameterFactory } from "./template";
 
-export const showMessage: EventParameterFactory<
-  ShowMessage,
+import type * as CommandParam from "./paramTypes";
+import { EventCommandFactory } from "./eventCommandFactory";
+
+export const showMessage = new EventCommandFactory<
+  CommandParam.ShowMessage,
   EventCommandTypes["SHOW_MESSAGE"]
-> = {
-  constructParamArray(proto) {
+>(101, {
+  construct: (proto) => {
+    return {
+      facename: proto.facename ?? "",
+      faceIndex: proto.faceIndex ?? 0,
+      background: proto.background ?? 0,
+      positionType: proto.positionType ?? 2,
+      speakerName: proto.speakerName ?? "",
+    };
+  },
+  array: (obj) => {
     return [
-      proto?.facename ?? "",
-      proto?.faceIndex ?? 0,
-      proto?.background ?? 0,
-      proto?.positionType ?? 2,
-      proto?.speakerName ?? "",
+      obj.facename,
+      obj.faceIndex,
+      obj.background,
+      obj.positionType,
+      obj.speakerName,
     ];
   },
 
-  constructMappedParamObject(proto) {
+  fromArray: (arr) => {
     return {
-      facename: proto?.facename ?? "",
-      faceIndex: proto?.faceIndex ?? 0,
-      background: proto?.background ?? 0,
-      positionType: proto?.positionType ?? 2,
-      speakerName: proto?.speakerName ?? "",
+      facename: arr[0],
+      faceIndex: arr[1],
+      background: arr[2],
+      positionType: arr[3],
+      speakerName: arr[4],
     };
   },
-  toArray(parameters) {
-    return [
-      parameters.facename,
-      parameters.faceIndex,
-      parameters.background,
-      parameters.positionType,
-      parameters.speakerName,
-    ];
-  },
-  fromArray(parameters) {
-    return {
-      facename: parameters[0],
-      faceIndex: parameters[1],
-      background: parameters[2],
-      positionType: parameters[3],
-      speakerName: parameters[4],
-    };
-  },
-};
+});
 
-export const showMessageBody: EventParameterFactory<
-  ShowMessageBody,
+export const showMessageBody = new EventCommandFactory<
+  CommandParam.ShowMessageBody,
   EventCommandTypes["SHOW_MESSAGE_BODY"]
-> = {
-  constructParamArray(proto) {
-    return [proto?.content ?? ""];
+>(401, {
+  construct: (proto) => {
+    return {
+      content: proto.content ?? "",
+    };
   },
-  constructMappedParamObject(proto) {
-    return { content: proto?.content ?? "" };
+  array: (obj) => {
+    return [obj.content];
   },
-  toArray(parameters) {
-    return [parameters.content];
-  },
-  fromArray(parameters) {
-    return { content: parameters[0] };
-  },
-};
 
-export const changeName: EventParameterFactory<
-  ChangeName,
-  EventCommandTypes["CHANGE_NAME"]
-> = {
-  constructParamArray(proto) {
-    return [proto?.actorId ?? 0, proto?.name ?? ""];
+  fromArray: (arr) => {
+    return {
+      content: arr[0],
+    };
   },
-  constructMappedParamObject(proto) {
-    return { actorId: proto?.actorId ?? 0, name: proto?.name ?? "" };
+});
+
+export const showChoices = new EventCommandFactory<
+  CommandParam.ShowChoices,
+  EventCommandTypes["SHOW_CHOICES"]
+>(102, {
+  construct: (proto) => {
+    return {
+      choices: proto.choices ?? [],
+      cancelType: proto.cancelType ?? 0,
+      defaultType: proto.defaultType ?? 0,
+      positionType: proto.positionType ?? 2,
+      background: proto.background ?? 0,
+    };
   },
-  toArray(parameters) {
-    return [parameters.actorId, parameters.name];
+  array: (obj) => {
+    return [
+      obj.choices,
+      obj.cancelType,
+      obj.defaultType,
+      obj.positionType,
+      obj.background,
+    ];
   },
-  fromArray(parameters) {
-    return { actorId: parameters[0], name: parameters[1] };
+
+  fromArray: (arr) => {
+    return {
+      choices: arr[0],
+      cancelType: arr[1],
+      defaultType: arr[2],
+      positionType: arr[3],
+      background: arr[4],
+    };
   },
-};
+});
+export const inputNumber = new EventCommandFactory<
+  CommandParam.InputNumber,
+  EventCommandTypes["INPUT_NUMBER"]
+>(103, {
+  construct: (proto) => {
+    return {
+      variableId: proto.variableId ?? 1,
+      maxDigits: proto.maxDigits ?? 1,
+    };
+  },
+  array: (obj) => {
+    return [obj.variableId, obj.maxDigits];
+  },
+
+  fromArray: (arr) => {
+    return {
+      variableId: arr[0],
+      maxDigits: arr[1],
+    };
+  },
+});
+
+export const selectItem: EventParameterFactory<
+  CommandParam.SelectItem,
+  EventCommandTypes["SELECT_ITEM"]
+> = new ParameterFactory({
+  construct: (proto) => {
+    return {
+      variableId: proto.variableId ?? 1,
+      itemType: proto.itemType ?? 1,
+    };
+  },
+  array: (obj) => {
+    return [obj.variableId, obj.itemType];
+  },
+
+  fromArray: (arr) => {
+    return {
+      variableId: arr[0],
+      itemType: arr[1],
+    };
+  },
+});
