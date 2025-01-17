@@ -2,11 +2,21 @@ export type ArrayToObjectMapper<
   Array extends unknown[],
   ParamObject extends object
 > = {
-  [K in keyof ParamObject]: NumericKeyMap[Extract<
-    keyof NumericKeyMap,
-    keyof Array
-  >];
+  [K in keyof ParamObject]: TTT<ParamObject[K], Array>;
 };
+
+type TTT<
+  T,
+  Array extends unknown[],
+  LastKey extends Extract<keyof Array, keyof NumericKeyMap> = Extract<
+    keyof Array,
+    keyof NumericKeyMap
+  >
+> = {
+  [K in Extract<keyof Array, keyof NumericKeyMap>]: Array[K] extends T
+    ? NumericKeyMap[K]
+    : never;
+}[LastKey];
 
 interface NumericKeyMap {
   "0": 0;
