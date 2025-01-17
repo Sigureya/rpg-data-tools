@@ -10,14 +10,6 @@ export type ArrayToObjectMapper<
   }[Extract<keyof Array, keyof NumericKeyMap>];
 };
 
-type TTT<T, Array extends unknown[]> = ValueOf<{
-  [K in Extract<keyof Array, keyof NumericKeyMap>]: Array[K] extends T
-    ? NumericKeyMap[K]
-    : never;
-}>;
-
-type ValueOf<T> = T[keyof T];
-
 interface NumericKeyMap {
   "0": 0;
   "1": 1;
