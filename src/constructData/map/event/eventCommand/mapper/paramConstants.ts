@@ -114,10 +114,10 @@ export const inputNumber = new EventCommandFactory<
   },
 });
 
-export const selectItem: EventParameterFactory<
+export const selectItem = new EventCommandFactory<
   CommandParam.SelectItem,
   EventCommandTypes["SELECT_ITEM"]
-> = new ParameterFactory({
+>(104, {
   construct: (proto) => {
     return {
       variableId: proto.variableId ?? 1,
