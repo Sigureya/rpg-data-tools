@@ -3,9 +3,9 @@ export interface Blueprint<
   MappedParamObject extends object,
   ParameterArray extends unknown[]
 > {
-  construct(proto: Partial<MappedParamObject>): MappedParamObject;
-  array(parameters: MappedParamObject): ParameterArray;
-  fromArray(parameters: ParameterArray): MappedParamObject;
+  construct(proto: Partial<Readonly<MappedParamObject>>): MappedParamObject;
+  array(parameters: Readonly<MappedParamObject>): ParameterArray;
+  fromArray(parameters: Readonly<ParameterArray>): MappedParamObject;
   validate?(parameters: MappedParamObject): void;
 }
 
