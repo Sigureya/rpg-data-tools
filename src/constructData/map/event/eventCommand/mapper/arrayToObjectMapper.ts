@@ -3,10 +3,10 @@ export type ArrayToObjectMapper<
   ParamObject extends object
 > = {
   [K in keyof ParamObject]: {
-    [K2 in Extract<
+    [Index in Extract<
       keyof Array,
       keyof NumericKeyMap
-    >]: Array[K2] extends ParamObject[K] ? NumericKeyMap[K2] : never;
+    >]: Array[Index] extends ParamObject[K] ? NumericKeyMap[Index] : never;
   }[Extract<keyof Array, keyof NumericKeyMap>];
 };
 
