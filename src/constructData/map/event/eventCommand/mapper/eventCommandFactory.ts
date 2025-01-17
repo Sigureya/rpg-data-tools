@@ -1,8 +1,4 @@
-import type {
-  EventCode,
-  EventCommand,
-  EventCommandsMapper,
-} from "@sigureya/rpgtypes";
+import type { EventCommand } from "@sigureya/rpgtypes";
 import { ParameterFactory, type Blueprint } from "./template";
 
 export class EventCommandFactory<
