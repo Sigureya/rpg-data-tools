@@ -19,7 +19,7 @@ describe("constructEventCommand", () => {
     const eventCommand = constructEventCommand(CODE.SHOW_MESSAGE_BODY, [
       "Hello, World!",
     ]);
-    expect(eventCommand.code).toBe(CODE.SHOW_MESSAGE);
+    expect(eventCommand.code).toBe(CODE.SHOW_MESSAGE_BODY);
     expect(eventCommand.parameters[0]).toBe("Hello, World!");
     expect(eventCommand.indent).toBe(0);
   });
