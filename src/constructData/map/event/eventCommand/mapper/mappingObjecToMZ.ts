@@ -1,21 +1,13 @@
-import type { EventCommandTypes } from "@sigureya/rpgtypes";
+import type { EventCommand, EventCommandTypes } from "@sigureya/rpgtypes";
 import type { ChangeName, ShowMessage } from "./paramTypes";
-import type { ArrayToObjectMapper } from "./arrayToObjectMapper";
-const can: ArrayToObjectMapper<
-  EventCommandTypes["CHANGE_NAME"]["parameters"],
-  ChangeName
-> = {
-  actorId: 0,
-  name: 1,
-};
+import type { ArrayToObjectMapper } from "./template/arrayToObjectMapper";
+import type { ParameterFactory } from "./template/parameterFactory";
+export type MappingEventParameter<
+  MappedParamObject extends object,
+  EventCommandType extends EventCommand
+> = ArrayToObjectMapper<EventCommandType["parameters"], MappedParamObject>;
 
-const showMessage2: ArrayToObjectMapper<
-  EventCommandTypes["SHOW_MESSAGE"]["parameters"],
-  ShowMessage
-> = {
-  facename: 0,
-  faceIndex: 1,
-  background: 2,
-  positionType: 3,
-  speakerName: 4,
-};
+export type EventParameterFactory<
+  MappedParamObject extends object,
+  EventCommandType extends EventCommand
+> = ParameterFactory<EventCommandType["parameters"], MappedParamObject>;
