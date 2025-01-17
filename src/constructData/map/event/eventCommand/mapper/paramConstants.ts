@@ -1,6 +1,4 @@
 import type { EventCommandTypes } from "@sigureya/rpgtypes";
-import type { EventParameterFactory } from "./mappingObjecToMZ";
-import { ParameterFactory } from "./template";
 
 import type * as CommandParam from "./paramTypes";
 import { EventCommandFactory } from "./eventCommandFactory";
