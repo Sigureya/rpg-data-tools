@@ -1,10 +1,10 @@
 // 設計図
 export interface Blueprint<
-  ParameterArray extends unknown[],
-  MappedParamObject extends object
+  MappedParamObject extends object,
+  ParameterArray extends unknown[]
 > {
   construct(proto: Partial<MappedParamObject>): MappedParamObject;
-  toArray(parameters: MappedParamObject): ParameterArray;
+  array(parameters: MappedParamObject): ParameterArray;
   fromArray(parameters: ParameterArray): MappedParamObject;
   validate?(parameters: MappedParamObject): void;
 }
@@ -13,10 +13,10 @@ export const createSample = <
   ParameterArray extends unknown[],
   MappedParamObject extends object
 >(
-  blueprint: Blueprint<ParameterArray, MappedParamObject>
+  blueprint: Blueprint<MappedParamObject, ParameterArray>
 ) => {
   const proto = blueprint.construct({});
-  const array = blueprint.toArray(proto);
+  const array = blueprint.array(proto);
   return { object: createTypeMap(proto), array: typeMapFromArray(array) };
 };
 
