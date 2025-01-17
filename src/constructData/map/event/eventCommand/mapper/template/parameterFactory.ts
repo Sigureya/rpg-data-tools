@@ -6,7 +6,7 @@ export class ParameterFactory<
   MappedParamObject extends object,
   ParameterArray extends unknown[]
 > {
-  private _sample = createSample(this._blueprint);
+  private readonly _sample = createSample(this._blueprint);
   constructor(
     private readonly _blueprint: Blueprint<MappedParamObject, ParameterArray>
   ) {}
@@ -34,6 +34,13 @@ export class ParameterFactory<
       this._blueprint.validate(parameters as MappedParamObject);
     }
   }
+  validateArray(parameters: ParameterArray) {
+    if (parameters.length !== this._sample.array.size) {
+      throw new Error(INVALID_ARRAY_LENGTH, { cause: parameters });
+    }
+    this.fromArray(parameters);
+  }
+
   array(proto: Partial<MappedParamObject> = {}): ParameterArray {
     const newParam = this._blueprint.construct(proto);
     this.validate(newParam);
@@ -41,6 +48,10 @@ export class ParameterFactory<
   }
   construct(proto: Partial<MappedParamObject> = {}): MappedParamObject {
     const newParam = this._blueprint.construct(proto);
+    if (newParam === proto) {
+      // 引数をそのままreturnするのは禁止。as anyされると発生しうる
+      throw new Error("return same object", { cause: proto });
+    }
     this.validate(newParam);
     return newParam;
   }
