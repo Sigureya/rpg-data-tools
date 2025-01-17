@@ -1,5 +1,6 @@
 import type { TypeInfo, Blueprint } from "./blueprint";
 import { createSample } from "./blueprint";
+import { INVALID_ARRAY_LENGTH } from "./errorMessages";
 
 export class ParameterFactory<
   MappedParamObject extends object,
@@ -10,18 +11,20 @@ export class ParameterFactory<
     private readonly _blueprint: Blueprint<MappedParamObject, ParameterArray>
   ) {}
 
+  paramErrors(parameters: Partial<MappedParamObject>): TypeInfo[] {
+    return Object.entries(parameters).map<TypeInfo>(([key, value]) => ({
+      key,
+      requiredType: this._sample.object.get(key),
+      type: typeof value,
+      value,
+    }));
+  }
+
   validate(parameters: Partial<MappedParamObject>) {
-    const typeInfos = Object.entries(parameters).map<TypeInfo>(
-      ([key, value]) => ({
-        key,
-        requiredType: this._sample.object.get(key),
-        type: typeof value,
-        value,
-      })
-    );
+    const typeInfos = this.paramErrors(parameters);
 
     if (typeInfos.length !== this._sample.object.size) {
-      throw new Error("length is invalid", { cause: typeInfos });
+      throw new Error(INVALID_ARRAY_LENGTH, { cause: typeInfos });
     }
 
     if (typeInfos.some((info) => info.type !== info.requiredType)) {
