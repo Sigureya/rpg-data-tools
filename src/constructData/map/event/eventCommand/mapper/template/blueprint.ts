@@ -14,7 +14,10 @@ export const createSample = <
   MappedParamObject extends object
 >(
   blueprint: Blueprint<MappedParamObject, ParameterArray>
-) => {
+): {
+  object: ReadonlyMap<string, string>;
+  array: ReadonlyMap<string, string>;
+} => {
   const proto = blueprint.construct({});
   const array = blueprint.array(proto);
   return { object: createTypeMap(proto), array: typeMapFromArray(array) };
