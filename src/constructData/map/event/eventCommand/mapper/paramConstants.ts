@@ -133,3 +133,127 @@ export const selectItem = new EventCommandFactory<
     };
   },
 });
+
+export const showScrollingText = new EventCommandFactory<
+  CommandParam.ShowScrollingText,
+  EventCommandTypes["SHOW_SCROLLING_TEXT"]
+>(105, {
+  construct: (proto) => {
+    return {
+      speed: proto.speed ?? 2,
+      skip: proto.skip ?? false,
+    };
+  },
+  array: (obj) => {
+    return [obj.speed, obj.skip];
+  },
+
+  fromArray: (arr) => {
+    return {
+      speed: arr[0],
+      skip: arr[1],
+    };
+  },
+});
+
+export const showScrollingTextBody = new EventCommandFactory<
+  CommandParam.ShowScrollingTextBody,
+  EventCommandTypes["SHOW_SCROLLING_TEXT_BODY"]
+>(405, {
+  construct: (proto) => {
+    return {
+      content: proto.content ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.content];
+  },
+  fromArray: (arr) => {
+    return {
+      content: arr[0],
+    };
+  },
+});
+
+export const comment = new EventCommandFactory<
+  CommandParam.Comment,
+  EventCommandTypes["COMMENT"]
+>(108, {
+  construct: (proto) => {
+    return {
+      content: proto.content ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.content];
+  },
+  fromArray: (arr) => {
+    return {
+      content: arr[0],
+    };
+  },
+});
+
+export const commentBody = new EventCommandFactory<
+  CommandParam.CommentBody,
+  EventCommandTypes["COMMENT_BODY"]
+>(408, {
+  construct: (proto) => {
+    return {
+      content: proto.content ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.content];
+  },
+  fromArray: (arr) => {
+    return {
+      content: arr[0],
+    };
+  },
+});
+
+export const showPicture = new EventCommandFactory<
+  CommandParam.ShowPicture,
+  EventCommandTypes["SHOW_PICTURE"]
+>(231, {
+  array: (obj) => {
+    return [
+      obj.pictureId,
+      obj.filename,
+      obj.origin,
+      obj.x,
+      obj.y,
+      obj.scaleX,
+      obj.scaleY,
+      obj.opacity,
+      obj.blendMode,
+    ];
+  },
+  construct: (proto) => {
+    return {
+      pictureId: proto.pictureId ?? 1,
+      filename: proto.filename ?? "",
+      origin: proto.origin ?? 0,
+      x: proto.x ?? 0,
+      y: proto.y ?? 0,
+      scaleX: proto.scaleX ?? 100,
+      scaleY: proto.scaleY ?? 100,
+      opacity: proto.opacity ?? 255,
+      blendMode: proto.blendMode ?? 0,
+    };
+  },
+  fromArray: (arr) => {
+    return {
+      pictureId: arr[0],
+      filename: arr[1],
+      origin: arr[2],
+      x: arr[3],
+      y: arr[4],
+      scaleX: arr[5],
+      scaleY: arr[6],
+      opacity: arr[7],
+      blendMode: arr[8],
+    };
+  },
+});
