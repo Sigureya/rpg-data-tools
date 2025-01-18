@@ -6,6 +6,7 @@ import type {
   Direction8,
   MoveRouteData,
   Operation_PlusMinus,
+  PicutureBlendMode,
   Toggle,
   ValueOf,
 } from "@sigureya/rpgtypes";
@@ -381,7 +382,17 @@ export interface Wait {
   duration: number;
 }
 
-export interface ShowPicture {}
+export interface ShowPicture {
+  pictureId: number;
+  filename: string;
+  origin: 0 | 1;
+  x: number;
+  y: number;
+  scaleX: number;
+  scaleY: number;
+  opacity: number;
+  blendMode: PicutureBlendMode;
+}
 export interface MovePicture {}
 export interface TintPicture {}
 export interface RotatePicture {}
