@@ -1,4 +1,4 @@
-import type { EventCommandTypes } from "@sigureya/rpgtypes";
+import type { EventCommandTable as EventCommandTypes } from "@sigureya/rpgtypes";
 
 import type * as CommandParam from "./paramTypes";
 import { EventCommandFactory } from "./eventCommandFactory";

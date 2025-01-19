@@ -1,4 +1,4 @@
-export const createEventCommand = (code, parameters, indent = 0) => ({
+export const constructEventCommand = (code, parameters, indent = 0) => ({
     code,
     indent,
     parameters,

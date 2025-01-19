@@ -1,6 +1,6 @@
-import type { EventCommandTable } from "@sigureya/rpgtypes";
-export declare const createEventCommand: <Code extends keyof EventCommandTable>(code: Code, parameters: EventCommandTable[Code]["parameters"], indent?: number) => {
+import type { EventCode, EventCommandsMapper } from "@sigureya/rpgtypes";
+export declare const constructEventCommand: <Code extends EventCode>(code: Code, parameters: EventCommandsMapper["parameterByCode"][Code], indent?: number) => {
     code: Code;
-    parameters: EventCommandTable[Code]["parameters"];
+    parameters: EventCommandsMapper["parameterByCode"][Code];
     indent: number;
 };
