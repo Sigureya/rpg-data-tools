@@ -2,7 +2,7 @@ export class TwoWayMap<
   R extends Record<string, V>,
   V extends string | number = number
 > {
-  keyToValueMap: Map<keyof R, string | number>;
+  keyToValueMap: Map<keyof R, V>;
   valueToKeyMap: Map<string | number, string>;
   constructor(record: R) {
     const { a, b } = createMap(record);
@@ -10,7 +10,7 @@ export class TwoWayMap<
     this.valueToKeyMap = b;
   }
 
-  getValueFromKey<K extends string = string & keyof R>(key: K) {
+  getValueFromKey<K extends string = string & keyof R>(key: K): V | undefined {
     return this.keyToValueMap.get(key);
   }
 
