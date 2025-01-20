@@ -10,7 +10,9 @@ export class TwoWayMap<
     this.valueToKeyMap = b;
   }
 
-  getValueFromKey<K extends string = string & keyof R>(key: K): V | undefined {
+  getValueFromKey<K extends string = Extract<keyof R, string>>(
+    key: K
+  ): V | undefined {
     return this.keyToValueMap.get(key);
   }
 
