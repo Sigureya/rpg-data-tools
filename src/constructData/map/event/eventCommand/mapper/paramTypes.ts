@@ -1,5 +1,6 @@
 import type {
   AudioFileParams,
+  BranchCode,
   ChanageActorVariable,
   ColorRGBA,
   Designation,
@@ -10,6 +11,19 @@ import type {
   Toggle,
   ValueOf,
 } from "@sigureya/rpgtypes";
+import type {
+  BranchBySwitch,
+  BranchByVariable,
+  BranchByActor,
+  BranchByTimer,
+  BranchByCharacter,
+  BranchByGold,
+  BranchByItem,
+  BranchByWeapon,
+  BranchByArmor,
+  BranchByButton,
+  BranchByScript,
+} from "./branch/branchParams";
 
 export interface NoOperation {}
 /**
@@ -95,7 +109,21 @@ export interface Skip {}
 /**
  * @description Conditional Branch
  */
-export interface ConditionalBranch {}
+export interface ConditionalBranch {
+  branchCode: BranchCode;
+  parameters:
+    | BranchBySwitch
+    | BranchByVariable
+    | BranchByActor
+    | BranchByTimer
+    | BranchByCharacter
+    | BranchByGold
+    | BranchByItem
+    | BranchByWeapon
+    | BranchByArmor
+    | BranchByButton
+    | BranchByScript;
+}
 /**
  * @description Else (Conditional Branch)
  */

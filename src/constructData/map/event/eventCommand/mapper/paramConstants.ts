@@ -3,6 +3,27 @@ import type { EventCommandTable as EventCommandTypes } from "@sigureya/rpgtypes"
 import type * as CommandParam from "./paramTypes";
 import { EventCommandFactory } from "./eventCommandFactory";
 
+// const ConditionalBranch = new EventCommandFactory<
+//   CommandParam.ConditionalBranch,
+//   EventCommandTypes["CONDITIONAL_BRANCH"]
+// >(111, {
+//   construct: (proto) => {
+//     switch (proto.branchCode) {
+//       case 0:
+//     }
+//   },
+//   array: (obj) => {
+//     return [obj.variableId, obj.operand, obj.value];
+//   },
+//   fromArray: (arr) => {
+//     return {
+//       variableId: arr[0],
+//       operand: arr[1],
+//       value: arr[2],
+//     };
+//   },
+// });
+
 export const showMessage = new EventCommandFactory<
   CommandParam.ShowMessage,
   EventCommandTypes["SHOW_MESSAGE"]
