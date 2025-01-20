@@ -13,9 +13,11 @@ describe("constructEventCommand", () => {
   test("getValueFromKey", () => {
     expect(mockMap.getValueFromKey("OFF")).toBe(1);
     expect(mockMap.getValueFromKey("ON")).toBe(0);
+    expect(mockMap.getValueFromKey("INVALID")).toBeUndefined();
   });
   test("getKeyFromValue", () => {
     expect(mockMap.getKeyFromValue(1)).toBe("OFF");
     expect(mockMap.getKeyFromValue(0)).toBe("ON");
+    expect(mockMap.getKeyFromValue(2)).toBeUndefined();
   });
 });
