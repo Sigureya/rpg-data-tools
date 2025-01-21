@@ -4,7 +4,6 @@
   "description": "RpgMaker MockLibrary",
   "main": "dist/rpgdatatools.cjs.js",
   "module": "dist/rpgdatatools.esm.js",
-  "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sigureya/rpg-data-tools.git"
@@ -16,19 +15,17 @@
   "exports": {
     ".": {
       "require": "./dist/rpgdatatools.cjs.js",
-      "import": "./dist/rpgdatatools.esm.js",
-      "types": "./dist/types/index.d.ts"
+      "import": "./dist/rpgdatatools.esm.js"
     }
   },
   "scripts": {
-    "build": "tsc  --declaration --outDir dist",
+    "build": "vite build",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "lint": "eslint src --ext .ts,.tsx"
   },
   "files": [
-    "dist",
-    "dist/types"
+    "dist"
   ],
   "keywords": [
     "RPG Maker",
@@ -42,7 +39,7 @@
     "@typescript-eslint/parser": "^8.18.2",
     "eslint": "^8.57.1",
     "typescript": "^5.7.2",
-    "vite": "^6.0.6",
+    "vite": "^6.0.11",
     "vite-plugin-dts": "^4.5.0",
     "vitest": "^2.1.8"
   },
