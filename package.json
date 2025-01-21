@@ -1,5 +1,5 @@
 {
-  "name": "@sigureya/rpg-data-tools",
+  "name": "rpg-data-tools",
   "version": "1.0.2",
   "description": "RpgMaker MockLibrary",
   "main": "dist/rpgdatatools.cjs.js",
