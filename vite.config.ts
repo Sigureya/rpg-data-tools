@@ -10,7 +10,7 @@ export default defineConfig({
       formats: ["es", "cjs", "umd"], // 出力形式
     },
     rollupOptions: {
-      external: [], // 必要に応じて外部モジュールを指定
+      external: ["@sigureya/rpgtypes"], // 外部依存関係を適切に設定
     },
     sourcemap: true, // ソースマップの生成
     outDir: "dist", // 出力先ディレクトリ
@@ -20,6 +20,7 @@ export default defineConfig({
     dts({
       include: ["src/**/*.ts"], // 型定義を生成する対象
       exclude: ["src/**/*.test.ts"], // 型定義生成からテストコードを除外
+      insertTypesEntry: true, // 型ファイルへのエントリを追加
     }),
   ],
 });
