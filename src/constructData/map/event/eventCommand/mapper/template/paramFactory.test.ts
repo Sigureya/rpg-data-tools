@@ -1,68 +1,184 @@
-import { describe, test, expect, beforeEach, vitest } from "vitest";
+import { describe, test, expect, vi, beforeEach } from "vitest";
 import { ParameterFactory } from "./parameterFactory";
+import {
+  INVALID_ARRAY_LENGTH,
+  MEMBERS_UNMATCH,
+  RETURN_SAME_OBJECT,
+} from "./errorMessages";
 import type { Blueprint } from "./blueprint";
-import { INVALID_ARRAY_LENGTH } from "./errorMessages";
 
-describe("ParameterFactory", () => {
-  let mockBlueprint: Blueprint<{ a: string; b: number }, [string, number]>;
-  let factory: ParameterFactory<{ a: string; b: number }, [string, number]>;
+// Blueprint モックの型
+interface MockedParamObject {
+  name: string;
+  age: number;
+  id: number;
+}
+type MockedArray = [string, number, number];
+
+// モック用 Blueprint のテンプレート
+const createMockBlueprint = (): Blueprint<MockedParamObject, MockedArray> => ({
+  validate: vi.fn(),
+  construct: (proto: Partial<MockedParamObject>) => ({
+    name: proto.name ?? "default",
+    age: proto.age ?? 0,
+    id: proto.id ?? 1,
+  }),
+  array: (obj: MockedParamObject) => [obj.name, obj.age, obj.id],
+  fromArray: (arr: MockedArray) => ({
+    name: arr[0],
+    age: arr[1],
+    id: arr[2],
+  }),
+});
+
+describe("ParameterFactory - Valid Scenarios", () => {
+  let factory: ParameterFactory<MockedParamObject, MockedArray>;
+  let blueprint: ReturnType<typeof createMockBlueprint>;
+
   beforeEach(() => {
-    mockBlueprint = {
-      construct: (proto) => {
-        return { a: proto.a ?? "default", b: proto.b ?? 0 };
-      },
-      array: (obj) => {
-        return [obj.a, obj.b];
-      },
-      fromArray: (arr) => {
-        return { a: arr[0], b: arr[1] };
-      },
-      validate: vitest.fn(),
-    };
-    factory = new ParameterFactory(mockBlueprint);
-  });
-  test("should create a valid parameter object", () => {
-    const arg = { a: "test", b: 1 };
-    const param = factory.construct(arg);
-    expect(arg).toEqual(arg);
-    expect(arg).not.toBe(param);
-    expect(param.a).toBe("test");
-    expect(param.b).toBe(1);
-    expect(mockBlueprint.validate).toHaveBeenCalledWith(param);
+    blueprint = createMockBlueprint();
+    factory = new ParameterFactory(blueprint);
+    vi.resetAllMocks(); // モックのリセット
   });
 
-  test("should create a valid parameter object with default values", () => {
-    const param = factory.construct({});
-    expect(param.a).toBe("default");
-    expect(param.b).toBe(0);
-    expect(mockBlueprint.validate).toHaveBeenCalledWith(param);
+  test("object creation is validated and custom validation is called once", () => {
+    const proto = { name: "Alice", age: 30, id: 123 };
+
+    // オブジェクトの生成とバリデーション
+    const result = factory.construct(proto);
+
+    // 結果確認
+    expect(result).toEqual(proto);
+
+    // validate() の呼び出し確認
+    expect(blueprint.validate).toHaveBeenCalledTimes(1);
+    expect(blueprint.validate).toHaveBeenCalledWith(proto);
   });
 
-  test("should create a valid parameter array", () => {
-    const param = factory.array({ a: "test", b: 1 });
-    expect(param).toEqual(["test", 1]);
-    expect(mockBlueprint.validate).toHaveBeenCalledWith({ a: "test", b: 1 });
+  test("array creation validates object and ensures correctness", () => {
+    const proto = { name: "Alice", age: 30, id: 123 };
+
+    // 配列の生成とバリデーション
+    const resultArray = factory.array(proto);
+    //    const resultObject = factory.fromArray(resultArray);
+
+    // 結果確認
+    expect(resultArray).toEqual(["Alice", 30, 123]);
+    //  expect(resultObject).toEqual(proto);
+
+    // validate() の呼び出し確認
+    expect(blueprint.validate).toHaveBeenCalledTimes(1);
+    expect(blueprint.validate).toHaveBeenCalledWith(proto);
+  });
+  test("object creation fromArray() ", () => {
+    // 配列の生成とバリデーション
+    const object = factory.fromArray(["Alice", 30, 123]);
+    //    const resultObject = factory.fromArray(resultArray);
+
+    // 結果確認
+    expect(object).toEqual({ name: "Alice", age: 30, id: 123 });
+    //  expect(resultObject).toEqual(proto);
+
+    // validate() の呼び出し確認
+    expect(blueprint.validate).toHaveBeenCalledTimes(1);
+    expect(blueprint.validate).toHaveBeenCalledWith(object);
+  });
+});
+
+describe("ParameterFactory - Invalid Blueprint Scenarios", () => {
+  test("throws error when construct() returns the same object", () => {
+    const blueprint = createMockBlueprint();
+    blueprint.construct = (proto) => proto as MockedParamObject; // 手抜き実装
+
+    const factory = new ParameterFactory(blueprint);
+    const proto = { name: "Alice", age: 30, id: 123 };
+
+    // construct() が同じオブジェクトを返した場合のエラー確認
+    expect(() => factory.construct(proto)).toThrowError(RETURN_SAME_OBJECT);
   });
 
-  test("should create a valid parameter object from array", () => {
-    const param = factory.fromArray(["test", 1]);
-    expect(param.a).toBe("test");
-    expect(param.b).toBe(1);
-    expect(mockBlueprint.validate).toHaveBeenCalledWith(param);
+  // test("throws error when array-to-object conversion mismatches", () => {
+  //   const blueprint = createMockBlueprint();
+  //   blueprint.fromArray = ([name, id, age]) => ({
+  //     name,
+  //     age: id, // age と id を間違える
+  //     id: age,
+  //   });
+
+  //   const factory = new ParameterFactory(blueprint);
+  //   const array = ["Alice", 30, 123] as const;
+
+  //   // fromArray() に問題がある場合のエラー確認
+  //   //    expect(() => factory.fromArray(array)).toThrowError(MEMBERS_UNMATCH);
+  // });
+});
+describe("ParameterFactory - Invalid Parameters", () => {
+  let factory: ParameterFactory<MockedParamObject, MockedArray>;
+  let blueprint: ReturnType<typeof createMockBlueprint>;
+
+  beforeEach(() => {
+    blueprint = createMockBlueprint();
+    factory = new ParameterFactory(blueprint);
+    blueprint.validate = vi.fn();
   });
 
-  test("should throw an error when the length of the object is invalid", () => {
-    expect(() => factory.validate({})).toThrowError(INVALID_ARRAY_LENGTH);
-    expect(mockBlueprint.validate).not.toHaveBeenCalled();
-  });
+  test("throws error when ParamObject has extra members", () => {
+    const invalidObject = { name: "Alice", age: 30, id: 123, extra: true };
 
-  test("should throw an error when the type of the object is invalid", () => {
+    // 余計なメンバがある場合のテスト
     expect(() =>
-      factory.validate({ a: 1, b: "test" } as unknown as {
-        a: string;
-        b: number;
-      })
-    ).toThrowError("undefined type");
-    expect(mockBlueprint.validate).not.toHaveBeenCalled();
+      factory.construct(invalidObject as unknown as MockedParamObject)
+    ).toThrowError(INVALID_ARRAY_LENGTH);
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).not.toHaveBeenCalled();
+  });
+
+  test("throws error when ParamObject has incorrect type", () => {
+    const invalidObject = { name: "Alice", age: "30", id: 123 }; // age が string
+
+    // 型が間違っている場合のテスト
+    expect(() =>
+      factory.construct(invalidObject as unknown as MockedParamObject)
+    ).toThrowError(MEMBERS_UNMATCH);
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).not.toHaveBeenCalled();
+  });
+
+  test("throws error when fromArray() is called with too many elements", () => {
+    const invalidArray = ["Alice", 30, 123, "extra"]; // 要素が多い
+
+    // 要素数が多い場合のテスト
+    expect(() =>
+      factory.fromArray(invalidArray as unknown as MockedArray)
+    ).toThrowError(INVALID_ARRAY_LENGTH);
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).not.toHaveBeenCalled();
+  });
+
+  test("throws error when fromArray() is called with too few elements", () => {
+    const invalidArray = ["Alice", 30]; // 要素が少ない
+
+    // 要素数が少ない場合のテスト
+    expect(() =>
+      factory.fromArray(invalidArray as unknown as MockedArray)
+    ).toThrowError(INVALID_ARRAY_LENGTH);
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).not.toHaveBeenCalled();
+  });
+
+  test("throws error when fromArray() is called with incorrect types", () => {
+    const invalidArray = ["Alice", "thirty", 123]; // age が string
+
+    // 要素の型が間違っている場合のテスト
+    expect(() =>
+      factory.fromArray(invalidArray as unknown as MockedArray)
+    ).toThrowError(MEMBERS_UNMATCH);
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).not.toHaveBeenCalled();
   });
 });
