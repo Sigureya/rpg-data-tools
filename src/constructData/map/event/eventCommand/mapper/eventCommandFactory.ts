@@ -15,7 +15,7 @@ export class EventCommandFactory<
   ) {
     this._factory = new ParameterFactory(blueprint);
   }
-  validate(command: Partial<EventCommand>) {
+  validate(command: Partial<EventCommand>): void {
     if (command.code === undefined) {
       throw new Error("command.code is undefined");
     }
@@ -25,10 +25,10 @@ export class EventCommandFactory<
     }
   }
 
-  fromArray(parameters: Command["parameters"]) {
+  fromArray(parameters: Command["parameters"]): ParamObject {
     return this._factory.fromArray(parameters);
   }
-  array(param: Partial<ParamObject>) {
+  array(param: Partial<ParamObject>): Command["parameters"] {
     return this._factory.array(param);
   }
   constructe(
