@@ -29,7 +29,7 @@ export class EventCommandFactory<
     return this._factory.fromArray(parameters);
   }
   array(param: Partial<ParamObject>): Command["parameters"] {
-    return this._factory.array(param);
+    return this._factory.toArray(param);
   }
   constructe(
     param: Partial<ParamObject>,
@@ -43,7 +43,7 @@ export class EventCommandFactory<
     // これが抜けるとコンパイル結果の可読性が一気に悪化する
     return {
       code: this.code,
-      parameters: this._factory.array(param),
+      parameters: this._factory.toArray(param),
       indent,
     };
   }

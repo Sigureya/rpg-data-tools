@@ -3,7 +3,7 @@ import * as $ from "./branchParamFactory";
 describe("branchParamFactory", () => {
   test("branchBySwitch", () => {
     const obj = { switchId: 1, switchValue: "ON" } as const;
-    const arr = $.branchBySwitch.array(obj);
+    const arr = $.branchBySwitch.toArray(obj);
     expect(arr).toEqual([0, 1, 0]);
     const constructed = $.branchBySwitch.construct(obj);
     expect(constructed).toEqual(obj);
@@ -15,7 +15,7 @@ describe("branchParamFactory", () => {
 
   test("branchBySelfSwitch", () => {
     const obj = { selfSwitchId: "A", value: "ON" } as const;
-    const arr = $.branchBySelfSwitch.array(obj);
+    const arr = $.branchBySelfSwitch.toArray(obj);
     expect(arr).toEqual([2, "A", 0]);
     const constructed = $.branchBySelfSwitch.construct(obj);
     expect(constructed).toEqual(obj);
@@ -28,7 +28,7 @@ describe("branchParamFactory", () => {
 
   test("branchByVariable", () => {
     const obj = { variableId: 1, operand: 2, value: 3 } as const;
-    const arr = $.branchByVariable.array(obj);
+    const arr = $.branchByVariable.toArray(obj);
     expect(arr).toEqual([1, 1, 2, 3]);
     const constructed = $.branchByVariable.construct(obj);
     expect(constructed).toEqual(obj);
@@ -40,7 +40,7 @@ describe("branchParamFactory", () => {
 
   test("branchByGold", () => {
     const obj = { value: 100, compair: 1 } as const;
-    const arr = $.branchByGold.array(obj);
+    const arr = $.branchByGold.toArray(obj);
     expect(arr).toEqual([7, 100, 1]);
     const constructed = $.branchByGold.construct(obj);
     expect(constructed).toEqual({ branchCode: 7, ...obj });
@@ -52,7 +52,7 @@ describe("branchParamFactory", () => {
 
   test("branchByCharacter", () => {
     const obj = { characterId: 1 };
-    const arr = $.branchByCharacter.array(obj);
+    const arr = $.branchByCharacter.toArray(obj);
     expect(arr).toEqual([6, 1]);
     const constructed = $.branchByCharacter.construct(obj);
     expect(constructed).toEqual(obj);
@@ -64,7 +64,7 @@ describe("branchParamFactory", () => {
 
   test("branchByItem", () => {
     const obj = { itemId: 1 };
-    const arr = $.branchByItem.array(obj);
+    const arr = $.branchByItem.toArray(obj);
     expect(arr).toEqual([8, 1]);
     const constructed = $.branchByItem.construct(obj);
     expect(constructed).toEqual(obj);
@@ -76,7 +76,7 @@ describe("branchParamFactory", () => {
 
   test("branchByWeapon", () => {
     const obj = { weaponId: 1 };
-    const arr = $.branchByWeapon.array(obj);
+    const arr = $.branchByWeapon.toArray(obj);
     expect(arr).toEqual([9, 1]);
     const constructed = $.branchByWeapon.construct(obj);
     expect(constructed).toEqual(obj);
@@ -88,7 +88,7 @@ describe("branchParamFactory", () => {
 
   test("branchByArmor", () => {
     const obj = { armorId: 1 };
-    const arr = $.branchByArmor.array(obj);
+    const arr = $.branchByArmor.toArray(obj);
     expect(arr).toEqual([10, 1]);
     const constructed = $.branchByArmor.construct(obj);
     expect(constructed).toEqual(obj);
@@ -100,7 +100,7 @@ describe("branchParamFactory", () => {
 
   test("branchByButton", () => {
     const obj = { buttonId: 1 };
-    const arr = $.branchByButton.array(obj);
+    const arr = $.branchByButton.toArray(obj);
     expect(arr).toEqual([11, 1]);
     const constructed = $.branchByButton.construct(obj);
     expect(constructed).toEqual(obj);
@@ -112,7 +112,7 @@ describe("branchParamFactory", () => {
 
   test("branchByScript", () => {
     const obj = { script: "console.log('test');" };
-    const arr = $.branchByScript.array(obj);
+    const arr = $.branchByScript.toArray(obj);
     expect(arr).toEqual([12, "console.log('test');"]);
     const constructed = $.branchByScript.construct(obj);
     expect(constructed).toEqual(obj);
@@ -124,7 +124,7 @@ describe("branchParamFactory", () => {
 
   test("branchByVehicle", () => {
     const obj = { vehicleId: 1 };
-    const arr = $.branchByVehicle.array(obj);
+    const arr = $.branchByVehicle.toArray(obj);
     expect(arr).toEqual([13, 1]);
     const constructed = $.branchByVehicle.construct(obj);
     expect(constructed).toEqual(obj);
@@ -137,57 +137,57 @@ describe("branchParamFactory", () => {
 
 describe("branchParamFactory for empty object initialization", () => {
   test("branchBySwitch with empty object", () => {
-    const arr = $.branchBySwitch.array({});
+    const arr = $.branchBySwitch.toArray({});
     expect(arr).toEqual([0, 0, 0]);
   });
 
   test("branchBySelfSwitch with empty object", () => {
-    const arr = $.branchBySelfSwitch.array({});
+    const arr = $.branchBySelfSwitch.toArray({});
     expect(arr).toEqual([2, "A", 0]);
   });
 
   test("branchByVariable with empty object", () => {
-    const arr = $.branchByVariable.array({});
+    const arr = $.branchByVariable.toArray({});
     expect(arr).toEqual([1, 0, 0, 0]);
   });
 
   test("branchByGold with empty object", () => {
-    const arr = $.branchByGold.array({});
+    const arr = $.branchByGold.toArray({});
     expect(arr).toEqual([7, 0, 0]);
   });
 
   test("branchByCharacter with empty object", () => {
-    const arr = $.branchByCharacter.array({});
+    const arr = $.branchByCharacter.toArray({});
     expect(arr).toEqual([6, 0]);
   });
 
   test("branchByItem with empty object", () => {
-    const arr = $.branchByItem.array({});
+    const arr = $.branchByItem.toArray({});
     expect(arr).toEqual([8, 0]);
   });
 
   test("branchByWeapon with empty object", () => {
-    const arr = $.branchByWeapon.array({});
+    const arr = $.branchByWeapon.toArray({});
     expect(arr).toEqual([9, 0]);
   });
 
   test("branchByArmor with empty object", () => {
-    const arr = $.branchByArmor.array({});
+    const arr = $.branchByArmor.toArray({});
     expect(arr).toEqual([10, 0]);
   });
 
   test("branchByButton with empty object", () => {
-    const arr = $.branchByButton.array({});
+    const arr = $.branchByButton.toArray({});
     expect(arr).toEqual([11, 0]);
   });
 
   test("branchByScript with empty object", () => {
-    const arr = $.branchByScript.array({});
+    const arr = $.branchByScript.toArray({});
     expect(arr).toEqual([12, ""]);
   });
 
   test("branchByVehicle with empty object", () => {
-    const arr = $.branchByVehicle.array({});
+    const arr = $.branchByVehicle.toArray({});
     expect(arr).toEqual([13, 0]);
   });
 });

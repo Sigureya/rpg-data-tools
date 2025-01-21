@@ -59,7 +59,7 @@ describe("ParameterFactory - Valid Scenarios", () => {
     const proto = { name: "Alice", age: 30, id: 123 };
 
     // 配列の生成とバリデーション
-    const resultArray = factory.array(proto);
+    const resultArray = factory.toArray(proto);
     //    const resultObject = factory.fromArray(resultArray);
 
     // 結果確認
