@@ -4,7 +4,7 @@
   "description": "RpgMaker MockLibrary",
   "main": "dist/rpgdatatools.cjs.js",
   "types": "dist/index.d.ts",
-  "module": "dist/rpgdatatools.esm.js",
+  "module": "dist/rpgdatatools.es.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sigureya/rpg-data-tools.git"
@@ -16,7 +16,7 @@
   "exports": {
     ".": {
       "require": "./dist/rpg-data-tools.cjs.js",
-      "import": "./dist/rpg-data-tools.esm.js"
+      "import": "./dist/rpg-data-tools.es.js"
     }
   },
   "scripts": {
