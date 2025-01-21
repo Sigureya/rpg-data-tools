@@ -5,7 +5,7 @@ export class BranchCommandFactory<
   MappedParamObject extends object,
   ParameterArray extends EventCommandTable["CONDITIONAL_BRANCH"]["parameters"]
 > extends ParameterFactory<MappedParamObject, ParameterArray> {
-  createCommand(
+  command(
     arg: Partial<MappedParamObject>
   ): EventCommandTable["CONDITIONAL_BRANCH"] {
     return {

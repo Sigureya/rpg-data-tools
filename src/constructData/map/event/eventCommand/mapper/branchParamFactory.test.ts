@@ -9,6 +9,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchBySwitch.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchBySwitch.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchBySelfSwitch", () => {
@@ -19,6 +21,9 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchBySelfSwitch.fromArray(arr);
     expect(fromArr).toEqual(obj);
+
+    const command = $.branchBySelfSwitch.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByVariable", () => {
@@ -29,6 +34,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByVariable.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByVariable.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByGold", () => {
@@ -39,6 +46,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual({ branchCode: 7, ...obj });
     const fromArr = $.branchByGold.fromArray(arr);
     expect(fromArr).toEqual({ branchCode: 7, ...obj });
+    const command = $.branchByGold.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByCharacter", () => {
@@ -49,6 +58,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByCharacter.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByCharacter.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByItem", () => {
@@ -59,6 +70,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByItem.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByItem.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByWeapon", () => {
@@ -69,6 +82,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByWeapon.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByWeapon.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByArmor", () => {
@@ -79,6 +94,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByArmor.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByArmor.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByButton", () => {
@@ -89,6 +106,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByButton.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByButton.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByScript", () => {
@@ -99,6 +118,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByScript.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByScript.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 
   test("branchByVehicle", () => {
@@ -109,6 +130,8 @@ describe("branchParamFactory", () => {
     expect(constructed).toEqual(obj);
     const fromArr = $.branchByVehicle.fromArray(arr);
     expect(fromArr).toEqual(obj);
+    const command = $.branchByVehicle.command(obj);
+    expect(command).toEqual({ code: 111, parameters: arr, indent: 0 });
   });
 });
 
