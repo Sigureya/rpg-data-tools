@@ -1,4 +1,5 @@
-import type { AudioFileParams, ChanageActorVariable, ColorRGBA, Designation, Direction8, MoveRouteData, Operation_PlusMinus, PicutureBlendMode, Toggle, ValueOf } from "@sigureya/rpgtypes";
+import type { AudioFileParams, BranchCode, ChanageActorVariable, ColorRGBA, Designation, Direction8, MoveRouteData, Operation_PlusMinus, PicutureBlendMode, Toggle, ValueOf } from "@sigureya/rpgtypes";
+import type { BranchBySwitch, BranchByVariable, BranchByActor, BranchByTimer, BranchByCharacter, BranchByGold, BranchByItem, BranchByWeapon, BranchByArmor, BranchByButton, BranchByScript } from "./branch/branchParams";
 export interface NoOperation {
 }
 export interface ShowMessage {
@@ -46,6 +47,8 @@ export interface CommentBody {
 export interface Skip {
 }
 export interface ConditionalBranch {
+    branchCode: BranchCode;
+    parameters: BranchBySwitch | BranchByVariable | BranchByActor | BranchByTimer | BranchByCharacter | BranchByGold | BranchByItem | BranchByWeapon | BranchByArmor | BranchByButton | BranchByScript;
 }
 export interface ConditionalBranchElse {
 }
