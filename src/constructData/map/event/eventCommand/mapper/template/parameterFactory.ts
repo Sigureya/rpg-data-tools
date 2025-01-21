@@ -10,11 +10,13 @@ export class ParameterFactory<
   MappedParamObject extends object,
   ParameterArray extends unknown[]
 > {
-  private readonly _sample: ProductSample = createSample(this._blueprint);
+  private readonly _sample: ProductSample;
 
   constructor(
     private readonly _blueprint: Blueprint<MappedParamObject, ParameterArray>
-  ) {}
+  ) {
+    this._sample = createSample(this._blueprint);
+  }
 
   /**
    * 型情報を収集
