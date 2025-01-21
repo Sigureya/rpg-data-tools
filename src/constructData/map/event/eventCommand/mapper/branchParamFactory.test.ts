@@ -111,3 +111,60 @@ describe("branchParamFactory", () => {
     expect(fromArr).toEqual(obj);
   });
 });
+
+describe("branchParamFactory for empty object initialization", () => {
+  test("branchBySwitch with empty object", () => {
+    const arr = $.branchBySwitch.array({});
+    expect(arr).toEqual([0, 0, 0]);
+  });
+
+  test("branchBySelfSwitch with empty object", () => {
+    const arr = $.branchBySelfSwitch.array({});
+    expect(arr).toEqual([2, "A", 0]);
+  });
+
+  test("branchByVariable with empty object", () => {
+    const arr = $.branchByVariable.array({});
+    expect(arr).toEqual([1, 0, 0, 0]);
+  });
+
+  test("branchByGold with empty object", () => {
+    const arr = $.branchByGold.array({});
+    expect(arr).toEqual([7, 0, 0]);
+  });
+
+  test("branchByCharacter with empty object", () => {
+    const arr = $.branchByCharacter.array({});
+    expect(arr).toEqual([6, 0]);
+  });
+
+  test("branchByItem with empty object", () => {
+    const arr = $.branchByItem.array({});
+    expect(arr).toEqual([8, 0]);
+  });
+
+  test("branchByWeapon with empty object", () => {
+    const arr = $.branchByWeapon.array({});
+    expect(arr).toEqual([9, 0]);
+  });
+
+  test("branchByArmor with empty object", () => {
+    const arr = $.branchByArmor.array({});
+    expect(arr).toEqual([10, 0]);
+  });
+
+  test("branchByButton with empty object", () => {
+    const arr = $.branchByButton.array({});
+    expect(arr).toEqual([11, 0]);
+  });
+
+  test("branchByScript with empty object", () => {
+    const arr = $.branchByScript.array({});
+    expect(arr).toEqual([12, ""]);
+  });
+
+  test("branchByVehicle with empty object", () => {
+    const arr = $.branchByVehicle.array({});
+    expect(arr).toEqual([13, 0]);
+  });
+});
