@@ -11,7 +11,7 @@ export class BranchCommandFactory<
     return {
       code: 111,
       indent: 0,
-      parameters: this.array(arg),
+      parameters: this.toArray(arg),
     };
   }
 }

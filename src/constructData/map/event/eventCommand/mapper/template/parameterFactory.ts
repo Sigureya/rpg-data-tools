@@ -80,7 +80,7 @@ export class ParameterFactory<
   /**
    * 配列の生成
    */
-  array(proto: Partial<MappedParamObject> = {}): ParameterArray {
+  toArray(proto: Partial<MappedParamObject> = {}): ParameterArray {
     const newParam = this._blueprint.construct(proto);
     this.validate(newParam);
     return this._blueprint.array(newParam);
