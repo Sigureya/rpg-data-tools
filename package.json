@@ -15,10 +15,9 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/rpgdatatools.cjs.js",
-      "import": "./dist/rpgdatatools.esm.js"
-    },
-    "./package.json": "./package.json"
+      "require": "./dist/rpg-data-tools.cjs.js",
+      "import": "./dist/rpg-data-tools.esm.js"
+    }
   },
   "scripts": {
     "build": "vite build",
