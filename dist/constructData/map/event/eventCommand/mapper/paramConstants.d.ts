@@ -45,6 +45,11 @@ export declare const commentBody: EventCommandFactory<CommandParam.CommentBody, 
     parameters: [content: string];
     indent: number;
 }>;
+export declare const commonEvent: EventCommandFactory<CommandParam.CommonEvent, {
+    code: 117;
+    parameters: [id: number];
+    indent: number;
+}>;
 export declare const showPicture: EventCommandFactory<CommandParam.ShowPicture, {
     code: 231;
     parameters: import('@sigureya/rpgtypes').ShowPicture;
