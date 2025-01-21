@@ -24,4 +24,27 @@ export class EventCommandFactory<
       return;
     }
   }
+
+  fromArray(parameters: Command["parameters"]) {
+    return this._factory.fromArray(parameters);
+  }
+  array(param: Partial<ParamObject>) {
+    return this._factory.array(param);
+  }
+  constructe(
+    param: Partial<ParamObject>,
+    indent = 0
+  ): {
+    code: Command["code"];
+    parameters: Command["parameters"];
+    indent: number;
+  } {
+    // 補足:戻り値を明示的に書くのは必須。
+    // これが抜けるとコンパイル結果の可読性が一気に悪化する
+    return {
+      code: this.code,
+      parameters: this._factory.array(param),
+      indent,
+    };
+  }
 }

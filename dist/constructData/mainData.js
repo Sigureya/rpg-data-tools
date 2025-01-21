@@ -1,7 +1,7 @@
-export const createParamArray = () => {
+export const constructParamArray = () => {
     return [0, 0, 0, 0, 0, 0, 0, 0];
 };
-export const createActor = (proto) => {
+export const constructActor = (proto) => {
     return {
         id: 0,
         name: "",
@@ -21,7 +21,7 @@ export const createActor = (proto) => {
         ...proto,
     };
 };
-export const createEnemy = (proto) => {
+export const constructEnemy = (proto) => {
     return {
         battlerHue: 0,
         id: 0,
@@ -29,7 +29,7 @@ export const createEnemy = (proto) => {
         note: "",
         battlerName: "",
         traits: [],
-        params: createParamArray(),
+        params: constructParamArray(),
         exp: 0,
         gold: 0,
         dropItems: [],
@@ -37,7 +37,7 @@ export const createEnemy = (proto) => {
         ...proto,
     };
 };
-export const createArmor = (proto) => {
+export const constructArmor = (proto) => {
     return {
         price: 0,
         id: 0,
@@ -46,12 +46,12 @@ export const createArmor = (proto) => {
         iconIndex: 0,
         description: "",
         etypeId: 0,
-        params: createParamArray(),
+        params: constructParamArray(),
         traits: [],
         ...proto,
     };
 };
-export const createWeapon = (proto) => {
+export const constructWeapon = (proto) => {
     return {
         price: 0,
         id: 0,
@@ -61,25 +61,25 @@ export const createWeapon = (proto) => {
         description: "",
         etypeId: 0,
         wtypeId: 0,
-        params: createParamArray(),
+        params: constructParamArray(),
         traits: [],
-        damage: createDamage(),
+        damage: constructDamage(),
         ...proto,
     };
 };
-export const createClass = (proto) => {
+export const constructClass = (proto) => {
     return {
         id: 0,
         name: "",
         note: "",
         traits: [],
         learnings: [],
-        params: createParamArray(),
+        params: constructParamArray(),
         expParams: [],
         ...proto,
     };
 };
-export const createDamage = (proto) => {
+export const constructDamage = (proto) => {
     return {
         type: 0,
         elementId: 0,
@@ -89,7 +89,7 @@ export const createDamage = (proto) => {
         ...proto,
     };
 };
-export const createItem = (proto) => {
+export const constructItem = (proto) => {
     return {
         id: 0,
         name: "",
@@ -106,15 +106,15 @@ export const createItem = (proto) => {
         tpGain: 0,
         hitType: 0,
         animationId: 0,
-        damage: createDamage(),
+        damage: constructDamage(),
         effects: [],
         ...proto,
     };
 };
-export const createSkill = (proto) => {
+export const constructSkill = (proto) => {
     return {
         animationId: 0,
-        damage: createDamage(),
+        damage: constructDamage(),
         description: "",
         hitType: 0,
         iconIndex: 0,
@@ -139,7 +139,7 @@ export const createSkill = (proto) => {
         ...proto,
     };
 };
-export const createState = (proto) => {
+export const constructState = (proto) => {
     return {
         id: 0,
         name: "",

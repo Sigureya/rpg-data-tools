@@ -1,14 +1,29 @@
 import type {
   AudioFileParams,
+  BranchCode,
   ChanageActorVariable,
   ColorRGBA,
   Designation,
   Direction8,
   MoveRouteData,
   Operation_PlusMinus,
+  PicutureBlendMode,
   Toggle,
   ValueOf,
 } from "@sigureya/rpgtypes";
+import type {
+  BranchBySwitch,
+  BranchByVariable,
+  BranchByActor,
+  BranchByTimer,
+  BranchByCharacter,
+  BranchByGold,
+  BranchByItem,
+  BranchByWeapon,
+  BranchByArmor,
+  BranchByButton,
+  BranchByScript,
+} from "./branch/branchParams";
 
 export interface NoOperation {}
 /**
@@ -94,7 +109,21 @@ export interface Skip {}
 /**
  * @description Conditional Branch
  */
-export interface ConditionalBranch {}
+export interface ConditionalBranch {
+  branchCode: BranchCode;
+  parameters:
+    | BranchBySwitch
+    | BranchByVariable
+    | BranchByActor
+    | BranchByTimer
+    | BranchByCharacter
+    | BranchByGold
+    | BranchByItem
+    | BranchByWeapon
+    | BranchByArmor
+    | BranchByButton
+    | BranchByScript;
+}
 /**
  * @description Else (Conditional Branch)
  */
@@ -381,7 +410,17 @@ export interface Wait {
   duration: number;
 }
 
-export interface ShowPicture {}
+export interface ShowPicture {
+  pictureId: number;
+  filename: string;
+  origin: 0 | 1;
+  x: number;
+  y: number;
+  scaleX: number;
+  scaleY: number;
+  opacity: number;
+  blendMode: PicutureBlendMode;
+}
 export interface MovePicture {}
 export interface TintPicture {}
 export interface RotatePicture {}
