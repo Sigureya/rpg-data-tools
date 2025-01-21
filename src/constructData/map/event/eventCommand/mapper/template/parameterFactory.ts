@@ -16,15 +16,6 @@ export class ParameterFactory<
     private readonly _blueprint: Blueprint<MappedParamObject, ParameterArray>
   ) {}
 
-  validateBlueprint() {
-    const sample = this._blueprint.construct({});
-    const array = this._blueprint.array(sample);
-    const object = this._blueprint.fromArray(array);
-    this.validate(sample);
-    this.validateArray(array);
-    this.validate(object);
-    // TODO:sampleとobjectが一致することを確認
-  }
   /**
    * 型情報を収集
    */
@@ -71,6 +62,10 @@ export class ParameterFactory<
     this._blueprint.validate?.(parameters as MappedParamObject);
   }
 
+  /**
+   * @description 引数の配列が正しいか検証
+   * @param parameters
+   */
   validateArrayParam(parameters: ParameterArray) {
     if (parameters.length !== this._sample.array.size) {
       throw new Error(INVALID_ARRAY_LENGTH, { cause: parameters });
@@ -80,17 +75,6 @@ export class ParameterFactory<
         throw new Error(MEMBERS_UNMATCH, { cause: parameters });
       }
     });
-  }
-
-  /**
-   * 配列用バリデーション。配列をオブジェクト化してvalidate()を呼ぶ
-   */
-  validateArray(parameters: ParameterArray) {
-    if (parameters.length !== this._sample.array.size) {
-      throw new Error(INVALID_ARRAY_LENGTH, { cause: parameters });
-    }
-    const object = this._blueprint.fromArray(parameters);
-    this.validate(object);
   }
 
   /**

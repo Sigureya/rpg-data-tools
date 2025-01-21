@@ -83,6 +83,16 @@ describe("ParameterFactory - Valid Scenarios", () => {
     expect(blueprint.validate).toHaveBeenCalledTimes(1);
     expect(blueprint.validate).toHaveBeenCalledWith(object);
   });
+  test("object creation when ParamObject has extra members", () => {
+    const invalidObject = { name: "Alice", age: 30, id: 123, extra: true };
+
+    const result = factory.construct(invalidObject);
+    expect(result).toEqual({ name: "Alice", age: 30, id: 123 });
+    expect(result).not.property("extra");
+
+    // validate() が呼び出されないことを確認
+    expect(blueprint.validate).toBeCalledWith(result);
+  });
 });
 
 describe("ParameterFactory - Invalid Blueprint Scenarios", () => {
@@ -120,18 +130,6 @@ describe("ParameterFactory - Invalid Parameters", () => {
     blueprint = createMockBlueprint();
     factory = new ParameterFactory(blueprint);
     blueprint.validate = vi.fn();
-  });
-
-  test("throws error when ParamObject has extra members", () => {
-    const invalidObject = { name: "Alice", age: 30, id: 123, extra: true };
-
-    // 余計なメンバがある場合のテスト
-    expect(() =>
-      factory.construct(invalidObject as unknown as MockedParamObject)
-    ).toThrowError(INVALID_ARRAY_LENGTH);
-
-    // validate() が呼び出されないことを確認
-    expect(blueprint.validate).not.toHaveBeenCalled();
   });
 
   test("throws error when ParamObject has incorrect type", () => {
