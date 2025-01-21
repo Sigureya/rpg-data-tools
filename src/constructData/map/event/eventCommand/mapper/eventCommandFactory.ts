@@ -19,9 +19,11 @@ export class EventCommandFactory<
     if (command.code === undefined) {
       throw new Error("command.code is undefined");
     }
-    // 無関係のコードの場合は無視する
-    if (command.code !== this.code) {
-      return;
+    // 関係のあるコードならチェックする
+    if (command.code === this.code) {
+      this._factory.validateArrayParam(
+        command.parameters as unknown as Command["parameters"]
+      );
     }
   }
 
