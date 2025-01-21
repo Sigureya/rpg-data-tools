@@ -1,6 +1,5 @@
-import type { BranchParameters, Toggle } from "@sigureya/rpgtypes";
+import type { BranchParameters } from "@sigureya/rpgtypes";
 import type {
-  BranchByActor,
   BranchByArmor,
   BranchByButton,
   BranchByCharacter,
@@ -8,37 +7,57 @@ import type {
   BranchByItem,
   BranchBySelfSwitch,
   BranchBySwitch,
-  BranchByTimer,
   BranchByVariable,
   BranchByWeapon,
-} from "./branch/branchParams";
-import { ParameterFactory } from "./template";
+} from "./branch/";
+import { TOGGLE } from "./branch/enumMaps";
+import { BranchCommandFactory } from "./branchCommandFactory";
 
-const toggle: Readonly<Toggle> = { OFF: 1, ON: 0 };
-
-export const branchBySwitch = new ParameterFactory<
+export const branchBySwitch = new BranchCommandFactory<
   BranchBySwitch,
   BranchParameters["SWITCH"]
 >({
   array: (obj) => {
-    return [0, obj.switchId, toggle[obj.switchValue]];
+    return [0, obj.switchId, TOGGLE.getValue(obj.switchValue)];
   },
   construct: (proto) => {
     return {
       switchId: proto.switchId ?? 0,
-      switchValue: proto.switchValue ?? 0,
+      switchValue: proto.switchValue ?? "ON",
       // branchCode: proto.branchCode ?? 0,
     };
   },
   fromArray: (arr) => {
     return {
       switchId: arr[1],
-      switchValue: arr[2],
-      branchCode: arr[0],
+      switchValue: TOGGLE.getKey(arr[2]),
     };
   },
 });
-export const branchByVariable = new ParameterFactory<
+
+export const branchBySelfSwitch = new BranchCommandFactory<
+  BranchBySelfSwitch,
+  BranchParameters["SELF_SWITCH"]
+>({
+  array: (obj) => {
+    return [2, obj.selfSwitchId, TOGGLE.getValue(obj.value)];
+  },
+  construct: (proto) => {
+    return {
+      selfSwitchId: proto.selfSwitchId ?? "A",
+      value: proto.value ?? TOGGLE.defaultKey,
+      // branchCode: proto.branchCode ?? 0,
+    };
+  },
+  fromArray: (arr) => {
+    return {
+      selfSwitchId: arr[1],
+      value: TOGGLE.getKey(arr[2]),
+      //      branchCode: ,
+    };
+  },
+});
+export const branchByVariable = new BranchCommandFactory<
   BranchByVariable,
   BranchParameters["VARIABLE"]
 >({
@@ -50,6 +69,7 @@ export const branchByVariable = new ParameterFactory<
       variableId: proto.variableId ?? 0,
       operand: proto.operand ?? 0,
       value: proto.value ?? 0,
+
       // branchCode: proto.branchCode ?? 0,
     };
   },
@@ -61,72 +81,8 @@ export const branchByVariable = new ParameterFactory<
     };
   },
 });
-export const branchBySelfSwitch = new ParameterFactory<
-  BranchBySelfSwitch,
-  BranchParameters["SELF_SWITCH"]
->({
-  array: (obj) => {
-    return [2, obj.selfSwitchId, obj.value];
-  },
-  construct: (proto) => {
-    return {
-      selfSwitchId: proto.selfSwitchId ?? "",
-      value: proto.value ?? 0,
-    };
-  },
-  fromArray: (arr) => {
-    return {
-      selfSwitchId: arr[1],
-      value: arr[2],
-    };
-  },
-});
 
-export const branchByTimer = new ParameterFactory<
-  BranchByTimer,
-  BranchParameters["TIMER"]
->({
-  array: (obj) => {
-    return [3, obj.time, obj.operation];
-  },
-  construct: (proto) => {
-    return {
-      time: proto.time ?? 0,
-      operation: proto.operation ?? 0,
-    };
-  },
-  fromArray: (arr) => {
-    return {
-      time: arr[1],
-      operation: arr[2],
-    };
-  },
-});
-
-export const branchByActor = new ParameterFactory<
-  BranchByActor,
-  BranchParameters["ACTOR"]
->({
-  array: (obj) => {
-    return [4, obj.actorId, obj.operand, obj.value];
-  },
-  construct: (proto) => {
-    return {
-      actorId: proto.actorId ?? 0,
-      operand: proto.operand ?? 0,
-      value: proto.value ?? 0,
-    };
-  },
-  fromArray: (arr) => {
-    return {
-      actorId: arr[1],
-      operand: arr[2],
-      value: arr[3],
-    };
-  },
-});
-
-export const branchByGold = new ParameterFactory<
+export const branchByGold = new BranchCommandFactory<
   BranchByGold,
   BranchParameters["GOLD"]
 >({
@@ -135,6 +91,7 @@ export const branchByGold = new ParameterFactory<
   },
   construct: (proto) => {
     return {
+      branchCode: 7,
       value: proto.value ?? 0,
       compair: proto.compair ?? 0,
       // branchCode: proto.branchCode ?? 0,
@@ -142,12 +99,13 @@ export const branchByGold = new ParameterFactory<
   },
   fromArray: (arr) => {
     return {
+      branchCode: 7,
       value: arr[1],
       compair: arr[2],
     };
   },
 });
-export const branchByCharacter = new ParameterFactory<
+export const branchByCharacter = new BranchCommandFactory<
   BranchByCharacter,
   BranchParameters["CHARACTER"]
 >({
@@ -166,7 +124,7 @@ export const branchByCharacter = new ParameterFactory<
     };
   },
 });
-export const branchByItem = new ParameterFactory<
+export const branchByItem = new BranchCommandFactory<
   BranchByItem,
   BranchParameters["ITEM"]
 >({
@@ -185,7 +143,7 @@ export const branchByItem = new ParameterFactory<
   },
 });
 
-export const branchByWeapon = new ParameterFactory<
+export const branchByWeapon = new BranchCommandFactory<
   BranchByWeapon,
   BranchParameters["WEAPON"]
 >({
@@ -204,7 +162,7 @@ export const branchByWeapon = new ParameterFactory<
   },
 });
 
-export const branchByArmor = new ParameterFactory<
+export const branchByArmor = new BranchCommandFactory<
   BranchByArmor,
   BranchParameters["ARMOR"]
 >({
@@ -223,7 +181,7 @@ export const branchByArmor = new ParameterFactory<
   },
 });
 
-export const branchByButton = new ParameterFactory<
+export const branchByButton = new BranchCommandFactory<
   BranchByButton,
   BranchParameters["BUTTON"]
 >({
@@ -242,7 +200,7 @@ export const branchByButton = new ParameterFactory<
   },
 });
 
-export const branchByScript = new ParameterFactory<
+export const branchByScript = new BranchCommandFactory<
   { script: string },
   BranchParameters["SCRIPT"]
 >({
@@ -261,7 +219,7 @@ export const branchByScript = new ParameterFactory<
   },
 });
 
-export const branchByVehicle = new ParameterFactory<
+export const branchByVehicle = new BranchCommandFactory<
   { vehicleId: number },
   BranchParameters["VEHICLE"]
 >({
