@@ -9,7 +9,7 @@ import type {
 export interface BranchBySelfSwitch {
   //  branchCode: BranchCode["SELF_SWITCH"];
   selfSwitchId: string;
-  value: number;
+  value: keyof Toggle;
 }
 export interface BranchBySwitch {
   // branchCode: BranchCode["SWITCH"];
@@ -39,7 +39,7 @@ export interface BranchByCharacter {
   characterId: number;
 }
 export interface BranchByGold {
-  // branchCode: BranchCode["GOLD"];
+  //  branchCode: BranchCodeTable["GOLD"];
   value: number;
   compair: 0 | 1 | 2;
 }
@@ -63,7 +63,7 @@ export interface BranchByButton {
   buttonId: number;
 }
 export interface BranchByScript {
-  branchCode: BranchCodeTable["SCRIPT"];
+  //  branchCode: BranchCodeTable["SCRIPT"];
   script: string;
 }
 
