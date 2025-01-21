@@ -6,7 +6,7 @@ export class ParameterFactory<
   MappedParamObject extends object,
   ParameterArray extends unknown[]
 > {
-  private readonly _sample = createSample(this._blueprint);
+  private readonly _sample: ProductSample = createSample(this._blueprint);
   constructor(
     private readonly _blueprint: Blueprint<MappedParamObject, ParameterArray>
   ) {}
@@ -59,4 +59,9 @@ export class ParameterFactory<
     const newParam = this._blueprint.fromArray(parameters);
     return this.construct(newParam);
   }
+}
+
+interface ProductSample {
+  object: ReadonlyMap<string, string>;
+  array: ReadonlyMap<string, string>;
 }
