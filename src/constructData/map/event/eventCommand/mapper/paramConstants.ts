@@ -213,6 +213,25 @@ export const commentBody = new EventCommandFactory<
   },
 });
 
+export const commonEvent = new EventCommandFactory<
+  CommandParam.CommonEvent,
+  EventCommandTypes["COMMON_EVENT"]
+>(117, {
+  construct: (proto) => {
+    return {
+      commonEventId: proto.commonEventId ?? 1,
+    };
+  },
+  array: (obj) => {
+    return [obj.commonEventId];
+  },
+  fromArray: (arr) => {
+    return {
+      commonEventId: arr[0],
+    };
+  },
+});
+
 export const showPicture = new EventCommandFactory<
   CommandParam.ShowPicture,
   EventCommandTypes["SHOW_PICTURE"]

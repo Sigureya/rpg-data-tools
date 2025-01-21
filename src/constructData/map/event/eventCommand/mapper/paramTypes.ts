@@ -146,7 +146,7 @@ export interface ExitEventProcessing {}
  * @description Common Event
  */
 export interface CommonEvent {
-  id: number;
+  commonEventId: number;
 }
 /**
  * @description Label

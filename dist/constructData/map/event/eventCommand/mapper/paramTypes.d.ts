@@ -59,7 +59,7 @@ export interface LoopBreak {
 export interface ExitEventProcessing {
 }
 export interface CommonEvent {
-    id: number;
+    commonEventId: number;
 }
 export interface Label {
     name: string;
