@@ -280,11 +280,11 @@ export interface ErasePicture {
 }
 export interface ChangeNickname {
     actorId: number;
-    name: string;
+    nickname: string;
 }
 export interface ChangeProfile {
     actorId: number;
-    name: string;
+    profile: string;
 }
 export interface ScriptEval {
     script: string;

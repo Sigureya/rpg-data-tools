@@ -1,4 +1,5 @@
-const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
+import { COMMENT_BODY as g, CHANGE_NICKNAME as f, CHANGE_PROFILE as v, CHANGE_NAME as b, SHOW_SCROLLING_TEXT as p, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as N, SHOW_MESSAGE as x } from "@sigureya/rpgtypes";
+const r = () => [0, 0, 0, 0, 0, 0, 0, 0], L = (e) => ({
   id: 0,
   name: "",
   nickname: "",
@@ -15,20 +16,20 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   traits: [],
   equips: [],
   ...e
-}), h = (e) => ({
+}), O = (e) => ({
   battlerHue: 0,
   id: 0,
   name: "",
   note: "",
   battlerName: "",
   traits: [],
-  params: t(),
+  params: r(),
   exp: 0,
   gold: 0,
   dropItems: [],
   actions: [],
   ...e
-}), I = (e) => ({
+}), W = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -36,10 +37,10 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   iconIndex: 0,
   description: "",
   etypeId: 0,
-  params: t(),
+  params: r(),
   traits: [],
   ...e
-}), p = (e) => ({
+}), _ = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -48,27 +49,27 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   description: "",
   etypeId: 0,
   wtypeId: 0,
-  params: t(),
+  params: r(),
   traits: [],
-  damage: n(),
+  damage: u(),
   ...e
-}), y = (e) => ({
+}), q = (e) => ({
   id: 0,
   name: "",
   note: "",
   traits: [],
   learnings: [],
-  params: t(),
+  params: r(),
   expParams: [],
   ...e
-}), n = (e) => ({
+}), u = (e) => ({
   type: 0,
   elementId: 0,
   formula: "0",
   variance: 20,
   critical: !1,
   ...e
-}), x = (e) => ({
+}), z = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -84,12 +85,12 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   tpGain: 0,
   hitType: 0,
   animationId: 0,
-  damage: n(),
+  damage: u(),
   effects: [],
   ...e
-}), o = (e) => ({
+}), U = (e) => ({
   animationId: 0,
-  damage: n(),
+  damage: u(),
   description: "",
   hitType: 0,
   iconIndex: 0,
@@ -112,7 +113,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   effects: [],
   messageType: 0,
   ...e
-}), N = (e) => ({
+}), P = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -136,7 +137,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   traits: [],
   note: "",
   ...e
-}), T = (e) => ({
+}), X = (e) => ({
   autoplayBgm: !0,
   autoplayBgs: !1,
   battleback1Name: "",
@@ -158,15 +159,15 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   parallaxSx: 0,
   parallaxSy: 0,
   ...e
-}), w = (e) => ({
+}), Y = (e) => ({
   id: 0,
   name: "",
   note: "",
   x: 0,
   y: 0,
-  pages: [l()],
+  pages: [y()],
   ...e
-}), c = (e) => ({
+}), T = (e) => ({
   actorId: 0,
   actorValid: !1,
   itemId: 0,
@@ -181,16 +182,16 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   variableValid: !1,
   variableValue: 0,
   ...e
-}), s = (e) => ({
+}), w = (e) => ({
   characterIndex: 0,
   characterName: "",
   direction: 6,
   pattern: 0,
   tileId: 0,
   ...e
-}), l = (e) => ({
-  conditions: c(),
-  image: s(),
+}), y = (e) => ({
+  conditions: T(),
+  image: w(),
   moveRoute: {
     list: [],
     repeat: !1,
@@ -201,17 +202,17 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   moveFrequency: 0,
   list: [],
   ...e
-}), a = () => ({
+}), c = () => ({
   name: "",
   pan: 0,
   pitch: 100,
   volume: 90
-}), D = (e = {}) => ({
+}), $ = (e = {}) => ({
   local: e.local ?? "",
   gameTitle: e.gameTitle ?? "",
   currencyUnit: e.currencyUnit ?? "",
   title1Name: e.title1Name ?? "",
-  terms: e.terms ?? m(),
+  terms: e.terms ?? A(),
   title2Name: e.title2Name ?? "",
   optAutosave: e.optAutosave ?? !1,
   attackMotions: e.attackMotions ?? [],
@@ -224,17 +225,17 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   testTroopId: e.testTroopId ?? 0,
   testBattlers: e.testBattlers ?? [],
   versionId: e.versionId ?? 0,
-  advanced: e.advanced ?? f(),
+  advanced: e.advanced ?? k(),
   armorTypes: e.armorTypes ?? [],
   elements: e.elements ?? [],
   variables: e.variables ?? [],
   equipTypes: e.equipTypes ?? [],
-  sounds: e.sounds ?? b(),
-  titleBgm: e.titleBgm ?? a(),
-  gameoverMe: e.gameoverMe ?? a(),
-  battleBgm: e.battleBgm ?? a(),
-  defeatMe: e.defeatMe ?? a(),
-  victoryMe: e.victoryMe ?? a(),
+  sounds: e.sounds ?? D(),
+  titleBgm: e.titleBgm ?? c(),
+  gameoverMe: e.gameoverMe ?? c(),
+  battleBgm: e.battleBgm ?? c(),
+  defeatMe: e.defeatMe ?? c(),
+  victoryMe: e.victoryMe ?? c(),
   battleback1Name: e.battleback1Name ?? "",
   battleback2Name: e.battleback2Name ?? "",
   battlerName: e.battlerName ?? "",
@@ -249,16 +250,16 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   optSideView: e.optSideView ?? !1,
   optSlipDeath: e.optSlipDeath ?? !1,
   optTransparent: e.optTransparent ?? !1,
-  boat: e.boat ?? i(),
-  ship: e.ship ?? i(),
-  airship: e.airship ?? i(),
+  boat: e.boat ?? m(),
+  ship: e.ship ?? m(),
+  airship: e.airship ?? m(),
   tileSize: e.tileSize ?? 0
-}), m = (e = {}) => ({
-  messages: g(e.messages ?? {}),
-  commands: u(e.commands ?? {}),
-  params: d(e.params ?? {}),
-  basic: r(e.basic ?? {})
-}), r = (e = {}) => [
+}), A = (e = {}) => ({
+  messages: M(e.messages ?? {}),
+  commands: C(e.commands ?? {}),
+  params: E(e.params ?? {}),
+  basic: S(e.basic ?? {})
+}), S = (e = {}) => [
   e.level ?? "",
   e.levelA ?? "",
   e.hp ?? "",
@@ -269,7 +270,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   e.tpA ?? "",
   e.experience ?? "",
   e.exp ?? ""
-], d = (e = {}) => [
+], E = (e = {}) => [
   e.mhp ?? "",
   e.mmp ?? "",
   e.atk ?? "",
@@ -280,7 +281,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   e.luk ?? "",
   e.hit ?? "",
   e.eva ?? ""
-], u = (e = {}) => [
+], C = (e = {}) => [
   e.fight ?? "",
   e.escape ?? "",
   e.attack ?? "",
@@ -307,7 +308,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   e.notUsed23 ?? "",
   e.buy ?? "",
   e.sell ?? ""
-], g = (e = {}) => ({
+], M = (e = {}) => ({
   alwaysDash: e.alwaysDash ?? "",
   commandRemember: e.commandRemember ?? "",
   touchUI: e.touchUI ?? "",
@@ -361,7 +362,7 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   debuffAdd: e.debuffAdd ?? "",
   buffRemove: e.buffRemove ?? "",
   actionFailure: e.actionFailure ?? ""
-}), f = (e = {}) => ({
+}), k = (e = {}) => ({
   gameId: e.gameId ?? 0,
   screenWidth: e.screenWidth ?? 0,
   screenHeight: e.screenHeight ?? 0,
@@ -373,64 +374,170 @@ const t = () => [0, 0, 0, 0, 0, 0, 0, 0], v = (e) => ({
   mainFontFilename: e.mainFontFilename ?? "",
   fallbackFonts: e.fallbackFonts ?? "",
   fontSize: e.fontSize ?? 0
-}), i = (e = {}) => ({
-  bgm: e.bgm ?? a(),
+}), m = (e = {}) => ({
+  bgm: e.bgm ?? c(),
   characterIndex: e.characterIndex ?? 0,
   characterName: e.characterName ?? "",
   startMapId: e.startMapId ?? 0,
   startX: e.startX ?? 0,
   startY: e.startY ?? 0
-}), b = (e = {}) => [
-  e.cursor ?? a(),
-  e.ok ?? a(),
-  e.cancel ?? a(),
-  e.buzzer ?? a(),
-  e.equip ?? a(),
-  e.save ?? a(),
-  e.load ?? a(),
-  e.battleStart ?? a(),
-  e.escape ?? a(),
-  e.enemyAttack ?? a(),
-  e.enemyDamage ?? a(),
-  e.enemyCollapse ?? a(),
-  e.bossCollapse1 ?? a(),
-  e.bossCollapse2 ?? a(),
-  e.actorDamage ?? a(),
-  e.actorCollapse ?? a(),
-  e.playRecovery ?? a(),
-  e.playMiss ?? a(),
-  e.playEvasion ?? a(),
-  e.playMagicEvasion ?? a(),
-  e.playReflection ?? a(),
-  e.shop ?? a(),
-  e.useItem ?? a(),
-  e.useSkill ?? a()
+}), D = (e = {}) => [
+  e.cursor ?? c(),
+  e.ok ?? c(),
+  e.cancel ?? c(),
+  e.buzzer ?? c(),
+  e.equip ?? c(),
+  e.save ?? c(),
+  e.load ?? c(),
+  e.battleStart ?? c(),
+  e.escape ?? c(),
+  e.enemyAttack ?? c(),
+  e.enemyDamage ?? c(),
+  e.enemyCollapse ?? c(),
+  e.bossCollapse1 ?? c(),
+  e.bossCollapse2 ?? c(),
+  e.actorDamage ?? c(),
+  e.actorCollapse ?? c(),
+  e.playRecovery ?? c(),
+  e.playMiss ?? c(),
+  e.playEvasion ?? c(),
+  e.playMagicEvasion ?? c(),
+  e.playReflection ?? c(),
+  e.shop ?? c(),
+  e.useItem ?? c(),
+  e.useSkill ?? c()
 ];
+class R {
+  constructor(a, t, n) {
+    this.command = a, this.index = t, this.array = n;
+  }
+  joinBody(a = `
+`) {
+    return this.body().map((t) => t.parameters[0]).join(a);
+  }
+  body() {
+    const a = [];
+    for (let t = this.index + 1; t < this.array.length; t++) {
+      const n = this.array[t];
+      if (n.code === 401)
+        a.push(n);
+      else
+        break;
+    }
+    return a;
+  }
+  head() {
+    return this.command;
+  }
+  speakerName() {
+    return this.command.parameters[4];
+  }
+}
+const K = (e, a) => e.map((t, n, s) => {
+  switch (t.code) {
+    case x:
+      return a.showMessage(new R(t, n, s));
+    case N:
+      return a.showChoices(t, n, s);
+    case I:
+      return a.showChoicesItem(t, n, s);
+    case p:
+      return a.showscrollingText(t, n, s);
+    case b:
+      return a.changeName(t, n, s);
+    case v:
+      return a.changeProfile(t, n, s);
+    case f:
+      return a.changeNickname(t, n, s);
+    case g:
+      return a.commentBody(t, n, s);
+    default:
+      return a.other(t, n, s);
+  }
+}), o = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, j = (e) => {
+  const a = l(), t = [];
+  let n;
+  for (; (n = a.exec(e)) !== null; )
+    t.push([n[1], n[2]]);
+  return t;
+}, Z = (e, a) => e.replace(l(), (t, n, s) => {
+  const i = a(n, s);
+  return o(n, i);
+}), J = (e, a) => {
+  const t = l();
+  let n;
+  for (; (n = t.exec(e)) !== null; )
+    if (n[1] === a)
+      return n[2];
+}, Q = (e, a, t) => {
+  const n = l();
+  return e.replace(n, (s, i, d) => i === a ? o(i, t) : s);
+}, ee = (e) => `code:${e}`, F = "N", V = "V", h = (e, a) => `\\${e}[${a}]`, B = (e) => h(F, e.id), ae = (e) => e.map((a) => ({
+  controlChar: B(a),
+  text: a.name
+})), te = (e) => e.variables.map((a, t) => ({
+  text: a || "",
+  controlChar: h(V, t)
+})).filter((a) => a.text !== ""), H = /* @__PURE__ */ new Set([
+  "px",
+  "py",
+  "x",
+  "y",
+  "v",
+  "n",
+  "p",
+  "g",
+  "c",
+  "i",
+  "fs"
+]), ne = (e, a = H) => {
+  const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
+  let s;
+  for (; (s = t.exec(e)) !== null; ) {
+    const i = s[1].toLowerCase(), d = parseInt(s[2], 10);
+    a.has(i) && n.push({ char: s[1], id: d });
+  }
+  return n;
+};
 export {
-  v as constructActor,
-  I as constructArmor,
-  y as constructClass,
-  n as constructDamage,
-  h as constructEnemy,
-  x as constructItem,
-  t as constructParamArray,
-  o as constructSkill,
-  N as constructState,
-  p as constructWeapon,
-  f as createAdvanced,
-  a as createAudio,
-  r as createBasicTerms,
-  u as createCommandsArray,
-  c as createCondtion,
-  l as createEventPage,
-  T as createMap,
-  w as createMapEvent,
-  s as createMapEventImage,
-  g as createMessages,
-  d as createParamNamesArray,
-  D as createSystemData,
-  b as createSystemSoundsArray,
-  m as createTerms,
-  i as createVehicle
+  R as MessageProxy,
+  ee as codeInfoText,
+  L as constructActor,
+  W as constructArmor,
+  q as constructClass,
+  u as constructDamage,
+  O as constructEnemy,
+  z as constructItem,
+  r as constructParamArray,
+  U as constructSkill,
+  P as constructState,
+  _ as constructWeapon,
+  k as createAdvanced,
+  c as createAudio,
+  S as createBasicTerms,
+  C as createCommandsArray,
+  T as createCondtion,
+  h as createControlCharFormat,
+  y as createEventPage,
+  X as createMap,
+  Y as createMapEvent,
+  w as createMapEventImage,
+  M as createMessages,
+  o as createNoteEntity,
+  E as createParamNamesArray,
+  $ as createSystemData,
+  D as createSystemSoundsArray,
+  A as createTerms,
+  m as createVehicle,
+  B as fromActor,
+  ae as fromActors,
+  te as fromSystem,
+  ne as getControlChars,
+  J as getNoteValue,
+  l as makeRegex,
+  K as mapTextCommand,
+  j as readNote,
+  Z as replaceNote,
+  Q as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
