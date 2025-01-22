@@ -442,7 +442,7 @@ const K = (e, a) => e.map((t, n, s) => {
     case I:
       return a.showChoicesItem(t, n, s);
     case p:
-      return a.showscrollingText(t, n, s);
+      return a.showScrollingText(t, n, s);
     case b:
       return a.changeName(t, n, s);
     case v:
