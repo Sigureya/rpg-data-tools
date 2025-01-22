@@ -1,16 +1,15 @@
 import type { EventCommand, EventCommandTable } from "@sigureya/rpgtypes";
-import {
-  changeName,
-  changeNickname,
-  changeProfile,
-  commentBody,
-  showChoices,
-  showChoicesItem,
-  showMessage,
-  showScrollingText,
-} from "./mapper/paramConstants";
 import { MessageProxy } from "./commandProxy";
-import { SHOW_MESSAGE, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
+import {
+  CHANGE_NAME,
+  CHANGE_NICKNAME,
+  CHANGE_PROFILE,
+  COMMENT_BODY,
+  SHOW_CHOICES,
+  SHOW_CHOICES_ITEM,
+  SHOW_MESSAGE,
+  SHOW_SCROLLING_TEXT,
+} from "@sigureya/rpgtypes";
 
 type CallBackFunc<Command extends EventCommand, Reulst = void> = (
   command: Readonly<Command>,
@@ -39,19 +38,19 @@ export const mapTextCommand = <T>(
     switch (command.code) {
       case SHOW_MESSAGE:
         return table.showMessage(new MessageProxy(command, index, array));
-      case showChoices.code:
+      case SHOW_CHOICES:
         return table.showChoices(command, index, array);
-      case showChoicesItem.code:
+      case SHOW_CHOICES_ITEM:
         return table.showChoicesItem(command, index, array);
       case SHOW_SCROLLING_TEXT:
         return table.showscrollingText(command, index, array);
-      case changeName.code:
+      case CHANGE_NAME:
         return table.changeName(command, index, array);
-      case changeProfile.code:
+      case CHANGE_PROFILE:
         return table.changeProfile(command, index, array);
-      case changeNickname.code:
+      case CHANGE_NICKNAME:
         return table.changeNickname(command, index, array);
-      case commentBody.code:
+      case COMMENT_BODY:
         return table.commentBody(command, index, array);
 
       default:
