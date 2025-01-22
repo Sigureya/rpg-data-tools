@@ -1,0 +1,92 @@
+import { describe, it, expect } from "vitest";
+import { createNoteEntity, makeRegex, readNote, replaceNote } from "./note";
+
+// テスト用のデータ
+const exampleNoteTokyo = "<code:13><name:tokyo>";
+const exampleNoteSaitama = "<code:11><name:saitama>";
+describe("createNoteEntity", () => {
+  describe("正常系", () => {
+    it("指定されたキーと値で文字列を生成する", () => {
+      const result = createNoteEntity("key", "value");
+      expect(result).toBe("<key:value>");
+    });
+  });
+});
+
+describe("makeRegex", () => {
+  describe("正常系", () => {
+    it("正規表現オブジェクトを生成する", () => {
+      const regex = makeRegex();
+      expect(regex).toBeInstanceOf(RegExp);
+    });
+  });
+});
+
+describe("readNote", () => {
+  describe("正常系", () => {
+    it("note文字列を解析し、キーと値のペアを取得する", () => {
+      const result = readNote(exampleNoteTokyo);
+      expect(result).toEqual([
+        ["code", "13"],
+        ["name", "tokyo"],
+      ]);
+
+      const result2 = readNote(exampleNoteSaitama);
+      expect(result2).toEqual([
+        ["code", "11"],
+        ["name", "saitama"],
+      ]);
+    });
+    it("不完全なタグが混在している場合、正常な部分だけを読み取る", () => {
+      const result = readNote("<code:13><name:tok");
+      expect(result).toEqual([["code", "13"]]);
+    });
+
+    it("空文字列を渡しても結果が空配列になる", () => {
+      const result = readNote("");
+      expect(result).toEqual([]);
+    });
+
+    it("タグがない場合は空配列になる", () => {
+      const result = readNote("test");
+      expect(result).toEqual([]);
+    });
+
+    describe("異常系", () => {
+      it("不完全なタグを含む文字列の場合は無視する", () => {});
+      const result = readNote("<name");
+      expect(result).toEqual([]);
+    });
+  });
+});
+
+describe("replaceNote", () => {
+  const mockDictionary = (key: string, value: string): string => {
+    if (key === "name") {
+      return value.toUpperCase();
+    }
+    // それ以外はそのまま返す
+    return value;
+  };
+
+  describe("正常系", () => {
+    it("辞書関数を使用して値を置き換える", () => {
+      const result = replaceNote(exampleNoteTokyo, mockDictionary);
+      expect(result).toBe("<code:13><name:TOKYO>");
+    });
+
+    it("空文字列でもエラーにならない", () => {
+      const result = replaceNote("", mockDictionary);
+      expect(result).toBe("");
+    });
+  });
+
+  //   describe("異常系", () => {
+  //     it("辞書関数が不正でもエラーをスローしない", () => {
+  //       const result = replaceNote(exampleNoteTokyo, () => {
+  //         throw new Error("辞書関数のエラー");
+  //       });
+  //       expect(result).toBe(exampleNoteTokyo);
+  //     });
+  //   });
+});
