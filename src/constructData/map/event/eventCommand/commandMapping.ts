@@ -1,8 +1,4 @@
-import type {
-  EventCommand,
-  EventCommandByCode,
-  EventCommandTable,
-} from "@sigureya/rpgtypes";
+import type { EventCommand, EventCommandTable } from "@sigureya/rpgtypes";
 import {
   changeName,
   changeNickname,
@@ -14,6 +10,7 @@ import {
   showScrollingText,
 } from "./mapper/paramConstants";
 import { MessageProxy } from "./commandProxy";
+import { SHOW_MESSAGE, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
 
 type CallBackFunc<Command extends EventCommand, Reulst = void> = (
   command: Readonly<Command>,
@@ -22,7 +19,7 @@ type CallBackFunc<Command extends EventCommand, Reulst = void> = (
 ) => Reulst;
 
 // interface
-interface XXX<T> {
+interface Mapper<T> {
   showMessage(proxy: MessageProxy): T;
   showChoices: CallBackFunc<EventCommandTable["SHOW_CHOICES"], T>;
   showChoicesItem: CallBackFunc<EventCommandTable["SHOW_CHOICES_ITEM"], T>;
@@ -34,16 +31,19 @@ interface XXX<T> {
   other: CallBackFunc<EventCommand, T>;
 }
 
-const xxx = <T>(list: ReadonlyArray<EventCommand>, table: XXX<T>) => {
+export const mapTextCommand = <T>(
+  list: ReadonlyArray<EventCommand>,
+  table: Mapper<T>
+) => {
   return list.map<T>((command, index, array) => {
     switch (command.code) {
-      case showMessage.code:
+      case SHOW_MESSAGE:
         return table.showMessage(new MessageProxy(command, index, array));
       case showChoices.code:
         return table.showChoices(command, index, array);
       case showChoicesItem.code:
         return table.showChoicesItem(command, index, array);
-      case showScrollingText.code:
+      case SHOW_SCROLLING_TEXT:
         return table.showscrollingText(command, index, array);
       case changeName.code:
         return table.changeName(command, index, array);

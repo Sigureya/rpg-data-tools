@@ -1,4 +1,4 @@
-import * as CODE from "./eventCodes";
+import * as CODE from "@sigureya/rpgtypes";
 
 export const eventCodeAll = () =>
   [

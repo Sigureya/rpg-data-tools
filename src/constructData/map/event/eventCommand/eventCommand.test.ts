@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { constructEventCommand } from "./eventCommand";
-import * as CODE from "./eventCodes";
+import * as CODE from "@sigureya/rpgtypes";
 describe("constructEventCommand", () => {
   test("should create a valid event command object", () => {
     const eventCommand = constructEventCommand(CODE.SHOW_MESSAGE, [
