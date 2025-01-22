@@ -1,5 +1,3 @@
-import type { EventCommand, EventCommandTable } from "@sigureya/rpgtypes";
-import { MessageProxy } from "./commandProxy";
 import {
   CHANGE_NAME,
   CHANGE_NICKNAME,
@@ -10,6 +8,8 @@ import {
   SHOW_MESSAGE,
   SHOW_SCROLLING_TEXT,
 } from "@sigureya/rpgtypes";
+import type { EventCommand, EventCommandTable } from "@sigureya/rpgtypes";
+import { MessageProxy } from "./commandProxy";
 
 type CallBackFunc<Command extends EventCommand, Reulst = void> = (
   command: Readonly<Command>,
