@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import type { ControlChar } from "./geyContolChars";
-import { getControlChars } from "./geyContolChars";
+import type { ControlChar } from "./getContolChars";
+import { getControlChars } from "./getContolChars";
 
 describe("getControlChars", () => {
   describe("正常系", () => {
