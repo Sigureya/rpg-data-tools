@@ -15,6 +15,11 @@ export declare const showChoices: EventCommandFactory<CommandParam.ShowChoices, 
     parameters: [choices: string[], cancelType: number, defaultType: number, positionType: number, background: number];
     indent: number;
 }>;
+export declare const showChoicesItem: EventCommandFactory<CommandParam.ShowChoicesItem, {
+    code: 402;
+    parameters: [index: number, name: string];
+    indent: number;
+}>;
 export declare const inputNumber: EventCommandFactory<CommandParam.InputNumber, {
     code: 103;
     parameters: [variableId: number, maxDigits: number];
@@ -53,5 +58,20 @@ export declare const commonEvent: EventCommandFactory<CommandParam.CommonEvent, 
 export declare const showPicture: EventCommandFactory<CommandParam.ShowPicture, {
     code: 231;
     parameters: import('@sigureya/rpgtypes').ShowPicture;
+    indent: number;
+}>;
+export declare const changeName: EventCommandFactory<CommandParam.ChangeName, {
+    code: 320;
+    parameters: [actorId: number, name: string];
+    indent: number;
+}>;
+export declare const changeNickname: EventCommandFactory<CommandParam.ChangeNickname, {
+    code: 324;
+    parameters: [actorId: number, name: string];
+    indent: number;
+}>;
+export declare const changeProfile: EventCommandFactory<CommandParam.ChangeProfile, {
+    code: 325;
+    parameters: [actorId: number, name: string];
     indent: number;
 }>;
