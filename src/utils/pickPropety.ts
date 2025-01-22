@@ -22,7 +22,7 @@ export const pickString = <
 >(
   data: T,
   keyList: ReadonlyArray<KeyType>,
-  fn: () => Result
+  fn: (key: string, value: string, data: T) => Result
 ): Result[] => {
   return pickPropertys<Result, string, T>(data, keyList, fn);
 };
