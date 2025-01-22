@@ -4,9 +4,9 @@
   "description": "RpgMaker MockLibrary",
   "main": "dist/rpgdatatools.cjs.js",
   "module": "dist/rpgdatatools.es.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "require": "./dist/rpg-data-tools.cjs.js",
       "import": "./dist/rpg-data-tools.es.js"
     }
