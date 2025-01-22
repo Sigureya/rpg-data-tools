@@ -2,8 +2,8 @@
   "name": "@sigureya/rpg-data-tools",
   "version": "1.0.2",
   "description": "RpgMaker MockLibrary",
-  "main": "dist/rpgdatatools.cjs.js",
-  "module": "dist/rpgdatatools.es.js",
+  "main": "dist/rpg-data-tools.cjs.js",
+  "module": "dist/rpg-data-tools.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {

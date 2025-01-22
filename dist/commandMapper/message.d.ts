@@ -5,7 +5,7 @@ interface Mapper<T> {
     showMessage(proxy: MessageProxy): T;
     showChoices: CallBackFunc<EventCommandTable["SHOW_CHOICES"], T>;
     showChoicesItem: CallBackFunc<EventCommandTable["SHOW_CHOICES_ITEM"], T>;
-    showscrollingText: CallBackFunc<EventCommandTable["SHOW_SCROLLING_TEXT"], T>;
+    showScrollingText: CallBackFunc<EventCommandTable["SHOW_SCROLLING_TEXT"], T>;
     changeName: CallBackFunc<EventCommandTable["CHANGE_NAME"], T>;
     changeProfile: CallBackFunc<EventCommandTable["CHANGE_PROFILE"], T>;
     changeNickname: CallBackFunc<EventCommandTable["CHANGE_NICKNAME"], T>;
