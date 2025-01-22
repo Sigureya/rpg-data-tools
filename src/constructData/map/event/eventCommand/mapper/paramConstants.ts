@@ -90,6 +90,28 @@ export const showChoices = new EventCommandFactory<
     };
   },
 });
+export const showChoicesItem = new EventCommandFactory<
+  CommandParam.ShowChoicesItem,
+  EventCommandTypes["SHOW_CHOICES_ITEM"]
+>(402, {
+  construct: (proto) => {
+    return {
+      index: proto.index ?? 0,
+      name: proto.name ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.index, obj.name];
+  },
+
+  fromArray: (arr) => {
+    return {
+      index: arr[0],
+      name: arr[1],
+    };
+  },
+});
+
 export const inputNumber = new EventCommandFactory<
   CommandParam.InputNumber,
   EventCommandTypes["INPUT_NUMBER"]
@@ -273,6 +295,69 @@ export const showPicture = new EventCommandFactory<
       scaleY: arr[6],
       opacity: arr[7],
       blendMode: arr[8],
+    };
+  },
+});
+
+export const changeName = new EventCommandFactory<
+  CommandParam.ChangeName,
+  EventCommandTypes["CHANGE_NAME"]
+>(320, {
+  construct: (proto) => {
+    return {
+      actorId: proto.actorId ?? 1,
+      name: proto.name ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.actorId, obj.name];
+  },
+  fromArray: (arr) => {
+    return {
+      actorId: arr[0],
+      name: arr[1],
+    };
+  },
+});
+
+export const changeNickname = new EventCommandFactory<
+  CommandParam.ChangeNickname,
+  EventCommandTypes["CHANGE_NICKNAME"]
+>(324, {
+  construct: (proto) => {
+    return {
+      actorId: proto.actorId ?? 1,
+      nickname: proto.nickname ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.actorId, obj.nickname];
+  },
+  fromArray: (arr) => {
+    return {
+      actorId: arr[0],
+      nickname: arr[1],
+    };
+  },
+});
+
+export const changeProfile = new EventCommandFactory<
+  CommandParam.ChangeProfile,
+  EventCommandTypes["CHANGE_PROFILE"]
+>(325, {
+  construct: (proto) => {
+    return {
+      actorId: proto.actorId ?? 1,
+      profile: proto.profile ?? "",
+    };
+  },
+  array: (obj) => {
+    return [obj.actorId, obj.profile];
+  },
+  fromArray: (arr) => {
+    return {
+      actorId: arr[0],
+      profile: arr[1],
     };
   },
 });
