@@ -13,6 +13,7 @@ const defaultSet: ReadonlySet<Lowercase<string>> = new Set([
   "p",
   "g",
   "c",
+  "i",
   "fs",
 ]);
 
