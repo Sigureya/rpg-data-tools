@@ -7,7 +7,7 @@ export default defineConfig({
       entry: "./src/index.ts", // ライブラリのエントリポイント
       name: "RpgDataTools", // ライブラリの名前（UMD形式用）
       fileName: (format) => `rpg-data-tools.${format}.js`, // 出力ファイル名
-      formats: ["es", "cjs", "umd"], // 出力形式
+      formats: ["es", "cjs"], // 出力形式
     },
     rollupOptions: {
       external: ["@sigureya/rpgtypes"], // 外部依存関係を適切に設定
