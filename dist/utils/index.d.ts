@@ -1,1 +1,1 @@
-export * from './pickPropety';
+export * from './dataPicker';

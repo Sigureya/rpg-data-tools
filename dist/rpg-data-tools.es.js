@@ -29,7 +29,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   dropItems: [],
   actions: [],
   ...e
-}), q = (e) => ({
+}), P = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -40,7 +40,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   params: r(),
   traits: [],
   ...e
-}), z = (e) => ({
+}), q = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -53,7 +53,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   traits: [],
   damage: u(),
   ...e
-}), P = (e) => ({
+}), z = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -255,11 +255,11 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   airship: e.airship ?? m(),
   tileSize: e.tileSize ?? 0
 }), A = (e = {}) => ({
-  messages: k(e.messages ?? {}),
-  commands: M(e.commands ?? {}),
-  params: C(e.params ?? {}),
-  basic: E(e.basic ?? {})
-}), E = (e = {}) => [
+  messages: M(e.messages ?? {}),
+  commands: k(e.commands ?? {}),
+  params: E(e.params ?? {}),
+  basic: C(e.basic ?? {})
+}), C = (e = {}) => [
   e.level ?? "",
   e.levelA ?? "",
   e.hp ?? "",
@@ -270,7 +270,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.tpA ?? "",
   e.experience ?? "",
   e.exp ?? ""
-], C = (e = {}) => [
+], E = (e = {}) => [
   e.mhp ?? "",
   e.mmp ?? "",
   e.atk ?? "",
@@ -281,7 +281,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.luk ?? "",
   e.hit ?? "",
   e.eva ?? ""
-], M = (e = {}) => [
+], k = (e = {}) => [
   e.fight ?? "",
   e.escape ?? "",
   e.attack ?? "",
@@ -308,7 +308,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.notUsed23 ?? "",
   e.buy ?? "",
   e.sell ?? ""
-], k = (e = {}) => ({
+], M = (e = {}) => ({
   alwaysDash: e.alwaysDash ?? "",
   commandRemember: e.commandRemember ?? "",
   touchUI: e.touchUI ?? "",
@@ -498,33 +498,41 @@ const Z = (e, a) => e.map((t, n, s) => {
     a.has(i) && n.push({ char: s[1], id: h });
   }
   return n;
-}, L = (e, a, t) => a.map((n) => t(n, e[n], e)), re = (e, a, t) => L(e, a, t);
+}, L = (e, a, t) => a.map((n) => t(n, e[n], e)), re = (e, a, t) => L(e, a, t), le = (e, a) => ({
+  code: e.code,
+  paramIndex: a,
+  value: e.parameters[a]
+}), me = (e, a) => ({
+  code: e.code,
+  paramIndex: a,
+  value: e.parameters[a]
+});
 export {
   F as MessageProxy,
   ne as codeInfoText,
   W as constructActor,
-  q as constructArmor,
-  P as constructClass,
+  P as constructArmor,
+  z as constructClass,
   u as constructDamage,
   _ as constructEnemy,
   U as constructItem,
   r as constructParamArray,
   X as constructSkill,
   Y as constructState,
-  z as constructWeapon,
+  q as constructWeapon,
   D as createAdvanced,
   c as createAudio,
-  E as createBasicTerms,
-  M as createCommandsArray,
+  C as createBasicTerms,
+  k as createCommandsArray,
   w as createCondtion,
   g as createControlCharFormat,
   S as createEventPage,
   $ as createMap,
   j as createMapEvent,
   y as createMapEventImage,
-  k as createMessages,
+  M as createMessages,
   d as createNoteEntity,
-  C as createParamNamesArray,
+  E as createParamNamesArray,
   K as createSystemData,
   R as createSystemSoundsArray,
   A as createTerms,
@@ -536,6 +544,8 @@ export {
   ae as getNoteValue,
   l as makeRegex,
   Z as mapTextCommand,
+  me as pickCommandParamNumber,
+  le as pickCommandParamString,
   L as pickPropertys,
   re as pickString,
   Q as readNote,
