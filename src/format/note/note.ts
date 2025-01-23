@@ -34,7 +34,12 @@ export const readNote = (
   }
   return result;
 };
-
+/**
+ *
+ * @param note
+ * @param transformFunction この関数の戻り値でvalueを置き換える
+ * @returns
+ */
 export const replaceNote = (
   note: string,
   transformFunction: (key: string, value: string) => string
