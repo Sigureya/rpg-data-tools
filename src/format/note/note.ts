@@ -1,25 +1,45 @@
+import type { ReadNoteOption, NoteReadResult } from "./types";
+
 export const createNoteEntity = (key: string, value: string): string => {
   return `<${key}:${value}>`;
 };
 
 export const makeRegex = () => /<([^<>:]+):([^>]*)>/g;
 
+export const readNoteObject = (
+  data: { note: string },
+  options: Partial<ReadNoteOption> = {}
+): NoteReadResult[] => readNote(data.note, options);
+
 /**
  * note文字列を解析し、キーと値のペアを取得します。
  * タグが閉じられていない場合、その要素は無視されます。
  */
-export const readNote = (note: string): [string, string][] => {
+export const readNote = (
+  note: string,
+  options: Partial<ReadNoteOption> = {}
+): NoteReadResult[] => {
+  const opt: ReadNoteOption = {
+    prefix: "",
+    suffix: "",
+    ...options,
+  };
+
   const regex = makeRegex();
-  const result: [string, string][] = [];
+  const result: NoteReadResult[] = [];
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(note)) !== null) {
-    result.push([match[1], match[2]]);
+    result.push([`${opt.prefix}${match[1]}${opt.suffix}`, match[2]]);
   }
   return result;
 };
-
-// 修正2: 引数名変更 dictionary → transformFunction
+/**
+ *
+ * @param note
+ * @param transformFunction この関数の戻り値でvalueを置き換える
+ * @returns
+ */
 export const replaceNote = (
   note: string,
   transformFunction: (key: string, value: string) => string
@@ -30,7 +50,6 @@ export const replaceNote = (
   });
 };
 
-// 修正4: 特定のキーに対応するデータを取得する関数
 export const getNoteValue = (
   note: string,
   targetKey: string
@@ -40,13 +59,12 @@ export const getNoteValue = (
 
   while ((match = regex.exec(note)) !== null) {
     if (match[1] === targetKey) {
-      return match[2]; // 対応する値を返す
+      return match[2];
     }
   }
-  return undefined; // 見つからなかった場合
+  return undefined;
 };
 
-// 修正4: 特定のキーに対応する値を差し替える関数
 export const setNoteValue = (
   note: string,
   targetKey: string,
@@ -54,7 +72,7 @@ export const setNoteValue = (
 ): string => {
   const regex = makeRegex();
 
-  return note.replace(regex, (match, key: string, value: string) => {
+  return note.replace(regex, (match, key: string) => {
     if (key === targetKey) {
       return createNoteEntity(key, newValue); // 対象キーの場合のみ値を差し替え
     }

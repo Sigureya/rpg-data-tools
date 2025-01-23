@@ -1,5 +1,5 @@
-import { COMMENT_BODY as h, CHANGE_NICKNAME as f, CHANGE_PROFILE as p, CHANGE_NAME as v, SHOW_SCROLLING_TEXT as b, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as N, SHOW_MESSAGE as x } from "@sigureya/rpgtypes";
-const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
+import { COMMENT_BODY as g, CHANGE_NICKNAME as h, CHANGE_PROFILE as p, CHANGE_NAME as b, SHOW_SCROLLING_TEXT as v, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as x, SHOW_MESSAGE as N } from "@sigureya/rpgtypes";
+const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   id: 0,
   name: "",
   nickname: "",
@@ -16,7 +16,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   traits: [],
   equips: [],
   ...e
-}), W = (e) => ({
+}), _ = (e) => ({
   battlerHue: 0,
   id: 0,
   name: "",
@@ -29,7 +29,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   dropItems: [],
   actions: [],
   ...e
-}), _ = (e) => ({
+}), q = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -40,7 +40,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   params: r(),
   traits: [],
   ...e
-}), q = (e) => ({
+}), z = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -53,7 +53,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   traits: [],
   damage: u(),
   ...e
-}), z = (e) => ({
+}), P = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -69,7 +69,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   variance: 20,
   critical: !1,
   ...e
-}), P = (e) => ({
+}), U = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -88,7 +88,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   damage: u(),
   effects: [],
   ...e
-}), U = (e) => ({
+}), $ = (e) => ({
   animationId: 0,
   damage: u(),
   description: "",
@@ -159,7 +159,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   parallaxSx: 0,
   parallaxSy: 0,
   ...e
-}), $ = (e) => ({
+}), j = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -433,52 +433,56 @@ class R {
     return this.command.parameters[4];
   }
 }
-const j = (e, a) => e.map((t, n, s) => {
+const Z = (e, a) => e.map((t, n, s) => {
   switch (t.code) {
-    case x:
-      return a.showMessage(new R(t, n, s));
     case N:
+      return a.showMessage(new R(t, n, s));
+    case x:
       return a.showChoices(t, n, s);
     case I:
       return a.showChoicesItem(t, n, s);
-    case b:
-      return a.showScrollingText(t, n, s);
     case v:
+      return a.showScrollingText(t, n, s);
+    case b:
       return a.changeName(t, n, s);
     case p:
       return a.changeProfile(t, n, s);
-    case f:
-      return a.changeNickname(t, n, s);
     case h:
+      return a.changeNickname(t, n, s);
+    case g:
       return a.commentBody(t, n, s);
     default:
       return a.other(t, n, s);
   }
-}), o = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, Z = (e) => {
-  const a = l(), t = [];
-  let n;
-  for (; (n = a.exec(e)) !== null; )
-    t.push([n[1], n[2]]);
-  return t;
-}, J = (e, a) => e.replace(l(), (t, n, s) => {
+}), d = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, J = (e, a = {}) => F(e.note, a), F = (e, a = {}) => {
+  const t = {
+    prefix: "",
+    suffix: "",
+    ...a
+  }, n = l(), s = [];
+  let i;
+  for (; (i = n.exec(e)) !== null; )
+    s.push([`${t.prefix}${i[1]}${t.suffix}`, i[2]]);
+  return s;
+}, Q = (e, a) => e.replace(l(), (t, n, s) => {
   const i = a(n, s);
-  return o(n, i);
-}), Q = (e, a) => {
+  return d(n, i);
+}), ee = (e, a) => {
   const t = l();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
-}, ee = (e, a, t) => {
+}, ae = (e, a, t) => {
   const n = l();
-  return e.replace(n, (s, i, d) => i === a ? o(i, t) : s);
-}, ae = (e) => `code:${e}`, F = "N", V = "V", g = (e, a) => `\\${e}[${a}]`, B = (e) => g(F, e.id), te = (e) => e.map((a) => ({
-  controlChar: B(a),
+  return e.replace(n, (s, i) => i === a ? d(i, t) : s);
+}, te = (e) => `code:${e}`, V = "N", B = "V", o = (e, a) => `\\${e}[${a}]`, H = (e) => o(V, e.id), ne = (e) => e.map((a) => ({
+  controlChar: H(a),
   text: a.name
-})), ne = (e) => e.variables.map((a, t) => ({
+})), ce = (e) => e.variables.map((a, t) => ({
   text: a || "",
-  controlChar: g(V, t)
-})).filter((a) => a.text !== ""), H = /* @__PURE__ */ new Set([
+  controlChar: o(B, t)
+})).filter((a) => a.text !== ""), G = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -490,56 +494,57 @@ const j = (e, a) => e.map((t, n, s) => {
   "c",
   "i",
   "fs"
-]), ce = (e, a = H) => {
+]), se = (e, a = G) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let s;
   for (; (s = t.exec(e)) !== null; ) {
-    const i = s[1].toLowerCase(), d = parseInt(s[2], 10);
-    a.has(i) && n.push({ char: s[1], id: d });
+    const i = s[1].toLowerCase(), f = parseInt(s[2], 10);
+    a.has(i) && n.push({ char: s[1], id: f });
   }
   return n;
-}, G = (e, a, t) => a.map((n) => t(n, e[n], e)), se = (e, a, t) => G(e, a, t);
+}, L = (e, a, t) => a.map((n) => t(n, e[n], e)), ie = (e, a, t) => L(e, a, t);
 export {
   R as MessageProxy,
-  ae as codeInfoText,
-  O as constructActor,
-  _ as constructArmor,
-  z as constructClass,
+  te as codeInfoText,
+  W as constructActor,
+  q as constructArmor,
+  P as constructClass,
   u as constructDamage,
-  W as constructEnemy,
-  P as constructItem,
+  _ as constructEnemy,
+  U as constructItem,
   r as constructParamArray,
-  U as constructSkill,
+  $ as constructSkill,
   X as constructState,
-  q as constructWeapon,
+  z as constructWeapon,
   k as createAdvanced,
   c as createAudio,
   A as createBasicTerms,
   C as createCommandsArray,
   T as createCondtion,
-  g as createControlCharFormat,
+  o as createControlCharFormat,
   y as createEventPage,
   Y as createMap,
-  $ as createMapEvent,
+  j as createMapEvent,
   w as createMapEventImage,
   M as createMessages,
-  o as createNoteEntity,
+  d as createNoteEntity,
   E as createParamNamesArray,
   K as createSystemData,
   D as createSystemSoundsArray,
   S as createTerms,
   m as createVehicle,
-  B as fromActor,
-  te as fromActors,
-  ne as fromSystem,
-  ce as getControlChars,
-  Q as getNoteValue,
+  H as fromActor,
+  ne as fromActors,
+  ce as fromSystem,
+  se as getControlChars,
+  ee as getNoteValue,
   l as makeRegex,
-  j as mapTextCommand,
-  G as pickPropertys,
-  se as pickString,
-  Z as readNote,
-  J as replaceNote,
-  ee as setNoteValue
+  Z as mapTextCommand,
+  L as pickPropertys,
+  ie as pickString,
+  F as readNote,
+  J as readNoteObject,
+  Q as replaceNote,
+  ae as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
