@@ -35,7 +35,6 @@ export const readNote = (
   return result;
 };
 
-// 修正2: 引数名変更 dictionary → transformFunction
 export const replaceNote = (
   note: string,
   transformFunction: (key: string, value: string) => string
@@ -46,7 +45,6 @@ export const replaceNote = (
   });
 };
 
-// 修正4: 特定のキーに対応するデータを取得する関数
 export const getNoteValue = (
   note: string,
   targetKey: string
@@ -56,13 +54,12 @@ export const getNoteValue = (
 
   while ((match = regex.exec(note)) !== null) {
     if (match[1] === targetKey) {
-      return match[2]; // 対応する値を返す
+      return match[2];
     }
   }
-  return undefined; // 見つからなかった場合
+  return undefined;
 };
 
-// 修正4: 特定のキーに対応する値を差し替える関数
 export const setNoteValue = (
   note: string,
   targetKey: string,
