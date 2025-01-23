@@ -1,7 +1,7 @@
 import { EventCommand, EventCommandTable } from '@sigureya/rpgtypes';
 import { MessageProxy } from './commandProxy';
-type CallBackFunc<Command extends EventCommand, Reulst = void> = (command: Readonly<Command>, index: number, list: ReadonlyArray<Readonly<EventCommand>>) => Reulst;
-interface Mapper<T> {
+import { CallBackFunc } from './callbackFunction';
+export interface TextCommandMapper<T> {
     showMessage(proxy: MessageProxy): T;
     showChoices: CallBackFunc<EventCommandTable["SHOW_CHOICES"], T>;
     showChoicesItem: CallBackFunc<EventCommandTable["SHOW_CHOICES_ITEM"], T>;
@@ -12,5 +12,4 @@ interface Mapper<T> {
     commentBody: CallBackFunc<EventCommandTable["COMMENT_BODY"], T>;
     other: CallBackFunc<EventCommand, T>;
 }
-export declare const mapTextCommand: <T>(list: ReadonlyArray<EventCommand>, table: Mapper<T>) => T[];
-export {};
+export declare const mapTextCommand: <T>(list: ReadonlyArray<EventCommand>, table: TextCommandMapper<T>) => T[];
