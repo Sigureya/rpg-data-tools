@@ -1,3 +1,5 @@
+import type { ReadNoteOption, ReadResult } from "./types";
+
 export const createNoteEntity = (key: string, value: string): string => {
   return `<${key}:${value}>`;
 };
@@ -8,13 +10,22 @@ export const makeRegex = () => /<([^<>:]+):([^>]*)>/g;
  * note文字列を解析し、キーと値のペアを取得します。
  * タグが閉じられていない場合、その要素は無視されます。
  */
-export const readNote = (note: string): [string, string][] => {
+export const readNote = (
+  note: string,
+  options: Partial<ReadNoteOption> = {}
+): ReadResult[] => {
+  const opt: ReadNoteOption = {
+    prefix: "",
+    suffix: "",
+    ...options,
+  };
+
   const regex = makeRegex();
-  const result: [string, string][] = [];
+  const result: ReadResult[] = [];
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(note)) !== null) {
-    result.push([match[1], match[2]]);
+    result.push([`${opt.prefix}${match[1]}${opt.suffix}`, match[2]]);
   }
   return result;
 };

@@ -1,4 +1,4 @@
-import { COMMENT_BODY as h, CHANGE_NICKNAME as f, CHANGE_PROFILE as p, CHANGE_NAME as v, SHOW_SCROLLING_TEXT as b, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as N, SHOW_MESSAGE as x } from "@sigureya/rpgtypes";
+import { COMMENT_BODY as g, CHANGE_NICKNAME as h, CHANGE_PROFILE as p, CHANGE_NAME as v, SHOW_SCROLLING_TEXT as b, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as x, SHOW_MESSAGE as N } from "@sigureya/rpgtypes";
 const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   id: 0,
   name: "",
@@ -113,7 +113,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   effects: [],
   messageType: 0,
   ...e
-}), X = (e) => ({
+}), $ = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -137,7 +137,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   traits: [],
   note: "",
   ...e
-}), Y = (e) => ({
+}), X = (e) => ({
   autoplayBgm: !0,
   autoplayBgs: !1,
   battleback1Name: "",
@@ -159,7 +159,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], O = (e) => ({
   parallaxSx: 0,
   parallaxSy: 0,
   ...e
-}), $ = (e) => ({
+}), Y = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -435,9 +435,9 @@ class R {
 }
 const j = (e, a) => e.map((t, n, s) => {
   switch (t.code) {
-    case x:
-      return a.showMessage(new R(t, n, s));
     case N:
+      return a.showMessage(new R(t, n, s));
+    case x:
       return a.showChoices(t, n, s);
     case I:
       return a.showChoicesItem(t, n, s);
@@ -447,19 +447,23 @@ const j = (e, a) => e.map((t, n, s) => {
       return a.changeName(t, n, s);
     case p:
       return a.changeProfile(t, n, s);
-    case f:
-      return a.changeNickname(t, n, s);
     case h:
+      return a.changeNickname(t, n, s);
+    case g:
       return a.commentBody(t, n, s);
     default:
       return a.other(t, n, s);
   }
-}), o = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, Z = (e) => {
-  const a = l(), t = [];
-  let n;
-  for (; (n = a.exec(e)) !== null; )
-    t.push([n[1], n[2]]);
-  return t;
+}), o = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, Z = (e, a = {}) => {
+  const t = {
+    prefix: "",
+    suffix: "",
+    ...a
+  }, n = l(), s = [];
+  let i;
+  for (; (i = n.exec(e)) !== null; )
+    s.push([`${t.prefix}${i[1]}${t.suffix}`, i[2]]);
+  return s;
 }, J = (e, a) => e.replace(l(), (t, n, s) => {
   const i = a(n, s);
   return o(n, i);
@@ -472,12 +476,12 @@ const j = (e, a) => e.map((t, n, s) => {
 }, ee = (e, a, t) => {
   const n = l();
   return e.replace(n, (s, i, d) => i === a ? o(i, t) : s);
-}, ae = (e) => `code:${e}`, F = "N", V = "V", g = (e, a) => `\\${e}[${a}]`, B = (e) => g(F, e.id), te = (e) => e.map((a) => ({
+}, ae = (e) => `code:${e}`, F = "N", V = "V", f = (e, a) => `\\${e}[${a}]`, B = (e) => f(F, e.id), te = (e) => e.map((a) => ({
   controlChar: B(a),
   text: a.name
 })), ne = (e) => e.variables.map((a, t) => ({
   text: a || "",
-  controlChar: g(V, t)
+  controlChar: f(V, t)
 })).filter((a) => a.text !== ""), H = /* @__PURE__ */ new Set([
   "px",
   "py",
@@ -510,17 +514,17 @@ export {
   P as constructItem,
   r as constructParamArray,
   U as constructSkill,
-  X as constructState,
+  $ as constructState,
   q as constructWeapon,
   k as createAdvanced,
   c as createAudio,
   A as createBasicTerms,
   C as createCommandsArray,
   T as createCondtion,
-  g as createControlCharFormat,
+  f as createControlCharFormat,
   y as createEventPage,
-  Y as createMap,
-  $ as createMapEvent,
+  X as createMap,
+  Y as createMapEvent,
   w as createMapEventImage,
   M as createMessages,
   o as createNoteEntity,
