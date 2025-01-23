@@ -1,4 +1,4 @@
-import type { ReadNoteOption, NoteReadResult } from "./types";
+import type { NoteReadResult } from "./types";
 
 export const createNoteEntity = (key: string, value: string): string => {
   return `<${key}:${value}>`;
@@ -6,31 +6,28 @@ export const createNoteEntity = (key: string, value: string): string => {
 
 export const makeRegex = () => /<([^<>:]+):([^>]*)>/g;
 
-export const readNoteObject = (
-  data: { note: string },
-  options: Partial<ReadNoteOption> = {}
-): NoteReadResult[] => readNote(data.note, options);
+export const readNoteObject = <Result, T extends { note: string }>(
+  data: T,
+  fn: (key: string, value: string, data: T) => Result
+): Result[] => readNoteEx(data.note, (key, value) => fn(key, value, data));
 
+export const readNote = (note: string): NoteReadResult[] => {
+  return readNoteEx(note, (key, value) => [key, value]);
+};
 /**
  * note文字列を解析し、キーと値のペアを取得します。
  * タグが閉じられていない場合、その要素は無視されます。
  */
-export const readNote = (
+export const readNoteEx = <Result>(
   note: string,
-  options: Partial<ReadNoteOption> = {}
-): NoteReadResult[] => {
-  const opt: ReadNoteOption = {
-    prefix: "",
-    suffix: "",
-    ...options,
-  };
-
+  fn: (key: string, value: string) => Result
+): Result[] => {
   const regex = makeRegex();
-  const result: NoteReadResult[] = [];
+  const result: Result[] = [];
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(note)) !== null) {
-    result.push([`${opt.prefix}${match[1]}${opt.suffix}`, match[2]]);
+    result.push(fn(match[1], match[2]));
   }
   return result;
 };

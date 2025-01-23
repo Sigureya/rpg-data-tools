@@ -1,4 +1,4 @@
-import { COMMENT_BODY as g, CHANGE_NICKNAME as h, CHANGE_PROFILE as p, CHANGE_NAME as b, SHOW_SCROLLING_TEXT as v, SHOW_CHOICES_ITEM as I, SHOW_CHOICES as x, SHOW_MESSAGE as N } from "@sigureya/rpgtypes";
+import { COMMENT_BODY as f, CHANGE_NICKNAME as p, CHANGE_PROFILE as b, CHANGE_NAME as v, SHOW_SCROLLING_TEXT as I, SHOW_CHOICES_ITEM as N, SHOW_CHOICES as x, SHOW_MESSAGE as T } from "@sigureya/rpgtypes";
 const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   id: 0,
   name: "",
@@ -88,7 +88,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   damage: u(),
   effects: [],
   ...e
-}), $ = (e) => ({
+}), X = (e) => ({
   animationId: 0,
   damage: u(),
   description: "",
@@ -113,7 +113,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   effects: [],
   messageType: 0,
   ...e
-}), X = (e) => ({
+}), Y = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -137,7 +137,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   traits: [],
   note: "",
   ...e
-}), Y = (e) => ({
+}), $ = (e) => ({
   autoplayBgm: !0,
   autoplayBgs: !1,
   battleback1Name: "",
@@ -165,9 +165,9 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   note: "",
   x: 0,
   y: 0,
-  pages: [y()],
+  pages: [S()],
   ...e
-}), T = (e) => ({
+}), w = (e) => ({
   actorId: 0,
   actorValid: !1,
   itemId: 0,
@@ -182,16 +182,16 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   variableValid: !1,
   variableValue: 0,
   ...e
-}), w = (e) => ({
+}), y = (e) => ({
   characterIndex: 0,
   characterName: "",
   direction: 6,
   pattern: 0,
   tileId: 0,
   ...e
-}), y = (e) => ({
-  conditions: T(),
-  image: w(),
+}), S = (e) => ({
+  conditions: w(),
+  image: y(),
   moveRoute: {
     list: [],
     repeat: !1,
@@ -212,7 +212,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   gameTitle: e.gameTitle ?? "",
   currencyUnit: e.currencyUnit ?? "",
   title1Name: e.title1Name ?? "",
-  terms: e.terms ?? S(),
+  terms: e.terms ?? A(),
   title2Name: e.title2Name ?? "",
   optAutosave: e.optAutosave ?? !1,
   attackMotions: e.attackMotions ?? [],
@@ -225,12 +225,12 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   testTroopId: e.testTroopId ?? 0,
   testBattlers: e.testBattlers ?? [],
   versionId: e.versionId ?? 0,
-  advanced: e.advanced ?? k(),
+  advanced: e.advanced ?? D(),
   armorTypes: e.armorTypes ?? [],
   elements: e.elements ?? [],
   variables: e.variables ?? [],
   equipTypes: e.equipTypes ?? [],
-  sounds: e.sounds ?? D(),
+  sounds: e.sounds ?? R(),
   titleBgm: e.titleBgm ?? c(),
   gameoverMe: e.gameoverMe ?? c(),
   battleBgm: e.battleBgm ?? c(),
@@ -254,12 +254,12 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   ship: e.ship ?? m(),
   airship: e.airship ?? m(),
   tileSize: e.tileSize ?? 0
-}), S = (e = {}) => ({
-  messages: M(e.messages ?? {}),
-  commands: C(e.commands ?? {}),
-  params: E(e.params ?? {}),
-  basic: A(e.basic ?? {})
-}), A = (e = {}) => [
+}), A = (e = {}) => ({
+  messages: k(e.messages ?? {}),
+  commands: M(e.commands ?? {}),
+  params: C(e.params ?? {}),
+  basic: E(e.basic ?? {})
+}), E = (e = {}) => [
   e.level ?? "",
   e.levelA ?? "",
   e.hp ?? "",
@@ -270,7 +270,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.tpA ?? "",
   e.experience ?? "",
   e.exp ?? ""
-], E = (e = {}) => [
+], C = (e = {}) => [
   e.mhp ?? "",
   e.mmp ?? "",
   e.atk ?? "",
@@ -281,7 +281,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.luk ?? "",
   e.hit ?? "",
   e.eva ?? ""
-], C = (e = {}) => [
+], M = (e = {}) => [
   e.fight ?? "",
   e.escape ?? "",
   e.attack ?? "",
@@ -308,7 +308,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.notUsed23 ?? "",
   e.buy ?? "",
   e.sell ?? ""
-], M = (e = {}) => ({
+], k = (e = {}) => ({
   alwaysDash: e.alwaysDash ?? "",
   commandRemember: e.commandRemember ?? "",
   touchUI: e.touchUI ?? "",
@@ -362,7 +362,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   debuffAdd: e.debuffAdd ?? "",
   buffRemove: e.buffRemove ?? "",
   actionFailure: e.actionFailure ?? ""
-}), k = (e = {}) => ({
+}), D = (e = {}) => ({
   gameId: e.gameId ?? 0,
   screenWidth: e.screenWidth ?? 0,
   screenHeight: e.screenHeight ?? 0,
@@ -381,7 +381,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   startMapId: e.startMapId ?? 0,
   startX: e.startX ?? 0,
   startY: e.startY ?? 0
-}), D = (e = {}) => [
+}), R = (e = {}) => [
   e.cursor ?? c(),
   e.ok ?? c(),
   e.cancel ?? c(),
@@ -407,7 +407,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   e.useItem ?? c(),
   e.useSkill ?? c()
 ];
-class R {
+class F {
   constructor(a, t, n) {
     this.command = a, this.index = t, this.array = n;
   }
@@ -435,53 +435,49 @@ class R {
 }
 const Z = (e, a) => e.map((t, n, s) => {
   switch (t.code) {
-    case N:
-      return a.showMessage(new R(t, n, s));
+    case T:
+      return a.showMessage(new F(t, n, s));
     case x:
       return a.showChoices(t, n, s);
-    case I:
+    case N:
       return a.showChoicesItem(t, n, s);
-    case v:
+    case I:
       return a.showScrollingText(t, n, s);
-    case b:
+    case v:
       return a.changeName(t, n, s);
-    case p:
+    case b:
       return a.changeProfile(t, n, s);
-    case h:
+    case p:
       return a.changeNickname(t, n, s);
-    case g:
+    case f:
       return a.commentBody(t, n, s);
     default:
       return a.other(t, n, s);
   }
-}), d = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, J = (e, a = {}) => F(e.note, a), F = (e, a = {}) => {
-  const t = {
-    prefix: "",
-    suffix: "",
-    ...a
-  }, n = l(), s = [];
-  let i;
-  for (; (i = n.exec(e)) !== null; )
-    s.push([`${t.prefix}${i[1]}${t.suffix}`, i[2]]);
-  return s;
-}, Q = (e, a) => e.replace(l(), (t, n, s) => {
+}), d = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, J = (e, a) => o(e.note, (t, n) => a(t, n, e)), Q = (e) => o(e, (a, t) => [a, t]), o = (e, a) => {
+  const t = l(), n = [];
+  let s;
+  for (; (s = t.exec(e)) !== null; )
+    n.push(a(s[1], s[2]));
+  return n;
+}, ee = (e, a) => e.replace(l(), (t, n, s) => {
   const i = a(n, s);
   return d(n, i);
-}), ee = (e, a) => {
+}), ae = (e, a) => {
   const t = l();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
-}, ae = (e, a, t) => {
+}, te = (e, a, t) => {
   const n = l();
   return e.replace(n, (s, i) => i === a ? d(i, t) : s);
-}, te = (e) => `code:${e}`, V = "N", B = "V", o = (e, a) => `\\${e}[${a}]`, H = (e) => o(V, e.id), ne = (e) => e.map((a) => ({
+}, ne = (e) => `code:${e}`, V = "N", B = "V", g = (e, a) => `\\${e}[${a}]`, H = (e) => g(V, e.id), ce = (e) => e.map((a) => ({
   controlChar: H(a),
   text: a.name
-})), ce = (e) => e.variables.map((a, t) => ({
+})), se = (e) => e.variables.map((a, t) => ({
   text: a || "",
-  controlChar: o(B, t)
+  controlChar: g(B, t)
 })).filter((a) => a.text !== ""), G = /* @__PURE__ */ new Set([
   "px",
   "py",
@@ -494,18 +490,18 @@ const Z = (e, a) => e.map((t, n, s) => {
   "c",
   "i",
   "fs"
-]), se = (e, a = G) => {
+]), ie = (e, a = G) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let s;
   for (; (s = t.exec(e)) !== null; ) {
-    const i = s[1].toLowerCase(), f = parseInt(s[2], 10);
-    a.has(i) && n.push({ char: s[1], id: f });
+    const i = s[1].toLowerCase(), h = parseInt(s[2], 10);
+    a.has(i) && n.push({ char: s[1], id: h });
   }
   return n;
-}, L = (e, a, t) => a.map((n) => t(n, e[n], e)), ie = (e, a, t) => L(e, a, t);
+}, L = (e, a, t) => a.map((n) => t(n, e[n], e)), re = (e, a, t) => L(e, a, t);
 export {
-  R as MessageProxy,
-  te as codeInfoText,
+  F as MessageProxy,
+  ne as codeInfoText,
   W as constructActor,
   q as constructArmor,
   P as constructClass,
@@ -513,38 +509,39 @@ export {
   _ as constructEnemy,
   U as constructItem,
   r as constructParamArray,
-  $ as constructSkill,
-  X as constructState,
+  X as constructSkill,
+  Y as constructState,
   z as constructWeapon,
-  k as createAdvanced,
+  D as createAdvanced,
   c as createAudio,
-  A as createBasicTerms,
-  C as createCommandsArray,
-  T as createCondtion,
-  o as createControlCharFormat,
-  y as createEventPage,
-  Y as createMap,
+  E as createBasicTerms,
+  M as createCommandsArray,
+  w as createCondtion,
+  g as createControlCharFormat,
+  S as createEventPage,
+  $ as createMap,
   j as createMapEvent,
-  w as createMapEventImage,
-  M as createMessages,
+  y as createMapEventImage,
+  k as createMessages,
   d as createNoteEntity,
-  E as createParamNamesArray,
+  C as createParamNamesArray,
   K as createSystemData,
-  D as createSystemSoundsArray,
-  S as createTerms,
+  R as createSystemSoundsArray,
+  A as createTerms,
   m as createVehicle,
   H as fromActor,
-  ne as fromActors,
-  ce as fromSystem,
-  se as getControlChars,
-  ee as getNoteValue,
+  ce as fromActors,
+  se as fromSystem,
+  ie as getControlChars,
+  ae as getNoteValue,
   l as makeRegex,
   Z as mapTextCommand,
   L as pickPropertys,
-  ie as pickString,
-  F as readNote,
+  re as pickString,
+  Q as readNote,
+  o as readNoteEx,
   J as readNoteObject,
-  Q as replaceNote,
-  ae as setNoteValue
+  ee as replaceNote,
+  te as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
