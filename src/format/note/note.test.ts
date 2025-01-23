@@ -1,5 +1,11 @@
-import { describe, it, expect } from "vitest";
-import { createNoteEntity, makeRegex, readNote, replaceNote } from "./note";
+import { describe, it, expect, vi } from "vitest";
+import {
+  createNoteEntity,
+  makeRegex,
+  readNote,
+  replaceNote,
+  readNoteObject,
+} from "./note";
 
 // テスト用のデータ
 const exampleNoteTokyo = "<code:13><name:tokyo>";
@@ -18,6 +24,50 @@ describe("makeRegex", () => {
     it("正規表現オブジェクトを生成する", () => {
       const regex = makeRegex();
       expect(regex).toBeInstanceOf(RegExp);
+    });
+  });
+});
+
+describe("readNoteObject", () => {
+  describe("正常系", () => {
+    it("note文字列を解析し、キーと値のペアを取得する", () => {
+      const result = readNoteObject(
+        { note: exampleNoteTokyo },
+        (key, value) => [key, value]
+      );
+      expect(result).toEqual([
+        ["code", "13"],
+        ["name", "tokyo"],
+      ]);
+    });
+
+    it("mockのfnを使用してカスタム処理を行う", () => {
+      const mockFn = vi.fn((key: string, value: string) => {
+        return { key, value };
+      });
+      const mockData = { note: exampleNoteTokyo };
+      const result = readNoteObject(mockData, mockFn);
+      expect(result).toEqual([
+        { key: "code", value: "13" },
+        { key: "name", value: "tokyo" },
+      ]);
+
+      expect(mockFn).toBeCalledTimes(2);
+      expect(mockFn.mock.calls[0]).toEqual(["code", "13", mockData]);
+      expect(mockFn.mock.calls[1]).toEqual(["name", "tokyo", mockData]);
+    });
+
+    it("空文字列を渡しても結果が空配列になる", () => {
+      const result = readNoteObject({ note: "" }, (key, value) => [key, value]);
+      expect(result).toEqual([]);
+    });
+
+    it("タグがない場合は空配列になる", () => {
+      const result = readNoteObject({ note: "test" }, (key, value) => [
+        key,
+        value,
+      ]);
+      expect(result).toEqual([]);
     });
   });
 });
