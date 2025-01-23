@@ -454,7 +454,7 @@ const Z = (e, a) => e.map((t, n, s) => {
     default:
       return a.other(t, n, s);
   }
-}), o = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, J = (e, a = {}) => F(e.note, a), F = (e, a = {}) => {
+}), d = (e, a) => `<${e}:${a}>`, l = () => /<([^<>:]+):([^>]*)>/g, J = (e, a = {}) => F(e.note, a), F = (e, a = {}) => {
   const t = {
     prefix: "",
     suffix: "",
@@ -466,7 +466,7 @@ const Z = (e, a) => e.map((t, n, s) => {
   return s;
 }, Q = (e, a) => e.replace(l(), (t, n, s) => {
   const i = a(n, s);
-  return o(n, i);
+  return d(n, i);
 }), ee = (e, a) => {
   const t = l();
   let n;
@@ -475,13 +475,13 @@ const Z = (e, a) => e.map((t, n, s) => {
       return n[2];
 }, ae = (e, a, t) => {
   const n = l();
-  return e.replace(n, (s, i, d) => i === a ? o(i, t) : s);
-}, te = (e) => `code:${e}`, V = "N", B = "V", f = (e, a) => `\\${e}[${a}]`, H = (e) => f(V, e.id), ne = (e) => e.map((a) => ({
+  return e.replace(n, (s, i) => i === a ? d(i, t) : s);
+}, te = (e) => `code:${e}`, V = "N", B = "V", o = (e, a) => `\\${e}[${a}]`, H = (e) => o(V, e.id), ne = (e) => e.map((a) => ({
   controlChar: H(a),
   text: a.name
 })), ce = (e) => e.variables.map((a, t) => ({
   text: a || "",
-  controlChar: f(B, t)
+  controlChar: o(B, t)
 })).filter((a) => a.text !== ""), G = /* @__PURE__ */ new Set([
   "px",
   "py",
@@ -498,8 +498,8 @@ const Z = (e, a) => e.map((t, n, s) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let s;
   for (; (s = t.exec(e)) !== null; ) {
-    const i = s[1].toLowerCase(), d = parseInt(s[2], 10);
-    a.has(i) && n.push({ char: s[1], id: d });
+    const i = s[1].toLowerCase(), f = parseInt(s[2], 10);
+    a.has(i) && n.push({ char: s[1], id: f });
   }
   return n;
 }, L = (e, a, t) => a.map((n) => t(n, e[n], e)), ie = (e, a, t) => L(e, a, t);
@@ -521,13 +521,13 @@ export {
   A as createBasicTerms,
   C as createCommandsArray,
   T as createCondtion,
-  f as createControlCharFormat,
+  o as createControlCharFormat,
   y as createEventPage,
   Y as createMap,
   j as createMapEvent,
   w as createMapEventImage,
   M as createMessages,
-  o as createNoteEntity,
+  d as createNoteEntity,
   E as createParamNamesArray,
   K as createSystemData,
   D as createSystemSoundsArray,
