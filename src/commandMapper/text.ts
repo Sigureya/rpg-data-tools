@@ -8,19 +8,28 @@ import {
   SHOW_MESSAGE,
   SHOW_SCROLLING_TEXT,
 } from "@sigureya/rpgtypes";
-import type { EventCommand, EventCommandTable } from "@sigureya/rpgtypes";
+import type {
+  Command_ChangeName,
+  Command_ChangeNickname,
+  Command_ChangeProfile,
+  Command_CommentBody,
+  Command_ShowChoices,
+  Command_ShowChoicesItem,
+  Command_ShowScrollingText,
+  EventCommand,
+} from "@sigureya/rpgtypes";
 import { MessageProxy } from "./commandProxy";
 import type { CallBackFunc } from "./callbackFunction";
 
 export interface TextCommandMapper<T> {
   showMessage(proxy: MessageProxy): T;
-  showChoices: CallBackFunc<EventCommandTable["SHOW_CHOICES"], T>;
-  showChoicesItem: CallBackFunc<EventCommandTable["SHOW_CHOICES_ITEM"], T>;
-  showScrollingText: CallBackFunc<EventCommandTable["SHOW_SCROLLING_TEXT"], T>;
-  changeName: CallBackFunc<EventCommandTable["CHANGE_NAME"], T>;
-  changeProfile: CallBackFunc<EventCommandTable["CHANGE_PROFILE"], T>;
-  changeNickname: CallBackFunc<EventCommandTable["CHANGE_NICKNAME"], T>;
-  commentBody: CallBackFunc<EventCommandTable["COMMENT_BODY"], T>;
+  showChoices: CallBackFunc<Command_ShowChoices, T>;
+  showChoicesItem: CallBackFunc<Command_ShowChoicesItem, T>;
+  showScrollingText: CallBackFunc<Command_ShowScrollingText, T>;
+  changeName: CallBackFunc<Command_ChangeName, T>;
+  changeProfile: CallBackFunc<Command_ChangeProfile, T>;
+  changeNickname: CallBackFunc<Command_ChangeNickname, T>;
+  commentBody: CallBackFunc<Command_CommentBody, T>;
   other: CallBackFunc<EventCommand, T>;
 }
 

@@ -1,4 +1,5 @@
 import { EventCommandFactory } from './eventCommandFactory';
+import type * as CMD from "@sigureya/rpgtypes/";
 import type * as CommandParam from "./paramTypes";
 export declare const showMessage: EventCommandFactory<CommandParam.ShowMessage, {
     code: 101;
@@ -57,7 +58,7 @@ export declare const commonEvent: EventCommandFactory<CommandParam.CommonEvent, 
 }>;
 export declare const showPicture: EventCommandFactory<CommandParam.ShowPicture, {
     code: 231;
-    parameters: import('@sigureya/rpgtypes').ShowPicture;
+    parameters: CMD.ShowPicture;
     indent: number;
 }>;
 export declare const changeName: EventCommandFactory<CommandParam.ChangeName, {
