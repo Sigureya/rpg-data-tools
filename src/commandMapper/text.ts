@@ -10,11 +10,11 @@ import {
 } from "@sigureya/rpgtypes";
 import type {
   Command_ChangeName,
-  Command_ChangeNickname,
+  Command_ChangeNickName,
   Command_ChangeProfile,
+  Command_ChoiceWhen,
   Command_CommentBody,
   Command_ShowChoices,
-  Command_ShowChoicesItem,
   Command_ShowScrollingText,
   EventCommand,
 } from "@sigureya/rpgtypes";
@@ -24,11 +24,11 @@ import type { CallBackFunc } from "./callbackFunction";
 export interface TextCommandMapper<T> {
   showMessage(proxy: MessageProxy): T;
   showChoices: CallBackFunc<Command_ShowChoices, T>;
-  showChoicesItem: CallBackFunc<Command_ShowChoicesItem, T>;
+  choiceWhen: CallBackFunc<Command_ChoiceWhen, T>;
   showScrollingText: CallBackFunc<Command_ShowScrollingText, T>;
   changeName: CallBackFunc<Command_ChangeName, T>;
   changeProfile: CallBackFunc<Command_ChangeProfile, T>;
-  changeNickname: CallBackFunc<Command_ChangeNickname, T>;
+  changeNickname: CallBackFunc<Command_ChangeNickName, T>;
   commentBody: CallBackFunc<Command_CommentBody, T>;
   other: CallBackFunc<EventCommand, T>;
 }
@@ -44,7 +44,7 @@ export const mapTextCommand = <T>(
       case SHOW_CHOICES:
         return table.showChoices(command, index, array);
       case SHOW_CHOICES_ITEM:
-        return table.showChoicesItem(command, index, array);
+        return table.choiceWhen(command, index, array);
       case SHOW_SCROLLING_TEXT:
         return table.showScrollingText(command, index, array);
       case CHANGE_NAME:
