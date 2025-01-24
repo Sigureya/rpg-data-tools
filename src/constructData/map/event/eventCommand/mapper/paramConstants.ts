@@ -1,4 +1,7 @@
-import type { EventCommandTable as EventCommandTypes } from "@sigureya/rpgtypes";
+import type {
+  EventCommandTable,
+  EventCommandTable as EventCommandTypes,
+} from "@sigureya/rpgtypes";
 
 import type * as CMD from "@sigureya/rpgtypes/";
 
@@ -94,7 +97,7 @@ export const showChoices = new EventCommandFactory<
 });
 export const showChoicesItem = new EventCommandFactory<
   CommandParam.ShowChoicesItem,
-  CMD.Command_ShowChoicesItem
+  EventCommandTable["SHOW_CHOICES_ITEM"]
 >(402, {
   construct: (proto) => {
     return {
@@ -258,7 +261,7 @@ export const commonEvent = new EventCommandFactory<
 
 export const showPicture = new EventCommandFactory<
   CommandParam.ShowPicture,
-  CMD.Command_ShowPicture
+  EventCommandTable["SHOW_PICTURE"]
 >(231, {
   array: (obj) => {
     return [
@@ -324,7 +327,7 @@ export const changeName = new EventCommandFactory<
 
 export const changeNickname = new EventCommandFactory<
   CommandParam.ChangeNickname,
-  CMD.Command_ChangeNickname
+  CMD.Command_ChangeNickName
 >(324, {
   construct: (proto) => {
     return {
