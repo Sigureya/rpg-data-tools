@@ -167,7 +167,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   y: 0,
   pages: [S()],
   ...e
-}), w = (e) => ({
+}), y = (e) => ({
   actorId: 0,
   actorValid: !1,
   itemId: 0,
@@ -182,7 +182,7 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   variableValid: !1,
   variableValue: 0,
   ...e
-}), y = (e) => ({
+}), w = (e) => ({
   characterIndex: 0,
   characterName: "",
   direction: 6,
@@ -190,8 +190,8 @@ const r = () => [0, 0, 0, 0, 0, 0, 0, 0], W = (e) => ({
   tileId: 0,
   ...e
 }), S = (e) => ({
-  conditions: w(),
-  image: y(),
+  conditions: y(),
+  image: w(),
   moveRoute: {
     list: [],
     repeat: !1,
@@ -415,11 +415,14 @@ class F {
 `) {
     return this.body().map((t) => t.parameters[0]).join(a);
   }
+  bodyCode() {
+    return 401;
+  }
   body() {
     const a = [];
     for (let t = this.index + 1; t < this.array.length; t++) {
       const n = this.array[t];
-      if (n.code === 401)
+      if (n.code === this.bodyCode())
         a.push(n);
       else
         break;
@@ -440,7 +443,7 @@ const Z = (e, a) => e.map((t, n, s) => {
     case x:
       return a.showChoices(t, n, s);
     case N:
-      return a.showChoicesItem(t, n, s);
+      return a.choiceWhen(t, n, s);
     case I:
       return a.showScrollingText(t, n, s);
     case v:
@@ -524,12 +527,12 @@ export {
   c as createAudio,
   C as createBasicTerms,
   k as createCommandsArray,
-  w as createCondtion,
+  y as createCondtion,
   g as createControlCharFormat,
   S as createEventPage,
   $ as createMap,
   j as createMapEvent,
-  y as createMapEventImage,
+  w as createMapEventImage,
   M as createMessages,
   d as createNoteEntity,
   E as createParamNamesArray,
