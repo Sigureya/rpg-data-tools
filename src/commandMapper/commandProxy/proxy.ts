@@ -1,6 +1,7 @@
 import type {
   EventCode,
   EventCommand,
+  EventCommandByCode,
   EventCommandLike,
 } from "@sigureya/rpgtypes";
 
@@ -17,25 +18,23 @@ class MessageProxy2 {
 //   head?: Head;
 //   body: Body[];
 // }
-
-const create = <BodyCode extends EventCode, HeadCode extends EventCode>(
+export const create = <BodyCode extends EventCode, HeadCode extends EventCode>(
   array: ReadonlyArray<EventCommand>,
   index: number,
-  bodyCode: BodyCode,
-  headCode: HeadCode
-) => {
-  const top = array[index];
-  if (!top) {
+  headCode: HeadCode,
+  bodyCode: BodyCode
+): (EventCommandByCode[HeadCode] | EventCommandByCode[BodyCode])[] => {
+  const top: EventCommand = array[index];
+  if (!top || top.code !== headCode) {
     return [];
   }
-  if (array[index].code !== headCode) {
-    return [];
-  }
-  const body: EventCommand[] = [];
+  type Head = EventCommandByCode[HeadCode];
+  type Body = EventCommandByCode[BodyCode];
+  const body: Array<Head | Body> = [top as EventCommandByCode[HeadCode]];
   for (let i = index + 1; i < array.length; i++) {
     const command = array[i];
     if (command.code === bodyCode) {
-      body.push(command);
+      body.push(command as Body);
     } else {
       break;
     }
