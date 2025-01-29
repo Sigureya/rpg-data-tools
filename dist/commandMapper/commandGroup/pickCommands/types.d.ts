@@ -1,14 +1,14 @@
-import { Command_ShowMessage, Command_ShowMessageBody, Command_ShowScrollingText, Command_ShowScrollingTextBody, Command_Comment, Command_CommentBody, Command_ScriptHeader, Command_ScriptBody, EventCode, EventCommandLike } from '@sigureya/rpgtypes';
+import { Command_ShowMessage, Command_ShowMessageBody, Command_ShowScrollingText, Command_ShowScrollingTextBody, Command_Comment, Command_CommentBody, Command_ScriptHeader, Command_ScriptBody, EventCode, EventCommandLike, EventCommand } from '@sigureya/rpgtypes';
 export interface CommandReadError {
     headCode: number;
     bodyCode: number;
     index: number;
 }
-export interface Command_TextBody<Code extends EventCode = EventCode> {
+export type Command_TextBody<Code extends EventCode = EventCode> = Extract<EventCommand, {
     code: Code;
     parameters: [string];
     indent: number;
-}
+}>;
 export interface EventCommandPair<Headder extends EventCommandLike, Body extends Command_TextBody> {
     head: Headder;
     bodys: Body[];
