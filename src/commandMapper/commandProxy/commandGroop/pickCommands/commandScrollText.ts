@@ -9,19 +9,37 @@ import {
 } from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
 import { pickCommands } from "./pickCommands";
-import type { EventCommandPair } from "./types";
+import type { CommandReadError, EventCommandPair } from "./types";
+
+export type CommandPair_ScrollingText = EventCommandPair<
+  Command_ShowScrollingText,
+  Command_ShowScrollingTextBody
+>;
+export const ERROR_MESSAGE = "ScrollTextHeader invalid command" as const;
+
+export const pickScrollTextHeader = (
+  array: ReadonlyArray<EventCommand>,
+  start: number
+): Command_ShowScrollingText => {
+  const cmd = array[start];
+  if (codeTest(SHOW_SCROLLING_TEXT, cmd)) {
+    return cmd;
+  }
+  const error: CommandReadError = {
+    headCode: SHOW_SCROLLING_TEXT,
+    bodyCode: SHOW_SCROLLING_TEXT_BODY,
+    index: start,
+  };
+  throw new Error(ERROR_MESSAGE, { cause: error });
+};
 
 export const pickScrollText = (
-  arrya: ReadonlyArray<EventCommand>,
+  array: ReadonlyArray<EventCommand>,
   start: number
-):
-  | EventCommandPair<Command_ShowScrollingText, Command_ShowScrollingTextBody>
-  | undefined => {
-  const head = arrya[start];
-  if (codeTest(SHOW_SCROLLING_TEXT, head)) {
-    return {
-      head: head,
-      bodys: pickCommands(SHOW_SCROLLING_TEXT_BODY, arrya, start + 1),
-    };
-  }
+): CommandPair_ScrollingText => {
+  const head = pickScrollTextHeader(array, start);
+  return {
+    head: head,
+    bodys: pickCommands(SHOW_SCROLLING_TEXT_BODY, array, start + 1),
+  };
 };
