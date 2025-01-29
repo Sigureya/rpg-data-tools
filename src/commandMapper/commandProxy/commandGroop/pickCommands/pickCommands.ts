@@ -119,14 +119,13 @@ export const pickHead = <Code extends EventCode>(
 export const pickComments = (
   array: ReadonlyArray<EventCommand>,
   start: number
-): EventCommandPair<Command_Comment, Command_CommentBody> | undefined => {
-  const head = array[start];
-  if (isHeadCommand(COMMENT, head)) {
-    return {
-      head: head,
-      bodys: pickCommands(COMMENT_BODY, array, start + 1),
-    };
-  }
+): EventCommandPair<Command_Comment, Command_CommentBody> => {
+  const head = pickHead(array, start, COMMENT);
+
+  return {
+    head: head,
+    bodys: pickCommands(COMMENT_BODY, array, start + 1),
+  };
 };
 
 export const pickScripts = (

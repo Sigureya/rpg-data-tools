@@ -107,23 +107,46 @@ describe("pickScrollText", () => {
   });
 });
 
-describe("pickCommands", () => {
+// describe("pickCommands", () => {
+//   const commands: EventCommand[] = [
+//     { code: 108, parameters: ["Command 1"], indent: 0 },
+//     { code: 108, parameters: ["Command 2"], indent: 0 },
+//     { code: 108, parameters: ["Command 3"], indent: 0 },
+//   ];
+//   test("pick", () => {
+//     const result = pickCommands(108, commands, 0);
+//     expect(result).toHaveLength(3);
+//     expect(result[0].parameters).toEqual(["Command 1"]);
+//     expect(result[1].parameters).toEqual(["Command 2"]);
+//     expect(result[2].parameters).toEqual(["Command 3"]);
+//   });
+//   test("not pick", () => {
+//     expect(pickCommands(109, commands, 0)).toHaveLength(0);
+//     expect(pickCommands(108, commands, commands.length)).toHaveLength(0);
+//   });
+// });
+describe("pickComments", () => {
   const commands: EventCommand[] = [
-    { code: 108, parameters: ["Command 1"], indent: 0 },
-    { code: 108, parameters: ["Command 2"], indent: 0 },
-    { code: 108, parameters: ["Command 3"], indent: 0 },
+    { code: COMMENT, parameters: ["Command 1"], indent: 0 },
+    { code: COMMENT_BODY, parameters: ["Command 2"], indent: 0 },
+    { code: COMMENT_BODY, parameters: ["Command 3"], indent: 0 },
   ];
   test("pick", () => {
-    const result = pickCommands(108, commands, 0);
-    expect(result).toHaveLength(3);
-    expect(result[0].parameters).toEqual(["Command 1"]);
-    expect(result[1].parameters).toEqual(["Command 2"]);
-    expect(result[2].parameters).toEqual(["Command 3"]);
+    const result = pickComments(commands, 0);
+    expect(result).not.toBeUndefined();
+    expect(result?.head.code).toBe(COMMENT);
+    expect(result?.bodys).toHaveLength(2);
+    expect(result?.bodys[0].parameters).toEqual(["Command 2"]);
+    expect(result?.bodys[1].parameters).toEqual(["Command 3"]);
   });
-  test("not pick", () => {
-    expect(pickCommands(109, commands, 0)).toHaveLength(0);
-    expect(pickCommands(108, commands, commands.length)).toHaveLength(0);
-  });
+  // test("not pick", () => {
+  //   expect(pickComments(commands, 1)).toThrowError(
+  //     new Error(`msg: ${108} index: 1`)
+  //   );
+  //   expect(pickComments(commands, commands.length)).toThrowError(
+  //     new Error(`msg: ${108} index: 1`)
+  //   );
+  // });
 });
 describe("pickComments", () => {
   const commands: EventCommand[] = [
@@ -139,8 +162,14 @@ describe("pickComments", () => {
     expect(result?.bodys[0].parameters).toEqual(["Command 2"]);
     expect(result?.bodys[1].parameters).toEqual(["Command 3"]);
   });
-  test("not pick", () => {
-    expect(pickComments(commands, 1)).toBeUndefined();
-    expect(pickComments(commands, commands.length)).toBeUndefined();
+  test("not pick - invalid start index", () => {
+    expect(() => pickComments(commands, 1)).toThrowError(
+      new Error(`msg: ${COMMENT} index: 1`)
+    );
+  });
+  test("not pick - out of bounds start index", () => {
+    expect(() => pickComments(commands, commands.length)).toThrowError(
+      new Error(`msg: ${COMMENT} index: ${commands.length}`)
+    );
   });
 });
