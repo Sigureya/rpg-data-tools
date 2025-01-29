@@ -1,10 +1,9 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { SimpleEventCommandGroup } from "./commandGroop";
 import type { EventCommandGroup_Message } from "./types";
 import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
-  EventCommand,
 } from "@sigureya/rpgtypes";
 
 const createMessageMock = () => {
@@ -28,10 +27,7 @@ const createMessageMock = () => {
   );
 };
 describe("showMessage", () => {
-  let message: EventCommandGroup_Message;
-  beforeEach(() => {
-    message = createMessageMock();
-  });
+  const message: EventCommandGroup_Message = createMessageMock();
   test("normalizedCommands", () => {
     const result = message.normalizedCommands();
     expect(result.length).toBe(2);
@@ -40,33 +36,10 @@ describe("showMessage", () => {
       indent: 0,
       parameters: ["face", 0, 0, 2, "speaker"],
     });
+    expect(result[1]).toMatchObject<Command_ShowMessageBody>({
+      code: 401,
+      indent: 0,
+      parameters: ["aaa\nbbb"],
+    });
   });
-  //   test("getBodyText", () => {
-  //     const result = message.getBodyText();
-  //     expect(result).toMatchInlineSnapshot(`
-  //         "aaa
-  //         bbb"
-  //         `);
-  //   });
-  //   test("joinCommandBodies", () => {
-  //     const result = message.joinCommandBodies();
-  //     expect(result).toMatchInlineSnapshot(`
-  //         Array [
-  //             Object {
-  //             "code": 401,
-  //             "indent": 0,
-  //             "parameters": Array [
-  //                 "aaa",
-  //             ],
-  //             },
-  //             Object {
-  //             "code": 401,
-  //             "indent": 0,
-  //             "parameters": Array [
-  //                 "bbb",
-  //             ],
-  //             },
-  //         ]
-  //         `);
-  //   });
 });

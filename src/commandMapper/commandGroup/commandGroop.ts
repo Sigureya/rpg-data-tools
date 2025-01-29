@@ -61,7 +61,7 @@ export class SimpleEventCommandGroup<
 }
 
 export class CombinedEventCommandGroup<
-  Header extends Extract<EventCommand, EventCommandBody>,
+  Header extends EventCommandBody,
   Body extends EventCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(pair: EventCommandPair<Header, Body>) {

@@ -397,7 +397,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         indent: number;
     })[];
 }
-export declare class CombinedEventCommandGroup<Header extends Extract<EventCommand, EventCommandBody>, Body extends EventCommandBody> extends BaseEventCommandGroup<Header, Body> {
+export declare class CombinedEventCommandGroup<Header extends EventCommandBody, Body extends EventCommandBody> extends BaseEventCommandGroup<Header, Body> {
     constructor(pair: EventCommandPair<Header, Body>);
     protected getExpandedBodies(): [Header, ...Body[]];
     normalizedCommands(): [Header];
