@@ -19,11 +19,13 @@ import type {
   EventCommand,
 } from "@sigureya/rpgtypes";
 import type { CallBackFunc } from "./types";
+import type {
+  EventCommandGroup_Comment,
+  EventCommandGroup_Message,
+  EventCommandGroup_Script,
+  EventCommandGroup_ScrollingText,
+} from "./commandGroup";
 import {
-  type EventCommandGroup_Message,
-  type EventCommandGroup_ScrollingText,
-  type EventCommandGroup_Comment,
-  type EventCommandGroup_Script,
   handleGroupMessage,
   handleGroupScrollingText,
   handleGroupComment,
@@ -60,6 +62,7 @@ export const mapTextCommand = <T>(
         return handleGroupComment(array, index, table.comment);
       case SCRIPT_EVAL:
         return handleGroupScript(array, index, table.script);
+
       case SHOW_CHOICES:
         return table.showChoices(command, index, array);
       case SHOW_CHOICES_ITEM:
