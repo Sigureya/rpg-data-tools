@@ -6,7 +6,7 @@ export interface Command_TextBody {
   indent: number;
 }
 
-export interface CommandPair<
+export interface EventCommandPair<
   Headder extends EventCommandLike,
   Body extends Command_TextBody
 > {

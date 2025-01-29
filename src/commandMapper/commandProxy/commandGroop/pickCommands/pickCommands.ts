@@ -21,7 +21,7 @@ import {
   SHOW_SCROLLING_TEXT,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import type { Command_TextBody, CommandPair } from "./types";
+import type { EventCommandPair } from "./types";
 
 export const isBodyParams = (param: unknown[]): param is [string] => {
   return typeof param[0] === "string" && param.length === 1;
@@ -76,16 +76,10 @@ export const pickCommands = <Code extends EventCode>(
   return result;
 };
 
-export const joinBodys = <Command extends Command_TextBody>(
-  array: ReadonlyArray<Command>
-) => {
-  return array.map((v) => v.parameters[0]).join("\n");
-};
-
 export const pickComments = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-): CommandPair<Command_Comment, Command_CommentBody> | undefined => {
+): EventCommandPair<Command_Comment, Command_CommentBody> | undefined => {
   const head = arrya[start];
   if (isHeadCoomand(COMMENT, head)) {
     return {
@@ -98,7 +92,7 @@ export const pickComments = (
 export const pickScripts = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-): CommandPair<Command_ScriptHeader, Command_ScriptBody> | undefined => {
+): EventCommandPair<Command_ScriptHeader, Command_ScriptBody> | undefined => {
   const head = arrya[start];
   if (isHeadCoomand(SCRIPT_EVAL, head)) {
     return {
@@ -111,7 +105,9 @@ export const pickScripts = (
 export const pickMessageWithHead = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-): CommandPair<Command_ShowMessage, Command_ShowMessageBody> | undefined => {
+):
+  | EventCommandPair<Command_ShowMessage, Command_ShowMessageBody>
+  | undefined => {
   const head = arrya[start];
   if (codeTest(SHOW_MESSAGE, head)) {
     return {
@@ -125,7 +121,7 @@ export const pickScrollText = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
 ):
-  | CommandPair<Command_ShowScrollingText, Command_ShowScrollingTextBody>
+  | EventCommandPair<Command_ShowScrollingText, Command_ShowScrollingTextBody>
   | undefined => {
   const head = arrya[start];
   if (codeTest(SHOW_SCROLLING_TEXT, head)) {

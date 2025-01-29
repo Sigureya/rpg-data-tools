@@ -2,6 +2,7 @@ import {
   CHANGE_NAME,
   CHANGE_NICKNAME,
   CHANGE_PROFILE,
+  COMMENT,
   COMMENT_BODY,
   SHOW_CHOICES,
   SHOW_CHOICES_ITEM,
@@ -13,16 +14,17 @@ import type {
   Command_ChangeNickName,
   Command_ChangeProfile,
   Command_ChoiceWhen,
+  Command_Comment,
   Command_CommentBody,
   Command_ShowChoices,
   Command_ShowScrollingText,
   EventCommand,
 } from "@sigureya/rpgtypes";
-import { MessageProxy } from "./commandProxy";
 import type { CallBackFunc } from "./callbackFunction";
+import { pickComments } from "./commandProxy/commandGroop";
 
 export interface TextCommandMapper<T> {
-  showMessage(proxy: MessageProxy): T;
+  //  showMessage(proxy: MessageProxy): T;
   showChoices: CallBackFunc<Command_ShowChoices, T>;
   choiceWhen: CallBackFunc<Command_ChoiceWhen, T>;
   showScrollingText: CallBackFunc<Command_ShowScrollingText, T>;
@@ -30,6 +32,9 @@ export interface TextCommandMapper<T> {
   changeProfile: CallBackFunc<Command_ChangeProfile, T>;
   changeNickname: CallBackFunc<Command_ChangeNickName, T>;
   commentBody: CallBackFunc<Command_CommentBody, T>;
+  // comment2: (
+  //   proxy: MeesaCommandProxy2<Command_Comment, Command_CommentBody>
+  // ) => T;
   other: CallBackFunc<EventCommand, T>;
 }
 
@@ -39,8 +44,8 @@ export const mapTextCommand = <T>(
 ) => {
   return list.map<T>((command, index, array) => {
     switch (command.code) {
-      case SHOW_MESSAGE:
-        return table.showMessage(new MessageProxy(command, index, array));
+      // case SHOW_MESSAGE:
+      //   return table.showMessage(new MessageProxy(command, index, array));
       case SHOW_CHOICES:
         return table.showChoices(command, index, array);
       case SHOW_CHOICES_ITEM:
@@ -53,8 +58,8 @@ export const mapTextCommand = <T>(
         return table.changeProfile(command, index, array);
       case CHANGE_NICKNAME:
         return table.changeNickname(command, index, array);
-      case COMMENT_BODY:
-        return table.commentBody(command, index, array);
+      // case COMMENT:
+      //   return table.comment2(createComment(index, array));
 
       default:
         return table.other(command, index, array);
