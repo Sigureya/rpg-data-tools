@@ -1,4 +1,4 @@
-import type { EventCommand, EventCommandLike } from "@sigureya/rpgtypes";
+import type * as RpgTypes from "@sigureya/rpgtypes";
 import type {
   Command_TextBody as EventCommandBody,
   EventCommandPair,
@@ -7,13 +7,13 @@ import { joinCommandBodies } from "./pickCommands";
 import type { EventCommandGroup } from "./types";
 
 export abstract class BaseEventCommandGroup<
-  Header extends EventCommand,
+  Header extends RpgTypes.EventCommand,
   Body extends EventCommandBody
 > implements EventCommandGroup<Header, Body>
 {
   constructor(protected pair: EventCommandPair<Header, Body>) {}
   protected abstract getExpandedBodies(): EventCommandBody[];
-  abstract normalizedCommands(): EventCommand[];
+  abstract normalizedCommands(): RpgTypes.EventCommand[];
 
   getBodyText(separator: string = "\n"): string {
     return joinCommandBodies(this.getExpandedBodies(), separator);
@@ -32,7 +32,7 @@ export abstract class BaseEventCommandGroup<
 }
 
 export class SimpleEventCommandGroup<
-  Header extends EventCommand,
+  Header extends RpgTypes.EventCommand,
   Body extends EventCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(
@@ -56,7 +56,7 @@ export class SimpleEventCommandGroup<
       indent: 0,
       parameters: [this.getBodyText()],
     };
-    return [headder, body as EventCommand];
+    return [headder, body as RpgTypes.EventCommand];
   }
 }
 

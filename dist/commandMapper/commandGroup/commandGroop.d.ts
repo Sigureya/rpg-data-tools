@@ -1,17 +1,17 @@
-import { EventCommand } from '@sigureya/rpgtypes';
 import { Command_TextBody as EventCommandBody, EventCommandPair } from './pickCommands';
 import { EventCommandGroup } from './types';
-export declare abstract class BaseEventCommandGroup<Header extends EventCommand, Body extends EventCommandBody> implements EventCommandGroup<Header, Body> {
+import type * as RpgTypes from "@sigureya/rpgtypes";
+export declare abstract class BaseEventCommandGroup<Header extends RpgTypes.EventCommand, Body extends EventCommandBody> implements EventCommandGroup<Header, Body> {
     protected pair: EventCommandPair<Header, Body>;
     constructor(pair: EventCommandPair<Header, Body>);
     protected abstract getExpandedBodies(): EventCommandBody[];
-    abstract normalizedCommands(): EventCommand[];
+    abstract normalizedCommands(): RpgTypes.EventCommand[];
     getBodyText(separator?: string): string;
     joinCommandBodies(): EventCommandBody[];
     get header(): Header;
     get bodies(): Body[];
 }
-export declare class SimpleEventCommandGroup<Header extends EventCommand, Body extends EventCommandBody> extends BaseEventCommandGroup<Header, Body> {
+export declare class SimpleEventCommandGroup<Header extends RpgTypes.EventCommand, Body extends EventCommandBody> extends BaseEventCommandGroup<Header, Body> {
     readonly bodyCode: Body["code"];
     constructor(pair: EventCommandPair<Header, Body>, bodyCode: Body["code"]);
     protected getExpandedBodies(): Body[];
@@ -64,7 +64,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 109;
         indent: number;
     } | {
-        parameters: [branchCode: 0, switchId: number, switchValue: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>] | [branchCode: 1, variableId: number, operand: number, value: number] | [branchCode: 2, selfSwitchId: string, value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>] | [branchCode: 3, time: number, operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>] | [branchCode: 4, actorId: number, operand: number, value: number] | [branchCode: 5, enemyId: number] | [branchCode: 6, characterId: number] | [branchCode: 7, value: number, compair: 0 | 1 | 2] | [branchCode: 8, itemId: number] | [branchCode: 9, weaponId: number] | [branchCode: 10, armorId: number] | [branchCode: 11, buttonId: number] | [branchCode: 12, script: string] | [branchCode: 13, vehicleId: number];
+        parameters: [branchCode: 0, switchId: number, switchValue: RpgTypes.ValueOf<RpgTypes.Toggle>] | [branchCode: 1, variableId: number, operand: number, value: number] | [branchCode: 2, selfSwitchId: string, value: RpgTypes.ValueOf<RpgTypes.Toggle>] | [branchCode: 3, time: number, operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>] | [branchCode: 4, actorId: number, operand: number, value: number] | [branchCode: 5, enemyId: number] | [branchCode: 6, characterId: number] | [branchCode: 7, value: number, compair: 0 | 1 | 2] | [branchCode: 8, itemId: number] | [branchCode: 9, weaponId: number] | [branchCode: 10, armorId: number] | [branchCode: 11, buttonId: number] | [branchCode: 12, script: string] | [branchCode: 13, vehicleId: number];
         code: 111;
         indent: number;
     } | {
@@ -96,51 +96,51 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 119;
         indent: number;
     } | {
-        parameters: [min: number, max: number, value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [min: number, max: number, value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 121;
         indent: number;
     } | {
-        parameters: [startId: number, endId: number, operationType: number, operand: 0, value: number] | [startId: number, endId: number, operationType: number, operand: 1, variableId: number] | [startId: number, endId: number, operationType: number, operand: 2, min: number, max: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 0 | 1 | 2, itemId: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 3 | 4, index: number, param: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').STATUS>] | [startId: number, endId: number, operationType: number, operand: 3, type: 5, id: number, param: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').CHARACTER>] | [startId: number, endId: number, operationType: number, operand: 3, type: 6, index: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 7, param: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').OTHER>] | [startId: number, endId: number, operationType: number, operand: 3, type: 8, param: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').LAST>] | [startId: number, endId: number, operationType: number, operand: 4, code: string];
+        parameters: [startId: number, endId: number, operationType: number, operand: 0, value: number] | [startId: number, endId: number, operationType: number, operand: 1, variableId: number] | [startId: number, endId: number, operationType: number, operand: 2, min: number, max: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 0 | 1 | 2, itemId: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 3 | 4, index: number, param: RpgTypes.ValueOf<RpgTypes.STATUS>] | [startId: number, endId: number, operationType: number, operand: 3, type: 5, id: number, param: RpgTypes.ValueOf<RpgTypes.CHARACTER>] | [startId: number, endId: number, operationType: number, operand: 3, type: 6, index: number] | [startId: number, endId: number, operationType: number, operand: 3, type: 7, param: RpgTypes.ValueOf<RpgTypes.OTHER>] | [startId: number, endId: number, operationType: number, operand: 3, type: 8, param: RpgTypes.ValueOf<RpgTypes.LAST>] | [startId: number, endId: number, operationType: number, operand: 4, code: string];
         code: 122;
         indent: number;
     } | {
-        parameters: [key: string, value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [key: string, value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 123;
         indent: number;
     } | {
-        parameters: [operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, time: number];
+        parameters: [operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, time: number];
         code: 124;
         indent: number;
     } | {
-        parameters: [operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, operationType: number, value: number];
+        parameters: [operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, operationType: number, value: number];
         code: 125;
         indent: number;
     } | {
-        parameters: [id: number, operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, operationType: number, value: number];
+        parameters: [id: number, operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, operationType: number, value: number];
         code: 126;
         indent: number;
     } | {
-        parameters: [id: number, operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, operationType: number, value: number, isEquip: boolean];
+        parameters: [id: number, operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, operationType: number, value: number, isEquip: boolean];
         code: 127;
         indent: number;
     } | {
-        parameters: [id: number, operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, operationType: number, value: number, isEquip: boolean];
+        parameters: [id: number, operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, operationType: number, value: number, isEquip: boolean];
         code: 128;
         indent: number;
     } | {
-        parameters: [id: number, operation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, isInit: boolean];
+        parameters: [id: number, operation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, isInit: boolean];
         code: 129;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 132;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 140;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 133;
         indent: number;
     } | {
@@ -156,27 +156,27 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 301;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 134;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 135;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 136;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Toggle>];
+        parameters: [value: RpgTypes.ValueOf<RpgTypes.Toggle>];
         code: 137;
         indent: number;
     } | {
-        parameters: [color: import('@sigureya/rpgtypes').ColorRGBA];
+        parameters: [color: RpgTypes.ColorRGBA];
         code: 138;
         indent: number;
     } | {
-        parameters: [me: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [me: RpgTypes.AudioFileParams];
         code: 139;
         indent: number;
     } | {
@@ -184,7 +184,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 236;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 241;
         indent: number;
     } | {
@@ -192,7 +192,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 242;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 245;
         indent: number;
     } | {
@@ -200,7 +200,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 246;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 250;
         indent: number;
     } | {
@@ -208,7 +208,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 251;
         indent: number;
     } | {
-        parameters: [value: import('@sigureya/rpgtypes').AudioFileParams];
+        parameters: [value: RpgTypes.AudioFileParams];
         code: 249;
         indent: number;
     } | {
@@ -224,11 +224,11 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 244;
         indent: number;
     } | {
-        parameters: import('@sigureya/rpgtypes').ShopProcessing;
+        parameters: RpgTypes.ShopProcessing;
         code: 302;
         indent: number;
     } | {
-        parameters: import('@sigureya/rpgtypes').ShopGoods;
+        parameters: RpgTypes.ShopGoods;
         code: 605;
         indent: number;
     } | {
@@ -236,15 +236,15 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 303;
         indent: number;
     } | {
-        parameters: [targetSelect: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, index: number, oparation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, oprandType: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, VariableIdOrValue: number, allowDetah: boolean];
+        parameters: [targetSelect: RpgTypes.ValueOf<RpgTypes.Designation>, index: number, oparation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, oprandType: RpgTypes.ValueOf<RpgTypes.Designation>, VariableIdOrValue: number, allowDetah: boolean];
         code: 311;
         indent: number;
     } | {
-        parameters: [targetSelect: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, index: number, oparation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, oprandType: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, VariableIdOrValue: number];
+        parameters: [targetSelect: RpgTypes.ValueOf<RpgTypes.Designation>, index: number, oparation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, oprandType: RpgTypes.ValueOf<RpgTypes.Designation>, VariableIdOrValue: number];
         code: 312;
         indent: number;
     } | {
-        parameters: [targetSelect: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, index: number, oparation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Operation_PlusMinus>, oprandType: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, VariableIdOrValue: number];
+        parameters: [targetSelect: RpgTypes.ValueOf<RpgTypes.Designation>, index: number, oparation: RpgTypes.ValueOf<RpgTypes.Operation_PlusMinus>, oprandType: RpgTypes.ValueOf<RpgTypes.Designation>, VariableIdOrValue: number];
         code: 313;
         indent: number;
     } | {
@@ -268,7 +268,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 323;
         indent: number;
     } | {
-        parameters: [designation: import('@sigureya/rpgtypes').ValueOf<import('@sigureya/rpgtypes').Designation>, mapId: number, x: number, y: number, direction: import('@sigureya/rpgtypes').Direction8, fadeType: number];
+        parameters: [designation: RpgTypes.ValueOf<RpgTypes.Designation>, mapId: number, x: number, y: number, direction: RpgTypes.Direction8, fadeType: number];
         code: 201;
         indent: number;
     } | {
@@ -284,7 +284,7 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 204;
         indent: number;
     } | {
-        parameters: [characterId: number, movement: import('@sigureya/rpgtypes').MoveRouteData];
+        parameters: [characterId: number, movement: RpgTypes.MoveRouteData];
         code: 205;
         indent: number;
     } | {
@@ -340,11 +340,11 @@ export declare class SimpleEventCommandGroup<Header extends EventCommand, Body e
         code: 230;
         indent: number;
     } | {
-        parameters: import('@sigureya/rpgtypes').ShowPicture;
+        parameters: RpgTypes.ShowPicture;
         code: 231;
         indent: number;
     } | {
-        parameters: [pictureId: number, filename: string, origin: 0 | 1, x: number, y: number, scaleX: number, scaleY: number, opacity: number, blendMode: import('@sigureya/rpgtypes').PicutureBlendMode, wait: boolean, easingType: number];
+        parameters: [pictureId: number, filename: string, origin: 0 | 1, x: number, y: number, scaleX: number, scaleY: number, opacity: number, blendMode: RpgTypes.PicutureBlendMode, wait: boolean, easingType: number];
         code: 232;
         indent: number;
     } | {
