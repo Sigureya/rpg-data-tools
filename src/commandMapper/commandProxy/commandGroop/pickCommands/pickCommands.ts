@@ -1,6 +1,4 @@
 import type {
-  Command_Comment,
-  Command_CommentBody,
   Command_ScriptBody,
   Command_ScriptHeader,
   Command_ShowMessage,
@@ -12,8 +10,6 @@ import type {
   EventCommand,
 } from "@sigureya/rpgtypes";
 import {
-  COMMENT,
-  COMMENT_BODY,
   SCRIPT_EVAL,
   SCRIPT_EVAL_BODY,
   SHOW_MESSAGE,
@@ -22,31 +18,12 @@ import {
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
 import type { Command_TextBody, EventCommandPair } from "./types";
-import { codeTest } from "./checkCommand";
+import { codeTest } from "./commandCheck";
 
 export const isBodyParams = (
   param: unknown[]
 ): param is [string] & { length: 1 } => {
   return typeof param[0] === "string" && param.length === 1;
-};
-
-export const isMessageHeader = (
-  command: EventCommand
-): command is Command_ShowMessage => {
-  if (codeTest(SHOW_MESSAGE, command)) {
-    return false;
-  }
-  if (![4, 5].includes(command.parameters.length)) {
-    return false;
-  }
-
-  return (
-    typeof command.parameters[0] === "string" &&
-    typeof command.parameters[1] === "number" &&
-    typeof command.parameters[2] === "number" &&
-    typeof command.parameters[3] === "number"
-    //    typeof command.parameters[4] === "string"
-  );
 };
 
 export const isHeadCommand = <Code extends EventCode>(
@@ -105,28 +82,6 @@ export const pickHead = <Code extends EventCode>(
     };
   }
   throw new Error(`msg: ${code} index: ${index}`);
-};
-
-export const pickComments = (
-  array: ReadonlyArray<EventCommand>,
-  start: number
-): EventCommandPair<Command_Comment, Command_CommentBody> => {
-  const head = pickHead(array, start, COMMENT);
-
-  return {
-    head: head,
-    bodys: pickCommands(COMMENT_BODY, array, start + 1),
-  };
-};
-
-export const pickMessageHeader = (
-  arrya: ReadonlyArray<EventCommand>,
-  start: number
-) => {
-  const head = arrya[start];
-  if (isMessageHeader(head)) {
-    return head;
-  }
 };
 
 export const pickScripts = (

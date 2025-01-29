@@ -1,17 +1,16 @@
 import { describe, test, expect } from "vitest";
 import {
-  codeTest,
   isBodyParams,
   isHeadCommand,
-  pickComments,
   pickMessageWithHead,
   pickScripts,
   pickScrollText,
-  pickCommands,
 } from "./pickCommands";
 import { COMMENT, COMMENT_BODY, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
 
 import type { EventCommand } from "@sigureya/rpgtypes";
+import { codeTest } from "./commandCheck";
+import { pickComments } from "./commandComment";
 
 describe("codeTest", () => {
   test("true", () => {
