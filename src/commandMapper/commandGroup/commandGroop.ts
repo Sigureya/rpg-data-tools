@@ -1,4 +1,4 @@
-import type { EventCommandLike } from "@sigureya/rpgtypes";
+import type { EventCommand, EventCommandLike } from "@sigureya/rpgtypes";
 import type {
   Command_TextBody as EventCommandBody,
   EventCommandPair,
@@ -13,6 +13,7 @@ export abstract class BaseEventCommandGroup<
 {
   constructor(protected pair: EventCommandPair<Header, Body>) {}
   protected abstract getExpandedBodies(): EventCommandBody[];
+  abstract normalizedCommands(): EventCommand[];
 
   getBodyText(separator: string = "\n"): string {
     return joinCommandBodies(this.getExpandedBodies(), separator);
@@ -31,19 +32,36 @@ export abstract class BaseEventCommandGroup<
 }
 
 export class SimpleEventCommandGroup<
-  Header extends EventCommandLike,
+  Header extends EventCommand,
   Body extends EventCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
-  constructor(pair: EventCommandPair<Header, Body>) {
+  constructor(
+    pair: EventCommandPair<Header, Body>,
+    public readonly bodyCode: Body["code"]
+  ) {
     super(pair);
   }
   protected getExpandedBodies(): Body[] {
     return this.bodies;
   }
+  normalizedCommands() {
+    const headder: Header = {
+      ...this.header,
+      code: this.header.code,
+      indent: this.header.indent,
+      parameters: [...this.header.parameters],
+    };
+    const body = {
+      code: this.bodyCode,
+      indent: 0,
+      parameters: [this.getBodyText()],
+    };
+    return [headder, body as EventCommand];
+  }
 }
 
 export class CombinedEventCommandGroup<
-  Header extends EventCommandBody,
+  Header extends Extract<EventCommand, EventCommandBody>,
   Body extends EventCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(pair: EventCommandPair<Header, Body>) {
@@ -51,5 +69,15 @@ export class CombinedEventCommandGroup<
   }
   protected getExpandedBodies(): [Header, ...Body[]] {
     return [this.header, ...this.bodies];
+  }
+  normalizedCommands(): [Header] {
+    const text: string = this.getBodyText();
+    return [
+      {
+        code: this.header.code,
+        parameters: [text],
+        indent: this.header.indent,
+      } as Header,
+    ];
   }
 }
