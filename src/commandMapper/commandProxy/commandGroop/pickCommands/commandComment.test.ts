@@ -2,6 +2,7 @@ import type { EventCommand } from "@sigureya/rpgtypes";
 import { COMMENT, COMMENT_BODY } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { pickComments } from "./commandComment";
+import { ERROR_INVALID_HEAD } from "./errorConstants";
 
 describe("pickComments", () => {
   const commands: EventCommand[] = [
@@ -41,13 +42,11 @@ describe("pickComments", () => {
     expect(result?.bodys[1].parameters).toEqual(["Command 3"]);
   });
   test("not pick - invalid start index", () => {
-    expect(() => pickComments(commands, 1)).toThrowError(
-      new Error(`msg: ${COMMENT} index: 1`)
-    );
+    expect(() => pickComments(commands, 1)).toThrowError(ERROR_INVALID_HEAD);
   });
   test("not pick - out of bounds start index", () => {
     expect(() => pickComments(commands, commands.length)).toThrowError(
-      new Error(`msg: ${COMMENT} index: ${commands.length}`)
+      ERROR_INVALID_HEAD
     );
   });
 });

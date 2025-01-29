@@ -1,6 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { pickScripts } from "./commandScript";
+import { ERROR_INVALID_HEAD } from "./errorConstants";
 
 describe("pickScripts", () => {
   const commands: EventCommand[] = [
@@ -18,7 +19,9 @@ describe("pickScripts", () => {
     expect(result?.bodys[1].parameters).toEqual(["console.log('test3')"]);
   });
   test("not pick", () => {
-    expect(pickScripts(commands, 1)).toBeUndefined();
-    expect(pickScripts(commands, commands.length)).toBeUndefined();
+    expect(() => pickScripts(commands, 1)).toThrowError(ERROR_INVALID_HEAD);
+    expect(() => pickScripts(commands, commands.length)).toThrowError(
+      ERROR_INVALID_HEAD
+    );
   });
 });

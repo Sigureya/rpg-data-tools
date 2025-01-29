@@ -5,6 +5,7 @@ import type {
 } from "@sigureya/rpgtypes";
 import type { Command_TextBody } from "./types";
 import { codeTest } from "./commandCheck";
+import { ERROR_INVALID_HEAD } from "./errorConstants";
 
 export const isBodyParams = (
   param: unknown[]
@@ -57,15 +58,14 @@ export const pickHead = <Code extends EventCode>(
   code: Code
 ): Command_TextBody<Code> => {
   const head = commands[index];
-  if (!head) {
-    throw new Error(`msg: ${code} index: ${index}`);
+  if (head) {
+    if (codeTest(code, head) && isBodyParams(head.parameters)) {
+      return {
+        code: code,
+        indent: head.indent,
+        parameters: [head.parameters[0]],
+      };
+    }
   }
-  if (codeTest(code, head) && isBodyParams(head.parameters)) {
-    return {
-      code: code,
-      indent: head.indent,
-      parameters: [head.parameters[0]],
-    };
-  }
-  throw new Error(`msg: ${code} index: ${index}`);
+  throw new Error(ERROR_INVALID_HEAD, { cause: head });
 };
