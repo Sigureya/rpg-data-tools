@@ -1,12 +1,9 @@
 import type {
-  Command_ShowMessage,
-  Command_ShowMessageBody,
   EventCommandLike,
   EventCode,
   EventCommand,
 } from "@sigureya/rpgtypes";
-import { SHOW_MESSAGE, SHOW_MESSAGE_BODY } from "@sigureya/rpgtypes";
-import type { Command_TextBody, EventCommandPair } from "./types";
+import type { Command_TextBody } from "./types";
 import { codeTest } from "./commandCheck";
 
 export const isBodyParams = (
