@@ -1,11 +1,16 @@
-import type { EventCommandTable as EventCommandTypes } from "@sigureya/rpgtypes";
+import type {
+  EventCommandTable,
+  EventCommandTable as EventCommandTypes,
+} from "@sigureya/rpgtypes";
+
+import type * as CMD from "@sigureya/rpgtypes/";
 
 import type * as CommandParam from "./paramTypes";
 import { EventCommandFactory } from "./eventCommandFactory";
 
 export const showMessage = new EventCommandFactory<
   CommandParam.ShowMessage,
-  EventCommandTypes["SHOW_MESSAGE"]
+  CMD.Command_ShowMessage
 >(101, {
   construct: (proto) => {
     return {
@@ -39,7 +44,7 @@ export const showMessage = new EventCommandFactory<
 
 export const showMessageBody = new EventCommandFactory<
   CommandParam.ShowMessageBody,
-  EventCommandTypes["SHOW_MESSAGE_BODY"]
+  CMD.Command_ShowMessageBody
 >(401, {
   construct: (proto) => {
     return {
@@ -59,7 +64,7 @@ export const showMessageBody = new EventCommandFactory<
 
 export const showChoices = new EventCommandFactory<
   CommandParam.ShowChoices,
-  EventCommandTypes["SHOW_CHOICES"]
+  CMD.Command_ShowChoices
 >(102, {
   construct: (proto) => {
     return {
@@ -92,7 +97,7 @@ export const showChoices = new EventCommandFactory<
 });
 export const showChoicesItem = new EventCommandFactory<
   CommandParam.ShowChoicesItem,
-  EventCommandTypes["SHOW_CHOICES_ITEM"]
+  EventCommandTable["SHOW_CHOICES_ITEM"]
 >(402, {
   construct: (proto) => {
     return {
@@ -114,7 +119,7 @@ export const showChoicesItem = new EventCommandFactory<
 
 export const inputNumber = new EventCommandFactory<
   CommandParam.InputNumber,
-  EventCommandTypes["INPUT_NUMBER"]
+  CMD.Command_InputNumber
 >(103, {
   construct: (proto) => {
     return {
@@ -136,7 +141,7 @@ export const inputNumber = new EventCommandFactory<
 
 export const selectItem = new EventCommandFactory<
   CommandParam.SelectItem,
-  EventCommandTypes["SELECT_ITEM"]
+  CMD.Command_SelectItem
 >(104, {
   construct: (proto) => {
     return {
@@ -199,7 +204,7 @@ export const showScrollingTextBody = new EventCommandFactory<
 
 export const comment = new EventCommandFactory<
   CommandParam.Comment,
-  EventCommandTypes["COMMENT"]
+  CMD.Command_Comment
 >(108, {
   construct: (proto) => {
     return {
@@ -218,7 +223,7 @@ export const comment = new EventCommandFactory<
 
 export const commentBody = new EventCommandFactory<
   CommandParam.CommentBody,
-  EventCommandTypes["COMMENT_BODY"]
+  CMD.Command_CommentBody
 >(408, {
   construct: (proto) => {
     return {
@@ -237,7 +242,7 @@ export const commentBody = new EventCommandFactory<
 
 export const commonEvent = new EventCommandFactory<
   CommandParam.CommonEvent,
-  EventCommandTypes["COMMON_EVENT"]
+  CMD.Command_CommonEvent
 >(117, {
   construct: (proto) => {
     return {
@@ -256,7 +261,7 @@ export const commonEvent = new EventCommandFactory<
 
 export const showPicture = new EventCommandFactory<
   CommandParam.ShowPicture,
-  EventCommandTypes["SHOW_PICTURE"]
+  EventCommandTable["SHOW_PICTURE"]
 >(231, {
   array: (obj) => {
     return [
@@ -322,7 +327,7 @@ export const changeName = new EventCommandFactory<
 
 export const changeNickname = new EventCommandFactory<
   CommandParam.ChangeNickname,
-  EventCommandTypes["CHANGE_NICKNAME"]
+  CMD.Command_ChangeNickName
 >(324, {
   construct: (proto) => {
     return {
@@ -343,7 +348,7 @@ export const changeNickname = new EventCommandFactory<
 
 export const changeProfile = new EventCommandFactory<
   CommandParam.ChangeProfile,
-  EventCommandTypes["CHANGE_PROFILE"]
+  CMD.Command_ChangeProfile
 >(325, {
   construct: (proto) => {
     return {
