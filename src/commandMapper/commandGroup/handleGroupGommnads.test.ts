@@ -10,13 +10,18 @@ import {
   handleGroupComment,
   handleGroupScript,
 } from "./handleGroupGommnads";
+import type {
+  EventCommandPair_Comment,
+  EventCommandPair_Message,
+  EventCommandPair_Script,
+  EventCommandPair_ScrollingText,
+} from "./pickCommands";
 import {
   pickMessageWithHead,
   pickScrollText,
   pickComments,
   pickScripts,
 } from "./pickCommands";
-import type { EventCommandGroup_Message } from "./types";
 
 vi.mock("./pickCommands", () => ({
   pickMessageWithHead: vi.fn(),
@@ -27,7 +32,7 @@ vi.mock("./pickCommands", () => ({
 
 describe("handleGroupMessage", () => {
   it("should call the callback with a SimpleEventCommandGroup", () => {
-    const mockPair = {
+    const mockPair: EventCommandPair_Message = {
       head: { code: 101, parameters: ["", 0, 0, 2, ""], indent: 0 },
       bodys: [],
     } as const;
@@ -43,7 +48,9 @@ describe("handleGroupMessage", () => {
   });
 
   it("should throw an error when pickMessageWithHead fails", () => {
-    (pickMessageWithHead as any).mockImplementation(() => {
+    (
+      pickMessageWithHead as MockedFunction<typeof pickMessageWithHead>
+    ).mockImplementation(() => {
       throw new Error("Invalid message command");
     });
     expect(() => handleGroupMessage([], 0, vi.fn())).toThrow(
@@ -54,8 +61,13 @@ describe("handleGroupMessage", () => {
 
 describe("handleGroupScrollingText", () => {
   it("should call the callback with a SimpleEventCommandGroup", () => {
-    const mockPair = { head: { code: 105 }, bodys: [] } as const;
-    (pickScrollText as any).mockReturnValue(mockPair);
+    const mockPair: EventCommandPair_ScrollingText = {
+      head: { code: 105, parameters: [1, false], indent: 0 },
+      bodys: [],
+    } as const;
+    (pickScrollText as MockedFunction<typeof pickScrollText>).mockReturnValue(
+      mockPair
+    );
     const callback = vi.fn();
     const result = handleGroupScrollingText([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
@@ -65,7 +77,9 @@ describe("handleGroupScrollingText", () => {
   });
 
   it("should throw an error when pickScrollText fails", () => {
-    (pickScrollText as any).mockImplementation(() => {
+    (
+      pickScrollText as MockedFunction<typeof pickScrollText>
+    ).mockImplementation(() => {
       throw new Error("Invalid scrolling text command");
     });
     expect(() => handleGroupScrollingText([], 0, vi.fn())).toThrow(
@@ -76,8 +90,13 @@ describe("handleGroupScrollingText", () => {
 
 describe("handleGroupComment", () => {
   it("should call the callback with a CombinedEventCommandGroup", () => {
-    const mockPair = { head: { code: 108 }, bodys: [] };
-    (pickComments as any).mockReturnValue(mockPair);
+    const mockPair: EventCommandPair_Comment = {
+      head: { code: 108, parameters: ["Command 1"], indent: 0 },
+      bodys: [],
+    };
+    (pickComments as MockedFunction<typeof pickComments>).mockReturnValue(
+      mockPair
+    );
     const callback = vi.fn();
     const result = handleGroupComment([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
@@ -87,9 +106,11 @@ describe("handleGroupComment", () => {
   });
 
   it("should throw an error when pickComments fails", () => {
-    (pickComments as any).mockImplementation(() => {
-      throw new Error("Invalid comment command");
-    });
+    (pickComments as MockedFunction<typeof pickComments>).mockImplementation(
+      () => {
+        throw new Error("Invalid comment command");
+      }
+    );
     expect(() => handleGroupComment([], 0, vi.fn())).toThrow(
       "Invalid comment command"
     );
@@ -98,8 +119,13 @@ describe("handleGroupComment", () => {
 
 describe("handleGroupScript", () => {
   it("should call the callback with a CombinedEventCommandGroup", () => {
-    const mockPair = { head: { code: 355 }, bodys: [] };
-    (pickScripts as any).mockReturnValue(mockPair);
+    const mockPair: EventCommandPair_Script = {
+      head: { code: 355, parameters: ["console.log('test')"], indent: 0 },
+      bodys: [],
+    };
+    (pickScripts as MockedFunction<typeof pickScripts>).mockReturnValue(
+      mockPair
+    );
     const callback = vi.fn();
     const result = handleGroupScript([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
@@ -109,9 +135,11 @@ describe("handleGroupScript", () => {
   });
 
   it("should throw an error when pickScripts fails", () => {
-    (pickScripts as any).mockImplementation(() => {
-      throw new Error("Invalid script command");
-    });
+    (pickScripts as MockedFunction<typeof pickScripts>).mockImplementation(
+      () => {
+        throw new Error("Invalid script command");
+      }
+    );
     expect(() => handleGroupScript([], 0, vi.fn())).toThrow(
       "Invalid script command"
     );
