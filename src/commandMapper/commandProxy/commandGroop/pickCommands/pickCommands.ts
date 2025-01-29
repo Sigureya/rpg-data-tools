@@ -22,6 +22,7 @@ import {
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
 import type { Command_TextBody, EventCommandPair } from "./types";
+import { codeTest } from "./checkCommand";
 
 export const isBodyParams = (
   param: unknown[]
@@ -46,16 +47,6 @@ export const isMessageHeader = (
     typeof command.parameters[3] === "number"
     //    typeof command.parameters[4] === "string"
   );
-};
-
-export const codeTest = <Code extends EventCode>(
-  code: Code,
-  command: EventCommandLike | undefined
-): command is EventCommandLike<Code> => {
-  if (!command) {
-    return false;
-  }
-  return code === command.code;
 };
 
 export const isHeadCommand = <Code extends EventCode>(
@@ -126,6 +117,16 @@ export const pickComments = (
     head: head,
     bodys: pickCommands(COMMENT_BODY, array, start + 1),
   };
+};
+
+export const pickMessageHeader = (
+  arrya: ReadonlyArray<EventCommand>,
+  start: number
+) => {
+  const head = arrya[start];
+  if (isMessageHeader(head)) {
+    return head;
+  }
 };
 
 export const pickScripts = (
