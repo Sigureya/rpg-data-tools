@@ -52,11 +52,15 @@ export const pickCommands = <Code extends EventCode>(
   return result;
 };
 
-export const pickHead = <Code extends EventCode>(
+export const pickHead = <Code extends Command_TextBody["code"]>(
   commands: ReadonlyArray<EventCommand>,
   index: number,
   code: Code
-): Command_TextBody<Code> => {
+): {
+  code: Code;
+  indent: number;
+  parameters: [string];
+} => {
   const head = commands[index];
   if (head) {
     if (codeTest(code, head) && isBodyParams(head.parameters)) {
