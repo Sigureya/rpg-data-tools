@@ -25,7 +25,7 @@ export const handleGroupMessage = <Result>(
 ): Result => {
   const pair = pickMessageWithHead(array, index);
 
-  const group = new SimpleEventCommandGroup(pair);
+  const group = new SimpleEventCommandGroup(pair, 401);
   return func(group);
 };
 
@@ -35,7 +35,7 @@ export const handleGroupScrollingText = <Result>(
   func: (groop: EventCommandGroup_ScrollingText) => Result
 ): Result => {
   const pair = pickScrollText(array, index);
-  const group = new SimpleEventCommandGroup(pair);
+  const group = new SimpleEventCommandGroup(pair, 405);
   return func(group);
 };
 
