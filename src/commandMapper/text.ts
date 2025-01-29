@@ -16,7 +16,6 @@ import type {
   Command_ChoiceWhen,
   Command_CommentBody,
   Command_ShowChoices,
-  Command_ShowScrollingText,
   EventCommand,
 } from "@sigureya/rpgtypes";
 import type { CallBackFunc } from "./types";
@@ -29,7 +28,7 @@ import {
   handleGroupScrollingText,
   handleGroupComment,
   handleGroupScript,
-} from "./commandGroop";
+} from "./commandGroup";
 
 export interface TextCommandMapper<T> {
   showMessage(groop: EventCommandGroup_Message): T;

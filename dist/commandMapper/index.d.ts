@@ -1,3 +1,3 @@
 export * from './text';
 export * from './image';
-export * from './commandGroop';
+export * from './commandGroup';
