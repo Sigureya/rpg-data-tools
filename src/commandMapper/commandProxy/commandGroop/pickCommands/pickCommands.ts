@@ -37,7 +37,7 @@ export const codeTest = <Code extends EventCode>(
   return code === command.code;
 };
 
-export const isHeadCoomand = <Code extends EventCode>(
+export const isHeadCommand = <Code extends EventCode>(
   code: Code,
   command: EventCommandLike | undefined
 ): command is {
@@ -81,7 +81,7 @@ export const pickComments = (
   start: number
 ): EventCommandPair<Command_Comment, Command_CommentBody> | undefined => {
   const head = array[start];
-  if (isHeadCoomand(COMMENT, head)) {
+  if (isHeadCommand(COMMENT, head)) {
     return {
       head: head,
       bodys: pickCommands(COMMENT_BODY, array, start + 1),
@@ -94,7 +94,7 @@ export const pickScripts = (
   start: number
 ): EventCommandPair<Command_ScriptHeader, Command_ScriptBody> | undefined => {
   const head = arrya[start];
-  if (isHeadCoomand(SCRIPT_EVAL, head)) {
+  if (isHeadCommand(SCRIPT_EVAL, head)) {
     return {
       head: head,
       bodys: pickCommands(SCRIPT_EVAL_BODY, arrya, start + 1),

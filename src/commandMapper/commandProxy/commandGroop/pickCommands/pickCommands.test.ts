@@ -2,7 +2,7 @@ import { describe, test, expect } from "vitest";
 import {
   codeTest,
   isBodyParams,
-  isHeadCoomand,
+  isHeadCommand,
   pickComments,
   pickMessageWithHead,
   pickScripts,
@@ -34,12 +34,12 @@ describe("isBodyParams", () => {
 describe("isHeadCoomand", () => {
   test("true", () => {
     expect(
-      isHeadCoomand(108, { code: 108, parameters: ["aaa"], indent: 0 })
+      isHeadCommand(108, { code: 108, parameters: ["aaa"], indent: 0 })
     ).toBe(true);
   });
   test("false", () => {
     expect(
-      isHeadCoomand(108, { code: 118, parameters: ["aaa"], indent: 0 })
+      isHeadCommand(108, { code: 118, parameters: ["aaa"], indent: 0 })
     ).toBe(false);
   });
 });
