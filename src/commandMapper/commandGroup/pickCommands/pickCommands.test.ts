@@ -1,6 +1,7 @@
 import { describe, test, expect } from "vitest";
-import { isBodyParams, isHeadCommand } from "./pickCommands";
+import { isBodyParams, isHeadCommand, pickHead } from "./pickCommands";
 import { codeTest } from "./commandCheck";
+import { COMMENT } from "@sigureya/rpgtypes";
 
 describe("codeTest", () => {
   test("true", () => {
@@ -33,21 +34,8 @@ describe("isHeadCoomand", () => {
   });
 });
 
-// describe("pickCommands", () => {
-//   const commands: EventCommand[] = [
-//     { code: 108, parameters: ["Command 1"], indent: 0 },
-//     { code: 108, parameters: ["Command 2"], indent: 0 },
-//     { code: 108, parameters: ["Command 3"], indent: 0 },
-//   ];
-//   test("pick", () => {
-//     const result = pickCommands(108, commands, 0);
-//     expect(result).toHaveLength(3);
-//     expect(result[0].parameters).toEqual(["Command 1"]);
-//     expect(result[1].parameters).toEqual(["Command 2"]);
-//     expect(result[2].parameters).toEqual(["Command 3"]);
-//   });
-//   test("not pick", () => {
-//     expect(pickCommands(109, commands, 0)).toHaveLength(0);
-//     expect(pickCommands(108, commands, commands.length)).toHaveLength(0);
-//   });
-// });
+describe("pickHead", () => {
+  test("pick", () => {
+    expect(() => pickHead([], 0, COMMENT)).toThrowError();
+  });
+});
