@@ -10,21 +10,28 @@ import {
 import { codeTest } from "./commandCheck";
 import { pickCommands } from "./pickCommands";
 import type { EventCommandPair } from "./types";
+import { ERROR_COMMAND_MESSAGE } from "./errorConstants";
 
 export const pickMessageHeader = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-) => {
+): Command_ShowMessage => {
   const head = arrya[start];
-  if (isMessageHeader(head)) {
-    return head;
+  if (head) {
+    if (isMessageHeader(head)) {
+      return head;
+    }
   }
+  throw new Error(ERROR_COMMAND_MESSAGE, { cause: head });
 };
 
 export const isMessageHeader = (
-  command: EventCommand
+  command: EventCommand | undefined
 ): command is Command_ShowMessage => {
-  if (codeTest(SHOW_MESSAGE, command)) {
+  if (!command) {
+    return false;
+  }
+  if (command.code !== SHOW_MESSAGE) {
     return false;
   }
   if (![4, 5].includes(command.parameters.length)) {
@@ -42,17 +49,10 @@ export const isMessageHeader = (
 export const pickMessageWithHead = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-):
-  | EventCommandPair<Command_ShowMessage, Command_ShowMessageBody>
-  | undefined => {
-  const head = arrya[start];
-  if (!head) {
-    return;
-  }
-  if (head.code === SHOW_MESSAGE) {
-    return {
-      head: head,
-      bodys: pickCommands(SHOW_MESSAGE_BODY, arrya, start + 1),
-    };
-  }
+): EventCommandPair<Command_ShowMessage, Command_ShowMessageBody> => {
+  const head = pickMessageHeader(arrya, start);
+  return {
+    head: head,
+    bodys: pickCommands(SHOW_MESSAGE_BODY, arrya, start + 1),
+  };
 };
