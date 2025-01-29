@@ -10,7 +10,7 @@ import type { EventCommandPair } from "./types";
 export const pickScripts = (
   arrya: ReadonlyArray<EventCommand>,
   start: number
-): EventCommandPair<Command_ScriptHeader, Command_ScriptBody> | undefined => {
+): EventCommandPair<Command_ScriptHeader, Command_ScriptBody> => {
   const head = pickHead(arrya, start, SCRIPT_EVAL);
   return {
     head: head,
