@@ -1,5 +1,5 @@
-import { CHANGE_NICKNAME as T, CHANGE_PROFILE as w, CHANGE_NAME as C, SHOW_SCROLLING_TEXT as m, SHOW_CHOICES_ITEM as A, SHOW_CHOICES as y, COMMENT as M, COMMENT_BODY as k, SCRIPT_EVAL as D, SCRIPT_EVAL_BODY as R, SHOW_MESSAGE as H, SHOW_MESSAGE_BODY as B, SHOW_SCROLLING_TEXT_BODY as h } from "@sigureya/rpgtypes";
-const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
+import { COMMENT as g, COMMENT_BODY as A, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as M, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as y, SHOW_SCROLLING_TEXT as u, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as H, SHOW_CHOICES as B } from "@sigureya/rpgtypes";
+const i = () => [0, 0, 0, 0, 0, 0, 0, 0], me = (e) => ({
   id: 0,
   name: "",
   nickname: "",
@@ -16,7 +16,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   traits: [],
   equips: [],
   ...e
-}), oe = (e) => ({
+}), pe = (e) => ({
   battlerHue: 0,
   id: 0,
   name: "",
@@ -29,7 +29,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   dropItems: [],
   actions: [],
   ...e
-}), de = (e) => ({
+}), he = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -40,7 +40,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   params: i(),
   traits: [],
   ...e
-}), me = (e) => ({
+}), ge = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -51,9 +51,9 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   wtypeId: 0,
   params: i(),
   traits: [],
-  damage: u(),
+  damage: m(),
   ...e
-}), ue = (e) => ({
+}), fe = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -62,14 +62,14 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   params: i(),
   expParams: [],
   ...e
-}), u = (e) => ({
+}), m = (e) => ({
   type: 0,
   elementId: 0,
   formula: "0",
   variance: 20,
   critical: !1,
   ...e
-}), pe = (e) => ({
+}), be = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -85,12 +85,12 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   tpGain: 0,
   hitType: 0,
   animationId: 0,
-  damage: u(),
+  damage: m(),
   effects: [],
   ...e
-}), ge = (e) => ({
+}), ve = (e) => ({
   animationId: 0,
-  damage: u(),
+  damage: m(),
   description: "",
   hitType: 0,
   iconIndex: 0,
@@ -113,7 +113,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   effects: [],
   messageType: 0,
   ...e
-}), he = (e) => ({
+}), Ie = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -137,7 +137,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   traits: [],
   note: "",
   ...e
-}), fe = (e) => ({
+}), xe = (e) => ({
   autoplayBgm: !0,
   autoplayBgs: !1,
   battleback1Name: "",
@@ -159,15 +159,15 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   parallaxSx: 0,
   parallaxSy: 0,
   ...e
-}), be = (e) => ({
+}), Se = (e) => ({
   id: 0,
   name: "",
   note: "",
   x: 0,
   y: 0,
-  pages: [_()],
+  pages: [V()],
   ...e
-}), O = (e) => ({
+}), G = (e) => ({
   actorId: 0,
   actorValid: !1,
   itemId: 0,
@@ -182,16 +182,16 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   variableValid: !1,
   variableValue: 0,
   ...e
-}), V = (e) => ({
+}), O = (e) => ({
   characterIndex: 0,
   characterName: "",
   direction: 6,
   pattern: 0,
   tileId: 0,
   ...e
-}), _ = (e) => ({
-  conditions: O(),
-  image: V(),
+}), V = (e) => ({
+  conditions: G(),
+  image: O(),
   moveRoute: {
     list: [],
     repeat: !1,
@@ -207,12 +207,12 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   pan: 0,
   pitch: 100,
   volume: 90
-}), ve = (e = {}) => ({
+}), Ne = (e = {}) => ({
   local: e.local ?? "",
   gameTitle: e.gameTitle ?? "",
   currencyUnit: e.currencyUnit ?? "",
   title1Name: e.title1Name ?? "",
-  terms: e.terms ?? F(),
+  terms: e.terms ?? _(),
   title2Name: e.title2Name ?? "",
   optAutosave: e.optAutosave ?? !1,
   attackMotions: e.attackMotions ?? [],
@@ -254,12 +254,12 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   ship: e.ship ?? d(),
   airship: e.airship ?? d(),
   tileSize: e.tileSize ?? 0
-}), F = (e = {}) => ({
+}), _ = (e = {}) => ({
   messages: P(e.messages ?? {}),
   commands: W(e.commands ?? {}),
   params: L(e.params ?? {}),
-  basic: G(e.basic ?? {})
-}), G = (e = {}) => [
+  basic: F(e.basic ?? {})
+}), F = (e = {}) => [
   e.level ?? "",
   e.levelA ?? "",
   e.hp ?? "",
@@ -406,32 +406,11 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   e.shop ?? c(),
   e.useItem ?? c(),
   e.useSkill ?? c()
-], Ie = (e, a) => e.map((t, n, s) => {
-  switch (t.code) {
-    // case SHOW_MESSAGE:
-    //   return table.showMessage(new MessageProxy(command, index, array));
-    case y:
-      return a.showChoices(t, n, s);
-    case A:
-      return a.choiceWhen(t, n, s);
-    case m:
-      return a.showScrollingText(t, n, s);
-    case C:
-      return a.changeName(t, n, s);
-    case w:
-      return a.changeProfile(t, n, s);
-    case T:
-      return a.changeNickname(t, n, s);
-    // case COMMENT:
-    //   return table.comment2(createComment(index, array));
-    default:
-      return a.other(t, n, s);
-  }
-}), p = (e, a) => a ? e === a.code : !1, z = "MessageHeader invalid command", U = "Invalid Head", g = (e) => typeof e[0] == "string" && e.length === 1, xe = (e, a) => a ? e === a.code && g(a.parameters) : !1, l = (e, a, t) => {
+], p = (e, a) => a ? e === a.code : !1, z = "MessageHeader invalid command", U = "Invalid Head", h = (e) => typeof e[0] == "string" && e.length === 1, Ee = (e, a) => a ? e === a.code && h(a.parameters) : !1, l = (e, a, t) => {
   const n = [];
   for (let s = t; s < a.length; s++) {
     const r = a[s];
-    if (p(e, r) && g(r.parameters))
+    if (p(e, r) && h(r.parameters))
       n.push({
         code: e,
         indent: r.indent,
@@ -441,9 +420,9 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
       break;
   }
   return n;
-}, f = (e, a, t) => {
+}, I = (e, a, t) => {
   const n = e[a];
-  if (n && p(t, n) && g(n.parameters))
+  if (n && p(t, n) && h(n.parameters))
     return {
       code: t,
       indent: n.indent,
@@ -452,34 +431,34 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], le = (e) => ({
   throw new Error(U, { cause: n });
 }, X = (e, a = `
 `) => e.map((t) => t.parameters[0]).join(a), $ = (e, a) => ({
-  head: f(e, a, M),
-  bodys: l(k, e, a + 1)
+  head: I(e, a, g),
+  bodys: l(A, e, a + 1)
 }), j = (e, a) => ({
-  head: f(e, a, D),
-  bodys: l(R, e, a + 1)
+  head: I(e, a, f),
+  bodys: l(M, e, a + 1)
 }), K = (e, a) => {
   const t = e[a];
   if (t && Z(t))
     return t;
   throw new Error(z, { cause: t });
-}, Z = (e) => !e || e.code !== H || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", J = (e, a) => ({
+}, Z = (e) => !e || e.code !== b || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", J = (e, a) => ({
   head: K(e, a),
-  bodys: l(B, e, a + 1)
+  bodys: l(y, e, a + 1)
 }), Q = "ScrollTextHeader invalid command", ee = (e, a) => {
   const t = e[a];
-  if (p(m, t))
+  if (p(u, t))
     return t;
   const n = {
-    headCode: m,
-    bodyCode: h,
+    headCode: u,
+    bodyCode: v,
     index: a
   };
   throw new Error(Q, { cause: n });
 }, ae = (e, a) => ({
   head: ee(e, a),
-  bodys: l(h, e, a + 1)
+  bodys: l(v, e, a + 1)
 });
-class b {
+class x {
   constructor(a) {
     this.pair = a;
   }
@@ -497,7 +476,7 @@ class b {
     return this.pair.bodys;
   }
 }
-class v extends b {
+class S extends x {
   constructor(a) {
     super(a);
   }
@@ -505,7 +484,7 @@ class v extends b {
     return this.bodies;
   }
 }
-class I extends b {
+class N extends x {
   constructor(a) {
     super(a);
   }
@@ -513,19 +492,42 @@ class I extends b {
     return [this.header, ...this.bodies];
   }
 }
-const Se = (e, a, t) => {
-  const n = J(e, a), s = new v(n);
+const te = (e, a, t) => {
+  const n = J(e, a), s = new S(n);
   return t(s);
-}, Ne = (e, a, t) => {
-  const n = ae(e, a), s = new v(n);
+}, ne = (e, a, t) => {
+  const n = ae(e, a), s = new S(n);
   return t(s);
-}, Ee = (e, a, t) => {
-  const n = $(e, a), s = new I(n);
+}, se = (e, a, t) => {
+  const n = $(e, a), s = new N(n);
   return t(s);
-}, Te = (e, a, t) => {
-  const n = j(e, a), s = new I(n);
+}, ce = (e, a, t) => {
+  const n = j(e, a), s = new N(n);
   return t(s);
-}, x = (e, a) => `<${e}:${a}>`, o = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => S(e.note, (t, n) => a(t, n, e)), Ce = (e) => S(e, (a, t) => [a, t]), S = (e, a) => {
+}, Te = (e, a) => e.map((t, n, s) => {
+  switch (t.code) {
+    case b:
+      return te(s, n, a.showMessage);
+    case u:
+      return ne(s, n, a.showScrollingText);
+    case g:
+      return se(s, n, a.comment);
+    case f:
+      return ce(s, n, a.script);
+    case B:
+      return a.showChoices(t, n, s);
+    case H:
+      return a.choiceWhen(t, n, s);
+    case R:
+      return a.changeName(t, n, s);
+    case D:
+      return a.changeProfile(t, n, s);
+    case k:
+      return a.changeNickname(t, n, s);
+    default:
+      return a.other(t, n, s);
+  }
+}), E = (e, a) => `<${e}:${a}>`, o = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), Ce = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
   const t = o(), n = [];
   let s;
   for (; (s = t.exec(e)) !== null; )
@@ -533,23 +535,23 @@ const Se = (e, a, t) => {
   return n;
 }, Ae = (e, a) => e.replace(o(), (t, n, s) => {
   const r = a(n, s);
-  return x(n, r);
-}), ye = (e, a) => {
+  return E(n, r);
+}), Me = (e, a) => {
   const t = o();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
-}, Me = (e, a, t) => {
+}, ye = (e, a, t) => {
   const n = o();
-  return e.replace(n, (s, r) => r === a ? x(r, t) : s);
-}, ke = (e) => `code:${e}`, te = "N", ne = "V", N = (e, a) => `\\${e}[${a}]`, se = (e) => N(te, e.id), De = (e) => e.map((a) => ({
-  controlChar: se(a),
+  return e.replace(n, (s, r) => r === a ? E(r, t) : s);
+}, ke = (e) => `code:${e}`, re = "N", ie = "V", w = (e, a) => `\\${e}[${a}]`, le = (e) => w(re, e.id), De = (e) => e.map((a) => ({
+  controlChar: le(a),
   text: a.name
 })), Re = (e) => e.variables.map((a, t) => ({
   text: a || "",
-  controlChar: N(ne, t)
-})).filter((a) => a.text !== ""), ce = /* @__PURE__ */ new Set([
+  controlChar: w(ie, t)
+})).filter((a) => a.text !== ""), oe = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -561,88 +563,88 @@ const Se = (e, a, t) => {
   "c",
   "i",
   "fs"
-]), He = (e, a = ce) => {
+]), He = (e, a = oe) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let s;
   for (; (s = t.exec(e)) !== null; ) {
-    const r = s[1].toLowerCase(), E = parseInt(s[2], 10);
-    a.has(r) && n.push({ char: s[1], id: E });
+    const r = s[1].toLowerCase(), C = parseInt(s[2], 10);
+    a.has(r) && n.push({ char: s[1], id: C });
   }
   return n;
-}, re = (e, a, t) => a.map((n) => t(n, e[n], e)), Be = (e, a, t) => re(e, a, t), Oe = (e, a) => ({
+}, de = (e, a, t) => a.map((n) => t(n, e[n], e)), Be = (e, a, t) => de(e, a, t), Ge = (e, a) => ({
   code: e.code,
   paramIndex: a,
   value: e.parameters[a]
-}), Ve = (e, a) => ({
+}), Oe = (e, a) => ({
   code: e.code,
   paramIndex: a,
   value: e.parameters[a]
 });
 export {
-  b as BaseEventCommandGroup,
-  I as CombinedEventCommandGroup,
+  x as BaseEventCommandGroup,
+  N as CombinedEventCommandGroup,
   Q as ERROR_MESSAGE,
-  v as SimpleEventCommandGroup,
+  S as SimpleEventCommandGroup,
   ke as codeInfoText,
   p as codeTest,
-  le as constructActor,
-  de as constructArmor,
-  ue as constructClass,
-  u as constructDamage,
-  oe as constructEnemy,
-  pe as constructItem,
+  me as constructActor,
+  he as constructArmor,
+  fe as constructClass,
+  m as constructDamage,
+  pe as constructEnemy,
+  be as constructItem,
   i as constructParamArray,
-  ge as constructSkill,
-  he as constructState,
-  me as constructWeapon,
+  ve as constructSkill,
+  Ie as constructState,
+  ge as constructWeapon,
   q as createAdvanced,
   c as createAudio,
-  G as createBasicTerms,
+  F as createBasicTerms,
   W as createCommandsArray,
-  O as createCondtion,
-  N as createControlCharFormat,
-  _ as createEventPage,
-  fe as createMap,
-  be as createMapEvent,
-  V as createMapEventImage,
+  G as createCondtion,
+  w as createControlCharFormat,
+  V as createEventPage,
+  xe as createMap,
+  Se as createMapEvent,
+  O as createMapEventImage,
   P as createMessages,
-  x as createNoteEntity,
+  E as createNoteEntity,
   L as createParamNamesArray,
-  ve as createSystemData,
+  Ne as createSystemData,
   Y as createSystemSoundsArray,
-  F as createTerms,
+  _ as createTerms,
   d as createVehicle,
-  se as fromActor,
+  le as fromActor,
   De as fromActors,
   Re as fromSystem,
   He as getControlChars,
-  ye as getNoteValue,
-  g as isBodyParams,
-  xe as isHeadCommand,
+  Me as getNoteValue,
+  se as handleGroupComment,
+  te as handleGroupMessage,
+  ce as handleGroupScript,
+  ne as handleGroupScrollingText,
+  h as isBodyParams,
+  Ee as isHeadCommand,
   Z as isMessageHeader,
   X as joinCommandBodies,
   o as makeRegex,
-  Ie as mapTextCommand,
-  Ee as onComment,
-  Se as onMessage,
-  Te as onScript,
-  Ne as onScrollingText,
-  Ve as pickCommandParamNumber,
-  Oe as pickCommandParamString,
+  Te as mapTextCommand,
+  Oe as pickCommandParamNumber,
+  Ge as pickCommandParamString,
   l as pickCommands,
   $ as pickComments,
-  f as pickHead,
+  I as pickHead,
   K as pickMessageHeader,
   J as pickMessageWithHead,
-  re as pickPropertys,
+  de as pickPropertys,
   j as pickScripts,
   ae as pickScrollText,
   ee as pickScrollTextHeader,
   Be as pickString,
   Ce as readNote,
-  S as readNoteEx,
+  T as readNoteEx,
   we as readNoteObject,
   Ae as replaceNote,
-  Me as setNoteValue
+  ye as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map

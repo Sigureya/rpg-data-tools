@@ -1,9 +1,13 @@
-import { Command_ChangeName, Command_ChangeNickName, Command_ChangeProfile, Command_ChoiceWhen, Command_CommentBody, Command_ShowChoices, Command_ShowScrollingText, EventCommand } from '@sigureya/rpgtypes';
+import { Command_ChangeName, Command_ChangeNickName, Command_ChangeProfile, Command_ChoiceWhen, Command_CommentBody, Command_ShowChoices, EventCommand } from '@sigureya/rpgtypes';
 import { CallBackFunc } from './types';
+import { EventCommandGroup_Message, EventCommandGroup_ScrollingText, EventCommandGroup_Comment, EventCommandGroup_Script } from './commandGroop';
 export interface TextCommandMapper<T> {
+    showMessage(groop: EventCommandGroup_Message): T;
+    showScrollingText(groop: EventCommandGroup_ScrollingText): T;
+    comment(groop: EventCommandGroup_Comment): T;
+    script(groop: EventCommandGroup_Script): T;
     showChoices: CallBackFunc<Command_ShowChoices, T>;
     choiceWhen: CallBackFunc<Command_ChoiceWhen, T>;
-    showScrollingText: CallBackFunc<Command_ShowScrollingText, T>;
     changeName: CallBackFunc<Command_ChangeName, T>;
     changeProfile: CallBackFunc<Command_ChangeProfile, T>;
     changeNickname: CallBackFunc<Command_ChangeNickName, T>;
