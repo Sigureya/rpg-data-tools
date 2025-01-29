@@ -84,19 +84,6 @@ export const pickHead = <Code extends EventCode>(
   throw new Error(`msg: ${code} index: ${index}`);
 };
 
-export const pickScripts = (
-  arrya: ReadonlyArray<EventCommand>,
-  start: number
-): EventCommandPair<Command_ScriptHeader, Command_ScriptBody> | undefined => {
-  const head = arrya[start];
-  if (isHeadCommand(SCRIPT_EVAL, head)) {
-    return {
-      head: head,
-      bodys: pickCommands(SCRIPT_EVAL_BODY, arrya, start + 1),
-    };
-  }
-};
-
 export const pickMessageWithHead = (
   arrya: ReadonlyArray<EventCommand>,
   start: number

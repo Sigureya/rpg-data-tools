@@ -3,7 +3,6 @@ import {
   isBodyParams,
   isHeadCommand,
   pickMessageWithHead,
-  pickScripts,
   pickScrollText,
 } from "./pickCommands";
 import { COMMENT, COMMENT_BODY, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
@@ -11,6 +10,7 @@ import { COMMENT, COMMENT_BODY, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
 import type { EventCommand } from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
 import { pickComments } from "./commandComment";
+import { pickScripts } from "./commandScript";
 
 describe("codeTest", () => {
   test("true", () => {
