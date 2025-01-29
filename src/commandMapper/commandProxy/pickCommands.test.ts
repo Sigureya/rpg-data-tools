@@ -10,7 +10,7 @@ import {
   pickScrollText,
   pickCommands,
 } from "./pickCommands";
-import { SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
+import { COMMENT, COMMENT_BODY, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
 
 import type { Command_ShowMessageBody, EventCommand } from "@sigureya/rpgtypes";
 
@@ -23,6 +23,15 @@ describe("codeTest", () => {
   });
 });
 
+describe("isBodyParams", () => {
+  test("true", () => {
+    expect(isBodyParams(["aaa"])).toBe(true);
+  });
+  test("false", () => {
+    expect(isBodyParams(["aaa", "bbb"])).toBe(false);
+    expect(isBodyParams([1])).toBe(false);
+  });
+});
 describe("isHeadCoomand", () => {
   test("true", () => {
     expect(
@@ -125,5 +134,24 @@ describe("pickCommands", () => {
   test("not pick", () => {
     expect(pickCommands(109, commands, 0)).toHaveLength(0);
     expect(pickCommands(108, commands, commands.length)).toHaveLength(0);
+  });
+});
+describe("pickComments", () => {
+  const commands: EventCommand[] = [
+    { code: COMMENT, parameters: ["Command 1"], indent: 0 },
+    { code: COMMENT_BODY, parameters: ["Command 2"], indent: 0 },
+    { code: COMMENT_BODY, parameters: ["Command 3"], indent: 0 },
+  ];
+  test("pick", () => {
+    const result = pickComments(commands, 0);
+    expect(result).not.toBeUndefined();
+    expect(result?.head.code).toBe(COMMENT);
+    expect(result?.bodys).toHaveLength(2);
+    expect(result?.bodys[0].parameters).toEqual(["Command 2"]);
+    expect(result?.bodys[1].parameters).toEqual(["Command 3"]);
+  });
+  test("not pick", () => {
+    expect(pickComments(commands, 1)).toBeUndefined();
+    expect(pickComments(commands, commands.length)).toBeUndefined();
   });
 });
