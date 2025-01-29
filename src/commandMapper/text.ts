@@ -53,7 +53,7 @@ export const handlerDispatch = <T>(
 export const mapTextCommand = <T>(
   list: ReadonlyArray<EventCommand>,
   table: TextCommandMapper<T>
-) => {
+): T[] => {
   return list.map<T>((command, index, array) =>
     handlerDispatch(array, index, table)
   );
