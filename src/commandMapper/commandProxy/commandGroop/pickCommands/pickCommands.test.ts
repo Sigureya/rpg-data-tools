@@ -11,7 +11,7 @@ import {
 } from "./pickCommands";
 import { COMMENT, COMMENT_BODY, SHOW_SCROLLING_TEXT } from "@sigureya/rpgtypes";
 
-import type { Command_ShowMessageBody, EventCommand } from "@sigureya/rpgtypes";
+import type { EventCommand } from "@sigureya/rpgtypes";
 
 describe("codeTest", () => {
   test("true", () => {

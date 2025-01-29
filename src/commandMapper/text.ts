@@ -2,11 +2,8 @@ import {
   CHANGE_NAME,
   CHANGE_NICKNAME,
   CHANGE_PROFILE,
-  COMMENT,
-  COMMENT_BODY,
   SHOW_CHOICES,
   SHOW_CHOICES_ITEM,
-  SHOW_MESSAGE,
   SHOW_SCROLLING_TEXT,
 } from "@sigureya/rpgtypes";
 import type {
@@ -14,14 +11,12 @@ import type {
   Command_ChangeNickName,
   Command_ChangeProfile,
   Command_ChoiceWhen,
-  Command_Comment,
   Command_CommentBody,
   Command_ShowChoices,
   Command_ShowScrollingText,
   EventCommand,
 } from "@sigureya/rpgtypes";
 import type { CallBackFunc } from "./callbackFunction";
-import { pickComments } from "./commandProxy/commandGroop";
 
 export interface TextCommandMapper<T> {
   //  showMessage(proxy: MessageProxy): T;

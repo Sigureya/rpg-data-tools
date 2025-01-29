@@ -1,4 +1,4 @@
-import type { EventCommand, EventCommandLike } from "@sigureya/rpgtypes";
+import type { EventCommand } from "@sigureya/rpgtypes";
 
 export interface commandProxy3 {
   join(sepadrator?: string): string;
