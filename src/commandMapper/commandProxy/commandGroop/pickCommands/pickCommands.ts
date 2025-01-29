@@ -1,22 +1,11 @@
 import type {
-  Command_ScriptBody,
-  Command_ScriptHeader,
   Command_ShowMessage,
   Command_ShowMessageBody,
-  Command_ShowScrollingText,
-  Command_ShowScrollingTextBody,
   EventCommandLike,
   EventCode,
   EventCommand,
 } from "@sigureya/rpgtypes";
-import {
-  SCRIPT_EVAL,
-  SCRIPT_EVAL_BODY,
-  SHOW_MESSAGE,
-  SHOW_MESSAGE_BODY,
-  SHOW_SCROLLING_TEXT,
-  SHOW_SCROLLING_TEXT_BODY,
-} from "@sigureya/rpgtypes";
+import { SHOW_MESSAGE, SHOW_MESSAGE_BODY } from "@sigureya/rpgtypes";
 import type { Command_TextBody, EventCommandPair } from "./types";
 import { codeTest } from "./commandCheck";
 
@@ -82,37 +71,4 @@ export const pickHead = <Code extends EventCode>(
     };
   }
   throw new Error(`msg: ${code} index: ${index}`);
-};
-
-export const pickMessageWithHead = (
-  arrya: ReadonlyArray<EventCommand>,
-  start: number
-):
-  | EventCommandPair<Command_ShowMessage, Command_ShowMessageBody>
-  | undefined => {
-  const head = arrya[start];
-  if (!head) {
-    return;
-  }
-  if (head.code === SHOW_MESSAGE) {
-    return {
-      head: head,
-      bodys: pickCommands(SHOW_MESSAGE_BODY, arrya, start + 1),
-    };
-  }
-};
-
-export const pickScrollText = (
-  arrya: ReadonlyArray<EventCommand>,
-  start: number
-):
-  | EventCommandPair<Command_ShowScrollingText, Command_ShowScrollingTextBody>
-  | undefined => {
-  const head = arrya[start];
-  if (codeTest(SHOW_SCROLLING_TEXT, head)) {
-    return {
-      head: head,
-      bodys: pickCommands(SHOW_SCROLLING_TEXT_BODY, arrya, start + 1),
-    };
-  }
 };
