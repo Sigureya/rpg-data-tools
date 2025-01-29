@@ -7,7 +7,6 @@ import {
   SHOW_MESSAGE_BODY,
   type EventCommand,
 } from "@sigureya/rpgtypes";
-import { codeTest } from "./commandCheck";
 import { pickCommands } from "./pickCommands";
 import type { EventCommandPair } from "./types";
 import { ERROR_COMMAND_MESSAGE } from "./errorConstants";
