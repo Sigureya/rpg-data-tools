@@ -7,7 +7,7 @@ import { joinCommandBodies } from "./pickCommands";
 import type { EventCommandGroup } from "./types";
 
 export abstract class BaseEventCommandGroup<
-  Header extends EventCommandLike,
+  Header extends EventCommand,
   Body extends EventCommandBody
 > implements EventCommandGroup<Header, Body>
 {
