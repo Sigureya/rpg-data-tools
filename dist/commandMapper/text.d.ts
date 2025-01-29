@@ -1,5 +1,5 @@
 import { Command_ChangeName, Command_ChangeNickName, Command_ChangeProfile, Command_ChoiceWhen, Command_CommentBody, Command_ShowChoices, Command_ShowScrollingText, EventCommand } from '@sigureya/rpgtypes';
-import { CallBackFunc } from './callbackFunction';
+import { CallBackFunc } from './types';
 export interface TextCommandMapper<T> {
     showChoices: CallBackFunc<Command_ShowChoices, T>;
     choiceWhen: CallBackFunc<Command_ChoiceWhen, T>;

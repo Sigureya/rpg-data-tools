@@ -16,7 +16,7 @@ import type {
   Command_ShowScrollingText,
   EventCommand,
 } from "@sigureya/rpgtypes";
-import type { CallBackFunc } from "./callbackFunction";
+import type { CallBackFunc } from "./types";
 
 export interface TextCommandMapper<T> {
   //  showMessage(proxy: MessageProxy): T;
