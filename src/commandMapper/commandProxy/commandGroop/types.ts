@@ -1,8 +1,11 @@
 import type {
   Command_Comment,
   Command_CommentBody,
+  Command_ScriptHeader,
   Command_ShowMessage,
   Command_ShowMessageBody,
+  Command_ShowScrollingText,
+  Command_ShowScrollingTextBody,
   EventCommandLike,
 } from "@sigureya/rpgtypes";
 import type { Command_TextBody } from "./pickCommands";
@@ -25,4 +28,14 @@ export type EventCommandGroup_Message = EventCommandGroup<
 export type EventCommandGroup_Comment = EventCommandGroup<
   Command_Comment,
   Command_CommentBody
+>;
+
+export type EventCommandGroup_ScrollingText = EventCommandGroup<
+  Command_ShowScrollingText,
+  Command_ShowScrollingTextBody
+>;
+
+export type EventCommandGroup_Script = EventCommandGroup<
+  Command_ScriptHeader,
+  Command_ScriptHeader
 >;
