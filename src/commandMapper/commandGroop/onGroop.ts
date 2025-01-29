@@ -5,16 +5,18 @@ import type {
   EventCommandGroup_Message,
   EventCommandGroup_Script,
   EventCommandGroup_ScrollingText,
-} from "./commandGroop/";
+} from "./types";
 
 import {
-  CombinedEventCommandGroup,
-  SimpleEventCommandGroup,
   pickComments,
   pickMessageWithHead,
   pickScripts,
   pickScrollText,
-} from "./commandGroop/";
+} from "./pickCommands";
+import {
+  SimpleEventCommandGroup,
+  CombinedEventCommandGroup,
+} from "./commandGroop";
 
 export const onMessage = <Result>(
   array: ReadonlyArray<EventCommand>,

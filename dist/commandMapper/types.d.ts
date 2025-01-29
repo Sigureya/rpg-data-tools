@@ -1,7 +1,4 @@
 import { EventCommand } from '@sigureya/rpgtypes';
-export interface commandProxy3 {
-    join(sepadrator?: string): string;
-}
 export type CallBackFunc<Command extends {
     code: number;
     parameters: readonly unknown[];
