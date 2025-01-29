@@ -21,10 +21,31 @@ import {
   SHOW_SCROLLING_TEXT,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import type { EventCommandPair } from "./types";
+import type { Command_TextBody, EventCommandPair } from "./types";
 
-export const isBodyParams = (param: unknown[]): param is [string] => {
+export const isBodyParams = (
+  param: unknown[]
+): param is [string] & { length: 1 } => {
   return typeof param[0] === "string" && param.length === 1;
+};
+
+export const isMessageHeader = (
+  command: EventCommand
+): command is Command_ShowMessage => {
+  if (codeTest(SHOW_MESSAGE, command)) {
+    return false;
+  }
+  if (![4, 5].includes(command.parameters.length)) {
+    return false;
+  }
+
+  return (
+    typeof command.parameters[0] === "string" &&
+    typeof command.parameters[1] === "number" &&
+    typeof command.parameters[2] === "number" &&
+    typeof command.parameters[3] === "number"
+    //    typeof command.parameters[4] === "string"
+  );
 };
 
 export const codeTest = <Code extends EventCode>(
@@ -76,6 +97,25 @@ export const pickCommands = <Code extends EventCode>(
   return result;
 };
 
+export const pickHead = <Code extends EventCode>(
+  commands: ReadonlyArray<EventCommand>,
+  index: number,
+  code: Code
+): Command_TextBody<Code> => {
+  const head = commands[index];
+  if (!head) {
+    throw new Error(`msg: ${code} index: ${index}`);
+  }
+  if (codeTest(code, head) && isBodyParams(head.parameters)) {
+    return {
+      code: code,
+      indent: head.indent,
+      parameters: [head.parameters[0]],
+    };
+  }
+  throw new Error(`msg: ${code} index: ${index}`);
+};
+
 export const pickComments = (
   array: ReadonlyArray<EventCommand>,
   start: number
@@ -109,7 +149,10 @@ export const pickMessageWithHead = (
   | EventCommandPair<Command_ShowMessage, Command_ShowMessageBody>
   | undefined => {
   const head = arrya[start];
-  if (codeTest(SHOW_MESSAGE, head)) {
+  if (!head) {
+    return;
+  }
+  if (head.code === SHOW_MESSAGE) {
     return {
       head: head,
       bodys: pickCommands(SHOW_MESSAGE_BODY, arrya, start + 1),

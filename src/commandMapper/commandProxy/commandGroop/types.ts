@@ -1,6 +1,7 @@
 import type {
   Command_Comment,
   Command_CommentBody,
+  Command_ScriptBody,
   Command_ScriptHeader,
   Command_ShowMessage,
   Command_ShowMessageBody,
@@ -37,5 +38,5 @@ export type EventCommandGroup_ScrollingText = EventCommandGroup<
 
 export type EventCommandGroup_Script = EventCommandGroup<
   Command_ScriptHeader,
-  Command_ScriptHeader
+  Command_ScriptBody
 >;
