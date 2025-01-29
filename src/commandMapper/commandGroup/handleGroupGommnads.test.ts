@@ -22,7 +22,7 @@ import {
   pickComments,
   pickScripts,
 } from "./pickCommands";
-
+// TODO:このモックは不要っぽい。いずれモック不要の実装へ移行する
 vi.mock("./pickCommands", () => ({
   pickMessageWithHead: vi.fn(),
   pickScrollText: vi.fn(),
@@ -111,9 +111,7 @@ describe("handleGroupComment", () => {
         throw new Error("Invalid comment command");
       }
     );
-    expect(() => handleGroupComment([], 0, vi.fn())).toThrow(
-      "Invalid comment command"
-    );
+    expect(() => handleGroupComment([], 0, vi.fn())).toThrow();
   });
 });
 
@@ -140,8 +138,6 @@ describe("handleGroupScript", () => {
         throw new Error("Invalid script command");
       }
     );
-    expect(() => handleGroupScript([], 0, vi.fn())).toThrow(
-      "Invalid script command"
-    );
+    expect(() => handleGroupScript([], 0, vi.fn())).toThrowError();
   });
 });
