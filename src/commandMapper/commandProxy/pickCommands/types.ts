@@ -1,7 +1,7 @@
-import type { EventCommandLike } from "@sigureya/rpgtypes";
+import type { EventCode, EventCommandLike } from "@sigureya/rpgtypes";
 
 export interface Command_TextBody {
-  code: number;
+  code: EventCode;
   parameters: [string];
   indent: number;
 }

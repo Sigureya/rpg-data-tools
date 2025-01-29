@@ -3,7 +3,6 @@ import {
   codeTest,
   isBodyParams,
   isHeadCoomand,
-  joinBodys,
   pickComments,
   pickMessageWithHead,
   pickScripts,
@@ -42,16 +41,6 @@ describe("isHeadCoomand", () => {
     expect(
       isHeadCoomand(108, { code: 118, parameters: ["aaa"], indent: 0 })
     ).toBe(false);
-  });
-});
-
-describe("joinBodys", () => {
-  test("join", () => {
-    const array: Command_ShowMessageBody[] = [
-      { code: 401, parameters: ["aaa"], indent: 0 },
-      { code: 401, parameters: ["bbb"], indent: 0 },
-    ];
-    expect(joinBodys(array)).toBe("aaa\nbbb");
   });
 });
 
