@@ -13,7 +13,7 @@ export declare abstract class BaseEventCommandGroup<Header extends RpgTypes.Even
 }
 export declare class SimpleEventCommandGroup<Header extends RpgTypes.EventCommand, Body extends EventCommandBody> extends BaseEventCommandGroup<Header, Body> {
     readonly bodyCode: Body["code"];
-    constructor(pair: EventCommandPair<Header, Body>, bodyCode: Body["code"]);
+    constructor(bodyCode: Body["code"], pair: EventCommandPair<Header, Body>);
     protected getExpandedBodies(): Body[];
     normalizedCommands(): [Header, Body];
 }

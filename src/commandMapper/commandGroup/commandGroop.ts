@@ -36,8 +36,8 @@ export class SimpleEventCommandGroup<
   Body extends EventCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(
-    pair: EventCommandPair<Header, Body>,
-    public readonly bodyCode: Body["code"]
+    public readonly bodyCode: Body["code"],
+    pair: EventCommandPair<Header, Body>
   ) {
     super(pair);
   }

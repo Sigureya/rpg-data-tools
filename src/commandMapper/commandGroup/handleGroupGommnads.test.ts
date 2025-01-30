@@ -42,7 +42,7 @@ describe("handleGroupMessage", () => {
     const callback = vi.fn();
     const result = handleGroupMessage([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new SimpleEventCommandGroup(mockPair, 401)
+      new SimpleEventCommandGroup(401, mockPair)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });
@@ -71,7 +71,7 @@ describe("handleGroupScrollingText", () => {
     const callback = vi.fn();
     const result = handleGroupScrollingText([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new SimpleEventCommandGroup(mockPair, 405)
+      new SimpleEventCommandGroup(405, mockPair)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });
