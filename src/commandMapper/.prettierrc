@@ -1,7 +1,7 @@
 {
   "overrides": [
     {
-      "files": "mappingAll.ts",
+      "files": "allMapping.ts",
       "options": {
         "printWidth": 100
       }
