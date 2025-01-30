@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": "mappingAll.ts",
+      "options": {
+        "printWidth": 9999
+      }
+    }
+  ]
+}
