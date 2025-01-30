@@ -9,6 +9,7 @@ import type {
   Command_ScriptBody,
   EventCode,
   EventCommandLike,
+  EventCommand,
 } from "@sigureya/rpgtypes";
 export interface CommandReadError {
   headCode: number;
@@ -16,11 +17,14 @@ export interface CommandReadError {
   index: number;
 }
 
-export interface Command_TextBody<Code extends EventCode = EventCode> {
-  code: Code;
-  parameters: [string];
-  indent: number;
-}
+export type Command_TextBody<Code extends EventCode = EventCode> = Extract<
+  EventCommand,
+  {
+    code: Code;
+    parameters: [string];
+    indent: number;
+  }
+>;
 
 export interface EventCommandPair<
   Headder extends EventCommandLike,
