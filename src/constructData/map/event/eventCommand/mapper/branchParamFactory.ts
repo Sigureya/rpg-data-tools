@@ -1,4 +1,16 @@
-import type { BranchParameters } from "@sigureya/rpgtypes";
+import type {
+  BranchParam_Armor,
+  BranchParam_Button,
+  BranchParam_Character,
+  BranchParam_Gold,
+  BranchParam_Item,
+  BranchParam_Script,
+  BranchParam_SelfSwitch,
+  BranchParam_Switch,
+  BranchParam_Variable,
+  BranchParam_Vehicle,
+  BranchParam_Weapon,
+} from "@sigureya/rpgtypes";
 import type {
   BranchByArmor,
   BranchByButton,
@@ -15,7 +27,7 @@ import { BranchCommandFactory } from "./branchCommandFactory";
 
 export const branchBySwitch = new BranchCommandFactory<
   BranchBySwitch,
-  BranchParameters["SWITCH"]
+  BranchParam_Switch
 >({
   array: (obj) => {
     return [0, obj.switchId, TOGGLE.getValue(obj.switchValue)];
@@ -37,7 +49,7 @@ export const branchBySwitch = new BranchCommandFactory<
 
 export const branchBySelfSwitch = new BranchCommandFactory<
   BranchBySelfSwitch,
-  BranchParameters["SELF_SWITCH"]
+  BranchParam_SelfSwitch
 >({
   array: (obj) => {
     return [2, obj.selfSwitchId, TOGGLE.getValue(obj.value)];
@@ -59,7 +71,7 @@ export const branchBySelfSwitch = new BranchCommandFactory<
 });
 export const branchByVariable = new BranchCommandFactory<
   BranchByVariable,
-  BranchParameters["VARIABLE"]
+  BranchParam_Variable
 >({
   array: (obj) => {
     return [1, obj.variableId, obj.operand, obj.value];
@@ -84,7 +96,7 @@ export const branchByVariable = new BranchCommandFactory<
 
 export const branchByGold = new BranchCommandFactory<
   BranchByGold,
-  BranchParameters["GOLD"]
+  BranchParam_Gold
 >({
   array: (obj) => {
     return [7, obj.value, obj.compair];
@@ -107,7 +119,7 @@ export const branchByGold = new BranchCommandFactory<
 });
 export const branchByCharacter = new BranchCommandFactory<
   BranchByCharacter,
-  BranchParameters["CHARACTER"]
+  BranchParam_Character
 >({
   array: (obj) => {
     return [6, obj.characterId];
@@ -126,7 +138,7 @@ export const branchByCharacter = new BranchCommandFactory<
 });
 export const branchByItem = new BranchCommandFactory<
   BranchByItem,
-  BranchParameters["ITEM"]
+  BranchParam_Item
 >({
   array: (obj) => {
     return [8, obj.itemId];
@@ -145,7 +157,7 @@ export const branchByItem = new BranchCommandFactory<
 
 export const branchByWeapon = new BranchCommandFactory<
   BranchByWeapon,
-  BranchParameters["WEAPON"]
+  BranchParam_Weapon
 >({
   array: (obj) => {
     return [9, obj.weaponId];
@@ -164,7 +176,7 @@ export const branchByWeapon = new BranchCommandFactory<
 
 export const branchByArmor = new BranchCommandFactory<
   BranchByArmor,
-  BranchParameters["ARMOR"]
+  BranchParam_Armor
 >({
   array: (obj) => {
     return [10, obj.armorId];
@@ -183,7 +195,7 @@ export const branchByArmor = new BranchCommandFactory<
 
 export const branchByButton = new BranchCommandFactory<
   BranchByButton,
-  BranchParameters["BUTTON"]
+  BranchParam_Button
 >({
   array: (obj) => {
     return [11, obj.buttonId];
@@ -202,7 +214,7 @@ export const branchByButton = new BranchCommandFactory<
 
 export const branchByScript = new BranchCommandFactory<
   { script: string },
-  BranchParameters["SCRIPT"]
+  BranchParam_Script
 >({
   array: (obj) => {
     return [12, obj.script];
@@ -221,7 +233,7 @@ export const branchByScript = new BranchCommandFactory<
 
 export const branchByVehicle = new BranchCommandFactory<
   { vehicleId: number },
-  BranchParameters["VEHICLE"]
+  BranchParam_Vehicle
 >({
   array: (obj) => {
     return [13, obj.vehicleId];

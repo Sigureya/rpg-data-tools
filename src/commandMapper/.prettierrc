@@ -3,7 +3,7 @@
     {
       "files": "mappingAll.ts",
       "options": {
-        "printWidth": 9999
+        "printWidth": 100
       }
     }
   ]
