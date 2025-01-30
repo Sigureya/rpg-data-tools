@@ -44,7 +44,7 @@ export class SimpleEventCommandGroup<
   protected getExpandedBodies(): Body[] {
     return this.bodies;
   }
-  normalizedCommands() {
+  normalizedCommands(): [Header, Body] {
     const headder: Header = {
       ...this.header,
       code: this.header.code,
@@ -56,7 +56,7 @@ export class SimpleEventCommandGroup<
       indent: 0,
       parameters: [this.getBodyText()],
     };
-    return [headder, body as RpgTypes.EventCommand];
+    return [headder, body as Body];
   }
 }
 
