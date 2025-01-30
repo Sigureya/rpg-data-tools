@@ -25,7 +25,7 @@ import type { CallBackFunc } from "./types";
 export interface GroupJoinMapper<T>
   extends Pick<
     TextCommandMapper<T>,
-    "showMessage" | "comment" | "script" | "showScrollingText"
+    "showMessage" | "comment" | "script" | "showScrollingText" | "other"
   > {
   commnetBody: CallBackFunc<Command_CommentBody, T>;
   messageBody: CallBackFunc<Command_ShowMessageBody, T>;
@@ -34,23 +34,17 @@ export interface GroupJoinMapper<T>
 }
 
 const groupJoinMapper: GroupJoinMapper<EventCommand[]> = {
+  // body部分は空の要素で置き換える
   commnetBody: () => [],
   messageBody: () => [],
   scriptBody: () => [],
   scrollingTextBody: () => [],
-  showMessage: (data): [Command_ShowMessage, Command_ShowMessageBody] => {
-    return [
-      data.header,
-      {
-        code: SHOW_MESSAGE_BODY,
-        parameters: [data.getBodyText()],
-        indent: data.header.indent,
-      },
-    ];
-  },
-  showScrollingText: (data) => [],
-  comment: () => [],
-  script: () => [],
+  // ヘッダ側を基準に、Header+Bodyで生成
+  showMessage: (data) => data.normalizedCommands(),
+  showScrollingText: (data) => data.normalizedCommands(),
+  comment: (data) => data.normalizedCommands(),
+  script: (data) => data.normalizedCommands(),
+  other: (data) => [data],
 };
 
 const handlerGroupJoin = <T>(
