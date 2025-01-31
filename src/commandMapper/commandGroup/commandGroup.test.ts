@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { SimpleEventCommandGroup } from "./commandGroop";
+import {
+  CombinedEventCommandGroup,
+  SimpleEventCommandGroup,
+} from "./commandGroop";
 import type {
   EventCommandGroup_Message,
   EventCommandGroup_Comment,
@@ -83,5 +86,55 @@ describe("ShowScrollingText", () => {
       indent: 0,
       parameters: ["aaa\nbbb"],
     });
+  });
+});
+describe("Comment", () => {
+  test("comment length 0", () => {
+    const comment: EventCommandGroup_Comment = new SimpleEventCommandGroup<
+      RpgTypes.Command_Comment,
+      RpgTypes.Command_CommentBody
+    >(408, {
+      head: {
+        code: 108,
+        indent: 0,
+        parameters: ["test"],
+      },
+      bodys: [],
+    });
+    const result = comment.normalizedCommands();
+    expect(result.length).toBe(1);
+    expect(result[0]).toMatchObject({
+      code: 108,
+      indent: 0,
+      parameters: ["test"],
+    });
+  });
+  test("comment length 1", () => {
+    const comment: EventCommandGroup_Comment = new CombinedEventCommandGroup<
+      RpgTypes.Command_Comment,
+      RpgTypes.Command_CommentBody
+    >({
+      head: {
+        code: 108,
+        indent: 0,
+        parameters: ["test"],
+      },
+      bodys: [
+        {
+          code: 408,
+          indent: 0,
+          parameters: ["aaa"],
+        },
+      ],
+    });
+    const result = comment.normalizedCommands();
+    expect(result).toMatchObject([
+      {
+        code: 108,
+        indent: 0,
+        parameters: ["test\naaa"],
+      },
+    ]);
+    expect(result.length).toBe(1);
   });
 });
