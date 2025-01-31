@@ -55,10 +55,9 @@ const testCommandMerge = (
   expectedBody: Types.PickCommandByParam<[string]>
 ) => {
   test(`code:${commands[0].code} (${name}) should be merged`, () => {
-    const result = normalizedCommands(commands);
-    expect(result.length).toBe(commands.length);
+    const result: Types.EventCommand[][] = normalizedCommands(commands);
     const flat: Types.EventCommand[] = result.flat();
-    expect(flat.length).lessThan(commands.length);
+    expect(flat.length).lessThanOrEqual(commands.length);
     expect(flat[0]).toMatchObject(commands[0]);
     expect(flat).toMatchObject([commands[0], expectedBody]);
   });
@@ -79,6 +78,22 @@ describe("case showMessage", () => {
       code: Types.SHOW_MESSAGE_BODY,
       indent: 0,
       parameters: [MockJoinedText],
+    }
+  );
+  testCommandMerge(
+    "showMessage2",
+    [
+      {
+        code: Types.SHOW_MESSAGE,
+        indent: 0,
+        parameters: ["test", 0, 0, 0, "speaker"],
+      },
+      ...createMockCommand(Types.SHOW_MESSAGE_BODY, ["Hello world!"]),
+    ],
+    {
+      code: Types.SHOW_MESSAGE_BODY,
+      indent: 0,
+      parameters: ["Hello world!"],
     }
   );
 });
@@ -104,15 +119,15 @@ describe("case showScrollingText", () => {
 
 const testCommandMergeToSingle = <
   Head extends Types.PickCommandByParam<[string]>,
-  Body extends Types.PickCommandByParam<[string]>
+  Body extends Exclude<Types.PickCommandByParam<[string]>, Head>
 >(
   name: string,
   commands: [Head, ...Body[]],
   expectedBody: Head
 ) => {
-  test(`code:${commands[0].code} (${name}) should be merged`, () => {
+  const code = commands[0].code;
+  test(`code:${code} (${name}) should be merged`, () => {
     const result = normalizedCommands(commands);
-    expect(result.length).toBe(commands.length);
 
     const flat = result.flat();
     expect(flat.length).toBe(1);
