@@ -1,10 +1,6 @@
 import type { MockedFunction } from "vitest";
 import { describe, it, expect, vi } from "vitest";
 import {
-  SimpleEventCommandGroup,
-  CombinedEventCommandGroup,
-} from "./commandGroop2/";
-import {
   handleGroupMessage,
   handleGroupScrollingText,
   handleGroupComment,
@@ -21,7 +17,8 @@ import type {
   EventCommandPair_ScrollingText,
   EventCommandPair_Comment,
   EventCommandPair_Script,
-} from "./pickCommands/pairTypes";
+} from "./pickCommands/";
+import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./class";
 // TODO:このモックは不要っぽい。いずれモック不要の実装へ移行する
 vi.mock("./pickCommands", () => ({
   pickMessageWithHead: vi.fn(),
