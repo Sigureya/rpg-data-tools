@@ -18,7 +18,6 @@ const testMapping = <Command extends CMD.EventCommand>(
   test(`${key} should be called with correct arguments`, () => {
     const mapper = createMockMapper(key);
     mappingCommand([command], 0, mapper);
-
     expect(mapper[key]).toHaveBeenCalledWith(command, 0, [command]);
 
     // 他の関数が呼ばれていないことを確認
@@ -120,4 +119,59 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: [0, 0, 0, 0, 6],
   });
+  testMapping<CMD.Command_GameOver>("gameover", {
+    code: CMD.GAME_OVER,
+    indent: 0,
+    parameters: [],
+  });
+  testMapping<CMD.Command_TintScreen>("tintScreen", {
+    code: CMD.TINT_SCREEN,
+    indent: 0,
+    parameters: [mockColor, 0, false],
+  });
+  testMapping<CMD.Command_FlashScreen>("flashScreen", {
+    code: CMD.FLASH_SCREEN,
+    indent: 0,
+    parameters: [mockColor, 0, false],
+  });
+  testMapping<CMD.Command_ShakeScreen>("shakeScreen", {
+    code: CMD.SHAKE_SCREEN,
+    indent: 0,
+    parameters: [0, 0, 0, false],
+  });
+  testMapping<CMD.Command_BattleProcessing>("battleProcessing", {
+    code: CMD.BATTLE_PROCESSING,
+    indent: 0,
+    parameters: [0, 0, false, false],
+  });
+  testMapping<CMD.Command_ChangeEncounter>("changeEncounter", {
+    code: CMD.CHANGE_ENCOUNTER,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_ChangeFormationAccess>("changeFormationAccess", {
+    code: CMD.CHANGE_FORMATION_ACCESS,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_ChangeMenuAccess>("changeMenuAccess", {
+    code: CMD.CHANGE_MENU_ACCESS,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_ChangeSaveAccess>("changeSaveAccess", {
+    code: CMD.CHANGE_SAVE_ACCESS,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_ChangeDefeatME>("changeDefeatME", {
+    code: CMD.CHANGE_DEFEAT_ME,
+    indent: 0,
+    parameters: [mockAudioFile],
+  });
+  //   testMapping<CMD.Command_ChangeTransparency>("changeTransparency", {
+  //     code: CMD.CHANGE_TRANSPARENCY,
+  //     indent: 0,
+  //     parameters: [0],
+  //   });
 });
