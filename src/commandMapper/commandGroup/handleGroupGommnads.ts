@@ -6,14 +6,18 @@ import {
   pickScripts,
   pickScrollText,
 } from "./pickCommands";
-import { SimpleEventCommandGroup, CombinedEventCommandGroup } from "./class";
+import {
+  createMessageGroup,
+  createCommentGroup,
+  createScriptGroup,
+  createScrlloingTextGroup,
+} from "./class";
 import type {
   EventCommandGroup_Comment,
   EventCommandGroup_Message,
   EventCommandGroup_Script,
   EventCommandGroup_ScrollingText,
 } from "./class";
-
 export const handleGroupMessage = <Result>(
   array: ReadonlyArray<EventCommand>,
   index: number,
@@ -21,7 +25,8 @@ export const handleGroupMessage = <Result>(
 ): Result => {
   const pair = pickMessageWithHead(array, index);
 
-  const group = new SimpleEventCommandGroup(401, pair.head, pair.bodys);
+  const group = createMessageGroup(pair.head, pair.bodys);
+
   return func(group);
 };
 
@@ -31,7 +36,7 @@ export const handleGroupScrollingText = <Result>(
   func: (groop: EventCommandGroup_ScrollingText) => Result
 ): Result => {
   const pair = pickScrollText(array, index);
-  const group = new SimpleEventCommandGroup(405, pair.head, pair.bodys);
+  const group = createScrlloingTextGroup(pair.head, pair.bodys);
   return func(group);
 };
 
@@ -41,7 +46,7 @@ export const handleGroupComment = <Result>(
   func: (group: EventCommandGroup_Comment) => Result
 ): Result => {
   const pair = pickComments(array, index);
-  const group = new CombinedEventCommandGroup(pair.head, pair.bodys);
+  const group = createCommentGroup(pair.head, pair.bodys);
   return func(group);
 };
 
@@ -51,6 +56,6 @@ export const handleGroupScript = <Result>(
   func: (group: EventCommandGroup_Script) => Result
 ): Result => {
   const pair = pickScripts(array, index);
-  const groop = new CombinedEventCommandGroup(pair.head, pair.bodys);
+  const groop = createScriptGroup(pair.head, pair.bodys);
   return func(groop);
 };
