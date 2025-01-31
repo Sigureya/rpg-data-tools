@@ -130,9 +130,9 @@ const testCommandMergeToSingle = <
     const result = normalizedCommands(commands);
 
     const flat = result.flat();
-    expect(flat.length).toBe(1);
 
     expect(flat).toMatchObject([expectedBody]);
+    expect(flat.length).toBe(1);
   });
 };
 
