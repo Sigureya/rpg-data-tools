@@ -1,5 +1,6 @@
-import { Command_TextBody as EventCommandBody, EventCommandPair } from './pickCommands';
-import { EventCommandGroup } from './types';
+import { Command_TextBody as EventCommandBody } from './types';
+import { EventCommandGroup } from './groopTypes';
+import { EventCommandPair } from '../pickCommands/pairTypes';
 import type * as RpgTypes from "@sigureya/rpgtypes";
 export declare abstract class BaseEventCommandGroup<Header extends RpgTypes.EventCommand, Body extends EventCommandBody> implements EventCommandGroup<Header, Body> {
     protected pair: EventCommandPair<Header, Body>;

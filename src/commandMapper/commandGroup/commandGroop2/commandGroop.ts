@@ -1,10 +1,8 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
-import type {
-  Command_TextBody as EventCommandBody,
-  EventCommandPair,
-} from "./types";
-import type { EventCommandGroup } from "../types";
+import type { Command_TextBody as EventCommandBody } from "./types";
+import type { EventCommandGroup } from "./groopTypes";
 import { joinCommandBodies } from "./join";
+import type { EventCommandPair } from "../pickCommands/pairTypes";
 
 export abstract class BaseEventCommandGroup<
   Header extends RpgTypes.EventCommand,

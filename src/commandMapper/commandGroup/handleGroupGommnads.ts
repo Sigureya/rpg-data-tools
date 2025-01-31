@@ -1,12 +1,5 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 
-import type {
-  EventCommandGroup_Comment,
-  EventCommandGroup_Message,
-  EventCommandGroup_Script,
-  EventCommandGroup_ScrollingText,
-} from "./types";
-
 import {
   pickComments,
   pickMessageWithHead,
@@ -17,6 +10,12 @@ import {
   SimpleEventCommandGroup,
   CombinedEventCommandGroup,
 } from "./commandGroop2/commandGroop";
+import type {
+  EventCommandGroup_Comment,
+  EventCommandGroup_Message,
+  EventCommandGroup_Script,
+  EventCommandGroup_ScrollingText,
+} from "./commandGroop2";
 
 export const handleGroupMessage = <Result>(
   array: ReadonlyArray<EventCommand>,

@@ -9,7 +9,7 @@ import type {
   Command_ShowScrollingTextBody,
   EventCommand,
 } from "@sigureya/rpgtypes";
-import type { Command_TextBody } from "./pickCommands";
+import type { Command_TextBody } from ".";
 
 export interface EventCommandGroup<
   Header extends EventCommand,

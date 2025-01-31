@@ -5,7 +5,7 @@ import type {
 } from "@sigureya/rpgtypes";
 import { SCRIPT_EVAL, SCRIPT_EVAL_BODY } from "@sigureya/rpgtypes";
 import { pickCommands, pickHead } from "./pickCommands";
-import type { EventCommandPair } from "./types";
+import type { EventCommandPair } from "./pairTypes";
 
 export const pickScripts = (
   arrya: ReadonlyArray<EventCommand>,

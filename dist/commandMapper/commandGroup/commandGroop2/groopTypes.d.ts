@@ -1,5 +1,5 @@
 import { Command_Comment, Command_CommentBody, Command_ScriptBody, Command_ScriptHeader, Command_ShowMessage, Command_ShowMessageBody, Command_ShowScrollingText, Command_ShowScrollingTextBody, EventCommand } from '@sigureya/rpgtypes';
-import { Command_TextBody } from './pickCommands';
+import { Command_TextBody } from '.';
 export interface EventCommandGroup<Header extends EventCommand, Body extends Command_TextBody> {
     normalizedCommands(): EventCommand[];
     getBodyText(separator?: string): string;

@@ -3,18 +3,18 @@ import {
   CombinedEventCommandGroup,
   SimpleEventCommandGroup,
 } from "./commandGroop";
-import type {
-  EventCommandGroup_Message,
-  EventCommandGroup_Comment,
-  EventCommandGroup_Script,
-  EventCommandGroup_ScrollingText,
-} from "../types";
+
 import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
 } from "@sigureya/rpgtypes";
 
 import type * as RpgTypes from "@sigureya/rpgtypes";
+import type {
+  EventCommandGroup_Comment,
+  EventCommandGroup_Message,
+  EventCommandGroup_ScrollingText,
+} from "./groopTypes";
 const createMessageMock = () => {
   return new SimpleEventCommandGroup<
     Command_ShowMessage,

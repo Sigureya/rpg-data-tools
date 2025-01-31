@@ -1,5 +1,5 @@
 import { EventCommandLike, EventCode, EventCommand } from '@sigureya/rpgtypes';
-import { Command_TextBody } from './types';
+import { Command_TextBody } from '../commandGroop2';
 export declare const isBodyParams: (param: unknown[]) => param is [string] & {
     length: 1;
 };
