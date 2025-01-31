@@ -1,5 +1,5 @@
 import { EventCommand, Command_ShowScrollingText, Command_ShowScrollingTextBody } from '@sigureya/rpgtypes';
-import { EventCommandPair } from './types';
+import { EventCommandPair } from './pairTypes';
 export type CommandPair_ScrollingText = EventCommandPair<Command_ShowScrollingText, Command_ShowScrollingTextBody>;
 export declare const ERROR_MESSAGE: "ScrollTextHeader invalid command";
 export declare const pickScrollTextHeader: (array: ReadonlyArray<EventCommand>, start: number) => Command_ShowScrollingText;

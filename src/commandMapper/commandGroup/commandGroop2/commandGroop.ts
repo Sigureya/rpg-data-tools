@@ -1,18 +1,15 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
-import type {
-  Command_TextBody as EventCommandBody,
-  EventCommandPair,
-} from "./pickCommands";
-import { joinCommandBodies } from "./pickCommands";
-import type { EventCommandGroup } from "./types";
+import type { EventCommandGroup } from "./groopTypes";
+import { joinCommandBodies } from "./join";
 
+type TextCommandBody = RpgTypes.PickCommandByParam<[string]>;
 export abstract class BaseEventCommandGroup<
   Header extends RpgTypes.EventCommand,
-  Body extends EventCommandBody
+  Body extends TextCommandBody
 > implements EventCommandGroup<Header, Body>
 {
-  constructor(protected pair: EventCommandPair<Header, Body>) {}
-  protected abstract getExpandedBodies(): EventCommandBody[];
+  constructor(public header: Header, public bodies: Body[]) {}
+  protected abstract getExpandedBodies(): TextCommandBody[];
   abstract normalizedCommands(): RpgTypes.EventCommand[];
 
   getBodyText(separator: string = "\n"): string {
@@ -22,24 +19,18 @@ export abstract class BaseEventCommandGroup<
   joinCommandBodies() {
     return this.getExpandedBodies();
   }
-
-  get header(): Header {
-    return this.pair.head;
-  }
-  get bodies(): Body[] {
-    return this.pair.bodys;
-  }
 }
 
 export class SimpleEventCommandGroup<
   Header extends RpgTypes.EventCommand,
-  Body extends EventCommandBody
+  Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(
     public readonly bodyCode: Body["code"],
-    pair: EventCommandPair<Header, Body>
+    header: Header,
+    bodies: Body[]
   ) {
-    super(pair);
+    super(header, bodies);
   }
   protected getExpandedBodies(): Body[] {
     return this.bodies;
@@ -64,11 +55,11 @@ export class SimpleEventCommandGroup<
 }
 
 export class CombinedEventCommandGroup<
-  Header extends EventCommandBody,
-  Body extends EventCommandBody
+  Header extends TextCommandBody,
+  Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
-  constructor(pair: EventCommandPair<Header, Body>) {
-    super(pair);
+  constructor(header: Header, bodies: Body[]) {
+    super(header, bodies);
   }
   protected getExpandedBodies(): [Header, ...Body[]] {
     return [this.header, ...this.bodies];

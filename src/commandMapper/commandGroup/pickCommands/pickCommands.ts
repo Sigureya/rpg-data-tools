@@ -2,8 +2,8 @@ import type {
   EventCommandLike,
   EventCode,
   EventCommand,
+  PickCommandByParam,
 } from "@sigureya/rpgtypes";
-import type { Command_TextBody } from "./types";
 import { codeTest } from "./commandCheck";
 import { ERROR_INVALID_HEAD } from "./errorConstants";
 
@@ -52,7 +52,7 @@ export const pickCommands = <Code extends EventCode>(
   return result;
 };
 
-export const pickHead = <Code extends Command_TextBody["code"]>(
+export const pickHead = <Code extends PickCommandByParam<[string]>["code"]>(
   commands: ReadonlyArray<EventCommand>,
   index: number,
   code: Code

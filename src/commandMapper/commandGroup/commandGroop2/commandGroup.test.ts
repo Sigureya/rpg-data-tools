@@ -3,34 +3,35 @@ import {
   CombinedEventCommandGroup,
   SimpleEventCommandGroup,
 } from "./commandGroop";
-import type {
-  EventCommandGroup_Message,
-  EventCommandGroup_Comment,
-  EventCommandGroup_Script,
-  EventCommandGroup_ScrollingText,
-} from "./types";
+
 import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
 } from "@sigureya/rpgtypes";
 
 import type * as RpgTypes from "@sigureya/rpgtypes";
+import type {
+  EventCommandGroup_Comment,
+  EventCommandGroup_Message,
+  EventCommandGroup_ScrollingText,
+} from "./groopTypes";
 const createMessageMock = () => {
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
     Command_ShowMessageBody
-  >(401, {
-    head: {
+  >(
+    401,
+    {
       code: 101,
       indent: 0,
       parameters: ["face", 0, 0, 2, "speaker"],
     },
-    bodys: ["aaa", "bbb"].map<Command_ShowMessageBody>((text) => ({
+    ["aaa", "bbb"].map<Command_ShowMessageBody>((text) => ({
       code: 401,
       indent: 0,
       parameters: [text],
-    })),
-  });
+    }))
+  );
 };
 describe("showMessage", () => {
   const message: EventCommandGroup_Message = createMessageMock();
@@ -54,20 +55,19 @@ const createScrlloingTextMock = () => {
   return new SimpleEventCommandGroup<
     RpgTypes.Command_ShowScrollingText,
     RpgTypes.Command_ShowScrollingTextBody
-  >(405, {
-    head: {
+  >(
+    405,
+    {
       code: 105,
       indent: 0,
       parameters: [0, false],
     },
-    bodys: ["aaa", "bbb"].map<RpgTypes.Command_ShowScrollingTextBody>(
-      (text) => ({
-        code: 405,
-        indent: 0,
-        parameters: [text],
-      })
-    ),
-  });
+    ["aaa", "bbb"].map<RpgTypes.Command_ShowScrollingTextBody>((text) => ({
+      code: 405,
+      indent: 0,
+      parameters: [text],
+    }))
+  );
 };
 
 describe("ShowScrollingText", () => {
@@ -93,14 +93,15 @@ describe("Comment", () => {
     const comment: EventCommandGroup_Comment = new SimpleEventCommandGroup<
       RpgTypes.Command_Comment,
       RpgTypes.Command_CommentBody
-    >(408, {
-      head: {
+    >(
+      408,
+      {
         code: 108,
         indent: 0,
         parameters: ["test"],
       },
-      bodys: [],
-    });
+      []
+    );
     const result = comment.normalizedCommands();
     expect(result.length).toBe(1);
     expect(result[0]).toMatchObject({
@@ -113,20 +114,20 @@ describe("Comment", () => {
     const comment: EventCommandGroup_Comment = new CombinedEventCommandGroup<
       RpgTypes.Command_Comment,
       RpgTypes.Command_CommentBody
-    >({
-      head: {
+    >(
+      {
         code: 108,
         indent: 0,
         parameters: ["test"],
       },
-      bodys: [
+      [
         {
           code: 408,
           indent: 0,
           parameters: ["aaa"],
         },
-      ],
-    });
+      ]
+    );
     const result = comment.normalizedCommands();
     expect(result).toMatchObject([
       {

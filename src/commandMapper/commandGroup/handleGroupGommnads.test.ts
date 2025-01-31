@@ -3,25 +3,25 @@ import { describe, it, expect, vi } from "vitest";
 import {
   SimpleEventCommandGroup,
   CombinedEventCommandGroup,
-} from "./commandGroop";
+} from "./commandGroop2/";
 import {
   handleGroupMessage,
   handleGroupScrollingText,
   handleGroupComment,
   handleGroupScript,
 } from "./handleGroupGommnads";
-import type {
-  EventCommandPair_Comment,
-  EventCommandPair_Message,
-  EventCommandPair_Script,
-  EventCommandPair_ScrollingText,
-} from "./pickCommands";
 import {
   pickMessageWithHead,
   pickScrollText,
   pickComments,
   pickScripts,
 } from "./pickCommands";
+import type {
+  EventCommandPair_Message,
+  EventCommandPair_ScrollingText,
+  EventCommandPair_Comment,
+  EventCommandPair_Script,
+} from "./pickCommands/pairTypes";
 // TODO:このモックは不要っぽい。いずれモック不要の実装へ移行する
 vi.mock("./pickCommands", () => ({
   pickMessageWithHead: vi.fn(),
@@ -42,7 +42,7 @@ describe("handleGroupMessage", () => {
     const callback = vi.fn();
     const result = handleGroupMessage([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new SimpleEventCommandGroup(401, mockPair)
+      new SimpleEventCommandGroup(401, mockPair.head, mockPair.bodys)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });
@@ -64,14 +64,14 @@ describe("handleGroupScrollingText", () => {
     const mockPair: EventCommandPair_ScrollingText = {
       head: { code: 105, parameters: [1, false], indent: 0 },
       bodys: [],
-    } as const;
+    };
     (pickScrollText as MockedFunction<typeof pickScrollText>).mockReturnValue(
       mockPair
     );
     const callback = vi.fn();
     const result = handleGroupScrollingText([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new SimpleEventCommandGroup(405, mockPair)
+      new SimpleEventCommandGroup(405, mockPair.head, mockPair.bodys)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });
@@ -100,7 +100,7 @@ describe("handleGroupComment", () => {
     const callback = vi.fn();
     const result = handleGroupComment([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new CombinedEventCommandGroup(mockPair)
+      new CombinedEventCommandGroup(mockPair.head, mockPair.bodys)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });
@@ -127,7 +127,7 @@ describe("handleGroupScript", () => {
     const callback = vi.fn();
     const result = handleGroupScript([], 0, callback);
     expect(callback).toHaveBeenCalledWith(
-      new CombinedEventCommandGroup(mockPair)
+      new CombinedEventCommandGroup(mockPair.head, mockPair.bodys)
     );
     expect(result).toBe(callback.mock.results[0].value);
   });

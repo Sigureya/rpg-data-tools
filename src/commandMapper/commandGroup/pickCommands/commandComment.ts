@@ -5,7 +5,7 @@ import type {
 } from "@sigureya/rpgtypes";
 import { COMMENT, COMMENT_BODY } from "@sigureya/rpgtypes";
 import { pickHead, pickCommands } from "./pickCommands";
-import type { EventCommandPair } from "./types";
+import type { EventCommandPair } from "./pairTypes";
 
 export const pickComments = (
   array: ReadonlyArray<EventCommand>,

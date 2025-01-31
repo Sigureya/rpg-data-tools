@@ -1,12 +1,5 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 
-import type {
-  EventCommandGroup_Comment,
-  EventCommandGroup_Message,
-  EventCommandGroup_Script,
-  EventCommandGroup_ScrollingText,
-} from "./types";
-
 import {
   pickComments,
   pickMessageWithHead,
@@ -16,7 +9,13 @@ import {
 import {
   SimpleEventCommandGroup,
   CombinedEventCommandGroup,
-} from "./commandGroop";
+} from "./commandGroop2/commandGroop";
+import type {
+  EventCommandGroup_Comment,
+  EventCommandGroup_Message,
+  EventCommandGroup_Script,
+  EventCommandGroup_ScrollingText,
+} from "./commandGroop2";
 
 export const handleGroupMessage = <Result>(
   array: ReadonlyArray<EventCommand>,
@@ -25,7 +24,7 @@ export const handleGroupMessage = <Result>(
 ): Result => {
   const pair = pickMessageWithHead(array, index);
 
-  const group = new SimpleEventCommandGroup(401, pair);
+  const group = new SimpleEventCommandGroup(401, pair.head, pair.bodys);
   return func(group);
 };
 
@@ -35,7 +34,7 @@ export const handleGroupScrollingText = <Result>(
   func: (groop: EventCommandGroup_ScrollingText) => Result
 ): Result => {
   const pair = pickScrollText(array, index);
-  const group = new SimpleEventCommandGroup(405, pair);
+  const group = new SimpleEventCommandGroup(405, pair.head, pair.bodys);
   return func(group);
 };
 
@@ -45,7 +44,7 @@ export const handleGroupComment = <Result>(
   func: (group: EventCommandGroup_Comment) => Result
 ): Result => {
   const pair = pickComments(array, index);
-  const group = new CombinedEventCommandGroup(pair);
+  const group = new CombinedEventCommandGroup(pair.head, pair.bodys);
   return func(group);
 };
 
@@ -55,6 +54,6 @@ export const handleGroupScript = <Result>(
   func: (group: EventCommandGroup_Script) => Result
 ): Result => {
   const pair = pickScripts(array, index);
-  const groop = new CombinedEventCommandGroup(pair);
+  const groop = new CombinedEventCommandGroup(pair.head, pair.bodys);
   return func(groop);
 };
