@@ -1,16 +1,16 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
-import type { Command_TextBody as EventCommandBody } from "./types";
 import type { EventCommandGroup } from "./groopTypes";
 import { joinCommandBodies } from "./join";
 import type { EventCommandPair } from "../pickCommands/pairTypes";
 
+type TextCommandBody = RpgTypes.PickCommandByParam<[string]>;
 export abstract class BaseEventCommandGroup<
   Header extends RpgTypes.EventCommand,
-  Body extends EventCommandBody
+  Body extends TextCommandBody
 > implements EventCommandGroup<Header, Body>
 {
   constructor(protected pair: EventCommandPair<Header, Body>) {}
-  protected abstract getExpandedBodies(): EventCommandBody[];
+  protected abstract getExpandedBodies(): TextCommandBody[];
   abstract normalizedCommands(): RpgTypes.EventCommand[];
 
   getBodyText(separator: string = "\n"): string {
@@ -31,7 +31,7 @@ export abstract class BaseEventCommandGroup<
 
 export class SimpleEventCommandGroup<
   Header extends RpgTypes.EventCommand,
-  Body extends EventCommandBody
+  Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(
     public readonly bodyCode: Body["code"],
@@ -62,8 +62,8 @@ export class SimpleEventCommandGroup<
 }
 
 export class CombinedEventCommandGroup<
-  Header extends EventCommandBody,
-  Body extends EventCommandBody
+  Header extends TextCommandBody,
+  Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(pair: EventCommandPair<Header, Body>) {
     super(pair);
