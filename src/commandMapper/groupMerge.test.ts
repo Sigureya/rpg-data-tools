@@ -1,13 +1,14 @@
-import type * as Types from "@sigureya/rpgtypes";
+import * as Types from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
 import { normalizedCommands } from "./groupMerge";
 
-const MockJoinedText = "ふるいけや\nかわずとびこむ\nみずのおと" as const;
+const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
+
 const createMockCommand = <
   Code extends Types.PickCommandByParam<[string]>["code"]
 >(
   code: Code,
-  textList = ["ふるいけや", "かわずとびこむ", "みずのおと"]
+  textList = ["The quick", "brown fox", "jumps over"]
 ) =>
   textList.map((s) => ({
     code,
@@ -15,73 +16,144 @@ const createMockCommand = <
     parameters: [s] as [string],
   }));
 
-const sss = (name: string, command: Types.PickCommandByParam<[string]>) => {
-  test(`code:${command.code} ${name}`, () => {
-    const result: Types.EventCommand[][] = normalizedCommands([command]);
-    expect(result).toEqual([]);
+const testCommandRemoval = (
+  name: string,
+  command: Types.PickCommandByParam<[string]>
+) => {
+  test(`code:${command.code} (${name}) should be removed`, () => {
+    const result = normalizedCommands([command]);
+    expect(result).toEqual([[]]);
+    expect(result.flat()).toEqual([]);
   });
 };
 
-describe("groupJoin", () => {
-  describe("body単体は消せるか？", () => {
-    sss("showMessageBody", {
-      code: 401,
-      indent: 0,
-      parameters: ["abcd"],
-    });
-    test("scrollingTextBody", () => {
-      const mockScrollingText: Types.Command_ShowScrollingTextBody = {
-        code: 405,
-        indent: 0,
-        parameters: ["abcd"],
-      };
-      const result: Types.EventCommand[][] = normalizedCommands([
-        mockScrollingText,
-      ]);
-      expect(result.flat()).toEqual([]);
-    });
+describe("Body-only commands should be removed", () => {
+  testCommandRemoval("showMessageBody", {
+    code: Types.SHOW_MESSAGE_BODY,
+    indent: 0,
+    parameters: ["abcd"],
+  });
+  testCommandRemoval("scrollingTextBody", {
+    code: Types.SHOW_SCROLLING_TEXT_BODY,
+    indent: 0,
+    parameters: ["abcd"],
+  });
+  testCommandRemoval("commentBody", {
+    code: Types.COMMENT_BODY,
+    indent: 0,
+    parameters: ["abcd"],
+  });
+  testCommandRemoval("scriptBody", {
+    code: Types.SCRIPT_EVAL_BODY,
+    indent: 0,
+    parameters: ["abcd"],
   });
 });
+const testCommandMerge = (
+  name: string,
+  commands: [Types.EventCommand, ...Types.PickCommandByParam<[string]>[]],
+  expectedBody: Types.PickCommandByParam<[string]>
+) => {
+  test(`code:${commands[0].code} (${name}) should be merged`, () => {
+    const result = normalizedCommands(commands);
+    expect(result.length).toBe(commands.length);
+    const flat: Types.EventCommand[] = result.flat();
+    expect(flat.length).lessThan(commands.length);
+    expect(flat[0]).toMatchObject(commands[0]);
+    expect(flat).toMatchObject([commands[0], expectedBody]);
+  });
+};
+
 describe("case showMessage", () => {
-  test("showMessage", () => {
-    const command: Types.Command_ShowMessage = {
-      code: 101,
-      indent: 0,
-      parameters: ["test", 0, 0, 0, "speaker"],
-    };
-    const bodies: Types.Command_ShowMessageBody[] = createMockCommand(401);
-    const result: Types.EventCommand[][] = normalizedCommands([
-      command,
-      ...bodies,
-    ]);
-    expect<Types.EventCommand[]>(result.flat()).toMatchObject([
-      command,
+  testCommandMerge(
+    "showMessage",
+    [
       {
-        code: 401,
+        code: Types.SHOW_MESSAGE,
         indent: 0,
-        parameters: [MockJoinedText],
-      } as Types.Command_ShowMessageBody,
-    ]);
-  });
+        parameters: ["test", 0, 0, 0, "speaker"],
+      },
+      ...createMockCommand(Types.SHOW_MESSAGE_BODY),
+    ],
+    {
+      code: Types.SHOW_MESSAGE_BODY,
+      indent: 0,
+      parameters: [MockJoinedText],
+    }
+  );
 });
-describe("case comment", () => {
-  test("comment", () => {
-    const command: Types.Command_Comment = {
-      code: 108,
-      indent: 0,
-      parameters: ["松尾芭蕉"],
-    };
-    const bodies: Types.Command_CommentBody[] = createMockCommand(408);
-    const result: Types.EventCommand[][] = normalizedCommands([
-      command,
-      ...bodies,
-    ]);
-    expect(result.flat()).toMatchObject([
+
+describe("case showScrollingText", () => {
+  testCommandMerge(
+    "showScrollingText",
+    [
       {
-        code: 108,
+        code: Types.SHOW_SCROLLING_TEXT,
         indent: 0,
-        parameters: ["松尾芭蕉\n" + MockJoinedText],
-      } as Types.Command_Comment,
-    ]);
+        parameters: [0, false],
+      },
+      ...createMockCommand(Types.SHOW_SCROLLING_TEXT_BODY),
+    ],
+    {
+      code: Types.SHOW_SCROLLING_TEXT_BODY,
+      indent: 0,
+      parameters: [MockJoinedText],
+    }
+  );
+});
+
+const testCommandMergeToSingle = <
+  Head extends Types.PickCommandByParam<[string]>,
+  Body extends Types.PickCommandByParam<[string]>
+>(
+  name: string,
+  commands: [Head, ...Body[]],
+  expectedBody: Head
+) => {
+  test(`code:${commands[0].code} (${name}) should be merged`, () => {
+    const result = normalizedCommands(commands);
+    expect(result.length).toBe(commands.length);
+
+    const flat = result.flat();
+    expect(flat.length).toBe(1);
+
+    expect(flat).toMatchObject([expectedBody]);
   });
+};
+
+describe("case comment", () => {
+  testCommandMergeToSingle(
+    "comment",
+    [
+      {
+        code: Types.COMMENT,
+        indent: 0,
+        parameters: ["John Doe"],
+      },
+      ...createMockCommand(Types.COMMENT_BODY),
+    ],
+    {
+      code: Types.COMMENT,
+      indent: 0,
+      parameters: ["John Doe\n" + MockJoinedText],
+    }
+  );
+});
+describe("case script", () => {
+  testCommandMergeToSingle(
+    "script",
+    [
+      {
+        code: Types.SCRIPT_EVAL,
+        indent: 0,
+        parameters: ["console.log('Hello World')"],
+      },
+      ...createMockCommand(Types.SCRIPT_EVAL_BODY),
+    ],
+    {
+      code: Types.SCRIPT_EVAL,
+      indent: 0,
+      parameters: ["console.log('Hello World')\n" + MockJoinedText],
+    }
+  );
 });
