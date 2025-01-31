@@ -44,13 +44,16 @@ export class SimpleEventCommandGroup<
   protected getExpandedBodies(): Body[] {
     return this.bodies;
   }
-  normalizedCommands(): [Header, Body] {
+  normalizedCommands(): [Header, Body] | [Header] {
     const headder: Header = {
       ...this.header,
       code: this.header.code,
       indent: this.header.indent,
       parameters: [...this.header.parameters],
     };
+    if (this.bodies.length === 0) {
+      return [headder];
+    }
     const body = {
       code: this.bodyCode,
       indent: 0,
