@@ -4,8 +4,6 @@ import * as CMD from "@sigureya/rpgtypes";
 import { mappingCommand } from "./allMapping";
 import {
   createMessageGroup,
-  EventCommandGroup_Comment,
-  SimpleEventCommandGroup,
   type EventCommandGroup_Message,
 } from "./commandGroup";
 
@@ -188,6 +186,7 @@ describe("mappingCommand(groop)", () => {
       indent: 0,
       parameters: ["aaa", 0, 0, 0, ""],
     };
+
     const mapper = createMockMapper("showMessage");
     mappingCommand([command], 0, mapper);
     expect(mapper.showMessage).toHaveBeenCalledTimes(1);
