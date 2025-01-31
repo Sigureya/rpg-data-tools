@@ -22,12 +22,12 @@ export interface GroupJoinMapper<T>
  */
 export const CHOICE_HELP_TEXT = "選択肢ヘルプ" as const;
 
-export const is2 = (command: RpgTypes.Command_Comment) => {
+export const isChoiceHelp = (command: RpgTypes.Command_Comment) => {
   return command.parameters[0] === CHOICE_HELP_TEXT;
 };
 
 const mergeComment = (comment: EventCommandGroup_Comment) => {
-  if (is2(comment.header)) {
+  if (isChoiceHelp(comment.header)) {
     const text: string = joinCommandBodies(comment.bodies);
     return [
       {
