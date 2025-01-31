@@ -7,13 +7,13 @@ import type {
   Command_CommentBody,
   EventCommand,
 } from "@sigureya/rpgtypes";
+import type { CallBackFunc } from "./types";
 import type {
   EventCommandGroup_Message,
   EventCommandGroup_ScrollingText,
   EventCommandGroup_Comment,
   EventCommandGroup_Script,
-} from "./commandGroup";
-import type { CallBackFunc } from "./types";
+} from "./commandGroup/";
 
 export interface TextCommandMapper<T> {
   showMessage(groop: EventCommandGroup_Message): T;

@@ -6,16 +6,13 @@ import {
   pickScripts,
   pickScrollText,
 } from "./pickCommands";
-import {
-  SimpleEventCommandGroup,
-  CombinedEventCommandGroup,
-} from "./commandGroop2/commandGroop";
+import { SimpleEventCommandGroup, CombinedEventCommandGroup } from "./class";
 import type {
   EventCommandGroup_Comment,
   EventCommandGroup_Message,
   EventCommandGroup_Script,
   EventCommandGroup_ScrollingText,
-} from "./commandGroop2";
+} from "./class";
 
 export const handleGroupMessage = <Result>(
   array: ReadonlyArray<EventCommand>,
