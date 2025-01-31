@@ -33,7 +33,7 @@ const groupJoinMapper: GroupJoinMapper<RpgTypes.EventCommand[]> = {
 export const normalizedCommands = (
   command: ReadonlyArray<RpgTypes.EventCommand>
 ) => {
-  return command.flatMap((cmd, index, array) => {
+  return command.map((cmd, index, array) => {
     return mappingCommand(array, index, groupJoinMapper);
   });
 };
