@@ -1,7 +1,6 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { EventCommandGroup } from "./groopTypes";
 import { joinCommandBodies } from "./join";
-import type { EventCommandPair } from "../pickCommands/pairTypes";
 
 type TextCommandBody = RpgTypes.PickCommandByParam<[string]>;
 export abstract class BaseEventCommandGroup<
@@ -9,7 +8,7 @@ export abstract class BaseEventCommandGroup<
   Body extends TextCommandBody
 > implements EventCommandGroup<Header, Body>
 {
-  constructor(protected pair: EventCommandPair<Header, Body>) {}
+  constructor(public header: Header, public bodies: Body[]) {}
   protected abstract getExpandedBodies(): TextCommandBody[];
   abstract normalizedCommands(): RpgTypes.EventCommand[];
 
@@ -20,13 +19,6 @@ export abstract class BaseEventCommandGroup<
   joinCommandBodies() {
     return this.getExpandedBodies();
   }
-
-  get header(): Header {
-    return this.pair.head;
-  }
-  get bodies(): Body[] {
-    return this.pair.bodys;
-  }
 }
 
 export class SimpleEventCommandGroup<
@@ -35,9 +27,10 @@ export class SimpleEventCommandGroup<
 > extends BaseEventCommandGroup<Header, Body> {
   constructor(
     public readonly bodyCode: Body["code"],
-    pair: EventCommandPair<Header, Body>
+    header: Header,
+    bodies: Body[]
   ) {
-    super(pair);
+    super(header, bodies);
   }
   protected getExpandedBodies(): Body[] {
     return this.bodies;
@@ -65,8 +58,8 @@ export class CombinedEventCommandGroup<
   Header extends TextCommandBody,
   Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
-  constructor(pair: EventCommandPair<Header, Body>) {
-    super(pair);
+  constructor(header: Header, bodies: Body[]) {
+    super(header, bodies);
   }
   protected getExpandedBodies(): [Header, ...Body[]] {
     return [this.header, ...this.bodies];

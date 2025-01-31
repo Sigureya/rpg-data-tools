@@ -1,4 +1,4 @@
-import { COMMENT as g, COMMENT_BODY as A, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as y, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
+import { COMMENT as g, COMMENT_BODY as y, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as A, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
 const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   id: 0,
   name: "",
@@ -250,9 +250,9 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   optSideView: e.optSideView ?? !1,
   optSlipDeath: e.optSlipDeath ?? !1,
   optTransparent: e.optTransparent ?? !1,
-  boat: e.boat ?? d(),
-  ship: e.ship ?? d(),
-  airship: e.airship ?? d(),
+  boat: e.boat ?? o(),
+  ship: e.ship ?? o(),
+  airship: e.airship ?? o(),
   tileSize: e.tileSize ?? 0
 }), _ = (e = {}) => ({
   messages: P(e.messages ?? {}),
@@ -374,7 +374,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   mainFontFilename: e.mainFontFilename ?? "",
   fallbackFonts: e.fallbackFonts ?? "",
   fontSize: e.fontSize ?? 0
-}), d = (e = {}) => ({
+}), o = (e = {}) => ({
   bgm: e.bgm ?? s(),
   characterIndex: e.characterIndex ?? 0,
   characterName: e.characterName ?? "",
@@ -408,13 +408,13 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   e.useSkill ?? s()
 ], h = (e, a) => a ? e === a.code : !1, Y = "MessageHeader invalid command", U = "Invalid Head", p = (e) => typeof e[0] == "string" && e.length === 1, Te = (e, a) => a ? e === a.code && p(a.parameters) : !1, l = (e, a, t) => {
   const n = [];
-  for (let r = t; r < a.length; r++) {
-    const c = a[r];
-    if (h(e, c) && p(c.parameters))
+  for (let c = t; c < a.length; c++) {
+    const r = a[c];
+    if (h(e, r) && p(r.parameters))
       n.push({
         code: e,
-        indent: c.indent,
-        parameters: [c.parameters[0]]
+        indent: r.indent,
+        parameters: [r.parameters[0]]
       });
     else
       break;
@@ -431,10 +431,10 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   throw new Error(U, { cause: n });
 }, X = (e, a) => ({
   head: I(e, a, g),
-  bodys: l(A, e, a + 1)
+  bodys: l(y, e, a + 1)
 }), $ = (e, a) => ({
   head: I(e, a, f),
-  bodys: l(y, e, a + 1)
+  bodys: l(A, e, a + 1)
 }), j = (e, a) => {
   const t = e[a];
   if (t && K(t))
@@ -459,8 +459,8 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
 }), ae = (e, a = `
 `) => e.map((t) => t.parameters[0]).join(a);
 class x {
-  constructor(a) {
-    this.pair = a;
+  constructor(a, t) {
+    this.header = a, this.bodies = t;
   }
   getBodyText(a = `
 `) {
@@ -469,16 +469,10 @@ class x {
   joinCommandBodies() {
     return this.getExpandedBodies();
   }
-  get header() {
-    return this.pair.head;
-  }
-  get bodies() {
-    return this.pair.bodys;
-  }
 }
 class S extends x {
-  constructor(a, t) {
-    super(t), this.bodyCode = a;
+  constructor(a, t, n) {
+    super(t, n), this.bodyCode = a;
   }
   getExpandedBodies() {
     return this.bodies;
@@ -501,8 +495,8 @@ class S extends x {
   }
 }
 class N extends x {
-  constructor(a) {
-    super(a);
+  constructor(a, t) {
+    super(a, t);
   }
   getExpandedBodies() {
     return [this.header, ...this.bodies];
@@ -519,18 +513,18 @@ class N extends x {
   }
 }
 const te = (e, a, t) => {
-  const n = Z(e, a), r = new S(401, n);
-  return t(r);
+  const n = Z(e, a), c = new S(401, n.head, n.bodys);
+  return t(c);
 }, ne = (e, a, t) => {
-  const n = ee(e, a), r = new S(405, n);
-  return t(r);
+  const n = ee(e, a), c = new S(405, n.head, n.bodys);
+  return t(c);
 }, se = (e, a, t) => {
-  const n = X(e, a), r = new N(n);
-  return t(r);
-}, re = (e, a, t) => {
-  const n = $(e, a), r = new N(n);
-  return t(r);
+  const n = X(e, a), c = new N(n.head, n.bodys);
+  return t(c);
 }, ce = (e, a, t) => {
+  const n = $(e, a), c = new N(n.head, n.bodys);
+  return t(c);
+}, re = (e, a, t) => {
   const n = e[a];
   switch (n.code) {
     case b:
@@ -540,7 +534,7 @@ const te = (e, a, t) => {
     case g:
       return se(e, a, t.comment);
     case f:
-      return re(e, a, t.script);
+      return ce(e, a, t.script);
     case H:
       return t.showChoices(n, a, e);
     case B:
@@ -555,32 +549,32 @@ const te = (e, a, t) => {
       return t.other(n, a, e);
   }
 }, Ce = (e, a) => e.map(
-  (t, n, r) => ce(r, n, a)
-), E = (e, a) => `<${e}:${a}>`, o = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), Ae = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
-  const t = o(), n = [];
-  let r;
-  for (; (r = t.exec(e)) !== null; )
-    n.push(a(r[1], r[2]));
+  (t, n, c) => re(c, n, a)
+), E = (e, a) => `<${e}:${a}>`, d = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), ye = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
+  const t = d(), n = [];
+  let c;
+  for (; (c = t.exec(e)) !== null; )
+    n.push(a(c[1], c[2]));
   return n;
-}, ye = (e, a) => e.replace(o(), (t, n, r) => {
-  const c = a(n, r);
-  return E(n, c);
+}, Ae = (e, a) => e.replace(d(), (t, n, c) => {
+  const r = a(n, c);
+  return E(n, r);
 }), Me = (e, a) => {
-  const t = o();
+  const t = d();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
 }, ke = (e, a, t) => {
-  const n = o();
-  return e.replace(n, (r, c) => c === a ? E(c, t) : r);
-}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, oe = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
-  controlChar: oe(a),
+  const n = d();
+  return e.replace(n, (c, r) => r === a ? E(r, t) : c);
+}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, de = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
+  controlChar: de(a),
   text: a.name
 })), Be = (e) => e.variables.map((a, t) => ({
   text: a || "",
   controlChar: C(le, t)
-})).filter((a) => a.text !== ""), de = /* @__PURE__ */ new Set([
+})).filter((a) => a.text !== ""), oe = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -592,12 +586,12 @@ const te = (e, a, t) => {
   "c",
   "i",
   "fs"
-]), He = (e, a = de) => {
+]), He = (e, a = oe) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
-  let r;
-  for (; (r = t.exec(e)) !== null; ) {
-    const c = r[1].toLowerCase(), w = parseInt(r[2], 10);
-    a.has(c) && n.push({ char: r[1], id: w });
+  let c;
+  for (; (c = t.exec(e)) !== null; ) {
+    const r = c[1].toLowerCase(), w = parseInt(c[2], 10);
+    a.has(r) && n.push({ char: c[1], id: w });
   }
   return n;
 }, me = (e, a, t) => a.map((n) => t(n, e[n], e)), Ge = (e, a, t) => me(e, a, t), Oe = (e, a) => ({
@@ -642,21 +636,21 @@ export {
   Ee as createSystemData,
   q as createSystemSoundsArray,
   _ as createTerms,
-  d as createVehicle,
-  oe as fromActor,
+  o as createVehicle,
+  de as fromActor,
   Re as fromActors,
   Be as fromSystem,
   He as getControlChars,
   Me as getNoteValue,
   se as handleGroupComment,
   te as handleGroupMessage,
-  re as handleGroupScript,
+  ce as handleGroupScript,
   ne as handleGroupScrollingText,
-  ce as handlerDispatch,
+  re as handlerDispatch,
   p as isBodyParams,
   Te as isHeadCommand,
   K as isMessageHeader,
-  o as makeRegex,
+  d as makeRegex,
   Ce as mapTextCommand,
   Ve as pickCommandParamNumber,
   Oe as pickCommandParamString,
@@ -670,10 +664,10 @@ export {
   ee as pickScrollText,
   Q as pickScrollTextHeader,
   Ge as pickString,
-  Ae as readNote,
+  ye as readNote,
   T as readNoteEx,
   we as readNoteObject,
-  ye as replaceNote,
+  Ae as replaceNote,
   ke as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
