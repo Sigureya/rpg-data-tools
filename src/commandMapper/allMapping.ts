@@ -49,6 +49,8 @@ export const mappingCommand = <T>(
       return table.script
         ? handleGroupScript(array, index, table.script)
         : table.other(command, index, array);
+    case Code.SCRIPT_EVAL_BODY:
+      return callHandler(command, index, array, table.scriptBody, table.other);
     case Code.CONTROL_SWITCHES:
       return callHandler(command, index, array, table.controlSwitch, table.other);
     case Code.CONTROL_VARIABLES:
