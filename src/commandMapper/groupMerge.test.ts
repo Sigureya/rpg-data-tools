@@ -1,6 +1,6 @@
 import * as Types from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
-import { normalizedCommands } from "./groupMerge";
+import { CHOICE_HELP_TEXT, normalizedCommands } from "./groupMerge";
 
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
@@ -111,6 +111,24 @@ describe("case showScrollingText", () => {
     ],
     {
       code: Types.SHOW_SCROLLING_TEXT_BODY,
+      indent: 0,
+      parameters: [MockJoinedText],
+    }
+  );
+});
+describe("選択肢ヘルプ", () => {
+  testCommandMerge(
+    "選択肢ヘルプ",
+    [
+      {
+        code: Types.COMMENT,
+        indent: 0,
+        parameters: [CHOICE_HELP_TEXT],
+      },
+      ...createMockCommand(Types.COMMENT_BODY),
+    ],
+    {
+      code: Types.COMMENT_BODY,
       indent: 0,
       parameters: [MockJoinedText],
     }
