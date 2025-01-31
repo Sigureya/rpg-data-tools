@@ -1,7 +1,9 @@
 import { MappingObject } from './allCommandsMapper';
-import type * as RpgTypes from "@sigureya/rpgtypes";
+import * as RpgTypes from "@sigureya/rpgtypes";
 export interface GroupJoinMapper<T> extends Pick<MappingObject<T>, "showMessage" | "showMessageBody" | "comment" | "commentBody" | "script" | "scriptBody" | "showScrollingText" | "showScrollingTextBody" | "other"> {
 }
+export declare const CHOICE_HELP_TEXT: "\u9078\u629E\u80A2\u30D8\u30EB\u30D7";
+export declare const isChoiceHelp: (command: RpgTypes.Command_Comment) => boolean;
 export declare const normalizedCommands: (command: ReadonlyArray<RpgTypes.EventCommand>) => ({
     parameters: [];
     code: 0;
@@ -382,4 +384,4 @@ export declare const normalizedCommands: (command: ReadonlyArray<RpgTypes.EventC
     parameters: [filename: string, commandName: string, anything: string, args: Record<string, string>];
     code: 357;
     indent: number;
-})[];
+})[][];
