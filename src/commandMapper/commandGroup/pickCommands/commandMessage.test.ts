@@ -1,7 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { isMessageHeader, pickMessageWithHead } from "./commandMessage";
-import { ERROR_COMMAND_MESSAGE } from "./errorConstants";
+import { ERROR_COMMAND_MESSAGE } from "./errors/";
 
 describe("isMessageHeader", () => {
   const commands: EventCommand[] = [

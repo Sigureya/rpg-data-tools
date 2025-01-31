@@ -2,7 +2,7 @@ import type { EventCommand } from "@sigureya/rpgtypes";
 import { COMMENT, COMMENT_BODY } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { pickComments } from "./commandComment";
-import { ERROR_INVALID_HEAD } from "./errorConstants";
+import { ERROR_INVALID_HEAD } from "./errors";
 
 describe("pickComments", () => {
   const commands: EventCommand[] = [

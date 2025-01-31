@@ -5,7 +5,7 @@ import type {
   PickCommandByParam,
 } from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
-import { ERROR_INVALID_HEAD } from "./errorConstants";
+import { ERROR_INVALID_HEAD } from "./errors/";
 
 export const isBodyParams = (
   param: unknown[]

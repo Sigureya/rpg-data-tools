@@ -1,7 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { pickScripts } from "./commandScript";
-import { ERROR_INVALID_HEAD } from "./errorConstants";
+import { ERROR_INVALID_HEAD } from "./errors";
 
 describe("pickScripts", () => {
   const commands: EventCommand[] = [

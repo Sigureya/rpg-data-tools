@@ -1,5 +1,5 @@
 export * from './pickCommands';
-export * from './types';
+export * from './errors/';
 export * from './commandCheck';
 export * from './commandComment';
 export * from './commandScript';
