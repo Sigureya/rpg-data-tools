@@ -9,7 +9,7 @@ import {
 } from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
 import { pickCommands } from "./pickCommands";
-import type { CommandReadError } from "./types";
+import type { CommandReadError } from "./errors/";
 import type { EventCommandPair } from "./pairTypes";
 export type CommandPair_ScrollingText = EventCommandPair<
   Command_ShowScrollingText,

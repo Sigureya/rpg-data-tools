@@ -1,4 +1,4 @@
-import { COMMENT as g, COMMENT_BODY as y, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as A, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
+import { COMMENT as g, COMMENT_BODY as A, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as y, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as R, CHANGE_NAME as D, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
 const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   id: 0,
   name: "",
@@ -165,9 +165,9 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   note: "",
   x: 0,
   y: 0,
-  pages: [V()],
+  pages: [G()],
   ...e
-}), G = (e) => ({
+}), O = (e) => ({
   actorId: 0,
   actorValid: !1,
   itemId: 0,
@@ -182,16 +182,16 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   variableValid: !1,
   variableValue: 0,
   ...e
-}), O = (e) => ({
+}), _ = (e) => ({
   characterIndex: 0,
   characterName: "",
   direction: 6,
   pattern: 0,
   tileId: 0,
   ...e
-}), V = (e) => ({
-  conditions: G(),
-  image: O(),
+}), G = (e) => ({
+  conditions: O(),
+  image: _(),
   moveRoute: {
     list: [],
     repeat: !1,
@@ -212,7 +212,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   gameTitle: e.gameTitle ?? "",
   currencyUnit: e.currencyUnit ?? "",
   title1Name: e.title1Name ?? "",
-  terms: e.terms ?? _(),
+  terms: e.terms ?? V(),
   title2Name: e.title2Name ?? "",
   optAutosave: e.optAutosave ?? !1,
   attackMotions: e.attackMotions ?? [],
@@ -254,7 +254,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   ship: e.ship ?? o(),
   airship: e.airship ?? o(),
   tileSize: e.tileSize ?? 0
-}), _ = (e = {}) => ({
+}), V = (e = {}) => ({
   messages: P(e.messages ?? {}),
   commands: W(e.commands ?? {}),
   params: L(e.params ?? {}),
@@ -406,7 +406,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   e.shop ?? s(),
   e.useItem ?? s(),
   e.useSkill ?? s()
-], h = (e, a) => a ? e === a.code : !1, Y = "MessageHeader invalid command", U = "Invalid Head", p = (e) => typeof e[0] == "string" && e.length === 1, Te = (e, a) => a ? e === a.code && p(a.parameters) : !1, l = (e, a, t) => {
+], h = (e, a) => a ? e === a.code : !1, Y = "MessageHeader invalid command", Te = "Script invalid command", U = "Invalid Head", p = (e) => typeof e[0] == "string" && e.length === 1, Ce = (e, a) => a ? e === a.code && p(a.parameters) : !1, l = (e, a, t) => {
   const n = [];
   for (let c = t; c < a.length; c++) {
     const r = a[c];
@@ -431,10 +431,10 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   throw new Error(U, { cause: n });
 }, X = (e, a) => ({
   head: I(e, a, g),
-  bodys: l(y, e, a + 1)
+  bodys: l(A, e, a + 1)
 }), $ = (e, a) => ({
   head: I(e, a, f),
-  bodys: l(A, e, a + 1)
+  bodys: l(y, e, a + 1)
 }), j = (e, a) => {
   const t = e[a];
   if (t && K(t))
@@ -539,39 +539,39 @@ const te = (e, a, t) => {
       return t.showChoices(n, a, e);
     case B:
       return t.choiceWhen(n, a, e);
-    case R:
-      return t.changeName(n, a, e);
     case D:
+      return t.changeName(n, a, e);
+    case R:
       return t.changeProfile(n, a, e);
     case k:
       return t.changeNickname(n, a, e);
     default:
       return t.other(n, a, e);
   }
-}, Ce = (e, a) => e.map(
+}, we = (e, a) => e.map(
   (t, n, c) => re(c, n, a)
-), E = (e, a) => `<${e}:${a}>`, d = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), ye = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
+), E = (e, a) => `<${e}:${a}>`, d = () => /<([^<>:]+):([^>]*)>/g, Ae = (e, a) => T(e.note, (t, n) => a(t, n, e)), ye = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
   const t = d(), n = [];
   let c;
   for (; (c = t.exec(e)) !== null; )
     n.push(a(c[1], c[2]));
   return n;
-}, Ae = (e, a) => e.replace(d(), (t, n, c) => {
+}, Me = (e, a) => e.replace(d(), (t, n, c) => {
   const r = a(n, c);
   return E(n, r);
-}), Me = (e, a) => {
+}), ke = (e, a) => {
   const t = d();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
-}, ke = (e, a, t) => {
+}, Re = (e, a, t) => {
   const n = d();
   return e.replace(n, (c, r) => r === a ? E(r, t) : c);
-}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, de = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
+}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, de = (e) => C(ie, e.id), Be = (e) => e.map((a) => ({
   controlChar: de(a),
   text: a.name
-})), Be = (e) => e.variables.map((a, t) => ({
+})), He = (e) => e.variables.map((a, t) => ({
   text: a || "",
   controlChar: C(le, t)
 })).filter((a) => a.text !== ""), oe = /* @__PURE__ */ new Set([
@@ -586,7 +586,7 @@ const te = (e, a, t) => {
   "c",
   "i",
   "fs"
-]), He = (e, a = oe) => {
+]), Oe = (e, a = oe) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let c;
   for (; (c = t.exec(e)) !== null; ) {
@@ -594,7 +594,7 @@ const te = (e, a, t) => {
     a.has(r) && n.push({ char: c[1], id: w });
   }
   return n;
-}, me = (e, a, t) => a.map((n) => t(n, e[n], e)), Ge = (e, a, t) => me(e, a, t), Oe = (e, a) => ({
+}, me = (e, a, t) => a.map((n) => t(n, e[n], e)), _e = (e, a, t) => me(e, a, t), Ge = (e, a) => ({
   code: e.code,
   paramIndex: a,
   value: e.parameters[a]
@@ -606,6 +606,9 @@ const te = (e, a, t) => {
 export {
   x as BaseEventCommandGroup,
   N as CombinedEventCommandGroup,
+  Y as ERROR_COMMAND_MESSAGE,
+  Te as ERROR_COMMAND_SCRIPT,
+  U as ERROR_INVALID_HEAD,
   J as ERROR_MESSAGE,
   S as SimpleEventCommandGroup,
   De as codeInfoText,
@@ -624,36 +627,36 @@ export {
   s as createAudio,
   F as createBasicTerms,
   W as createCommandsArray,
-  G as createCondtion,
+  O as createCondtion,
   C as createControlCharFormat,
-  V as createEventPage,
+  G as createEventPage,
   Se as createMap,
   Ne as createMapEvent,
-  O as createMapEventImage,
+  _ as createMapEventImage,
   P as createMessages,
   E as createNoteEntity,
   L as createParamNamesArray,
   Ee as createSystemData,
   q as createSystemSoundsArray,
-  _ as createTerms,
+  V as createTerms,
   o as createVehicle,
   de as fromActor,
-  Re as fromActors,
-  Be as fromSystem,
-  He as getControlChars,
-  Me as getNoteValue,
+  Be as fromActors,
+  He as fromSystem,
+  Oe as getControlChars,
+  ke as getNoteValue,
   se as handleGroupComment,
   te as handleGroupMessage,
   ce as handleGroupScript,
   ne as handleGroupScrollingText,
   re as handlerDispatch,
   p as isBodyParams,
-  Te as isHeadCommand,
+  Ce as isHeadCommand,
   K as isMessageHeader,
   d as makeRegex,
-  Ce as mapTextCommand,
+  we as mapTextCommand,
   Ve as pickCommandParamNumber,
-  Oe as pickCommandParamString,
+  Ge as pickCommandParamString,
   l as pickCommands,
   X as pickComments,
   I as pickHead,
@@ -663,11 +666,11 @@ export {
   $ as pickScripts,
   ee as pickScrollText,
   Q as pickScrollTextHeader,
-  Ge as pickString,
+  _e as pickString,
   ye as readNote,
   T as readNoteEx,
-  we as readNoteObject,
-  Ae as replaceNote,
-  ke as setNoteValue
+  Ae as readNoteObject,
+  Me as replaceNote,
+  Re as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
