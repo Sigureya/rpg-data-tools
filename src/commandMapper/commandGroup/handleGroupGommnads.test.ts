@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from "vitest";
 import {
   SimpleEventCommandGroup,
   CombinedEventCommandGroup,
-} from "./commandGroop";
+} from "./commandGroop2/commandGroop";
 import {
   handleGroupMessage,
   handleGroupScrollingText,

@@ -16,7 +16,7 @@ import {
 import {
   SimpleEventCommandGroup,
   CombinedEventCommandGroup,
-} from "./commandGroop";
+} from "./commandGroop2/commandGroop";
 
 export const handleGroupMessage = <Result>(
   array: ReadonlyArray<EventCommand>,

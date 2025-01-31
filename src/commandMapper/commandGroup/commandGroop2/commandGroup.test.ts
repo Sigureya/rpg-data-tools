@@ -8,7 +8,7 @@ import type {
   EventCommandGroup_Comment,
   EventCommandGroup_Script,
   EventCommandGroup_ScrollingText,
-} from "./types";
+} from "../types";
 import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
