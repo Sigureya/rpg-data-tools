@@ -3,8 +3,8 @@ import type {
   Command_TextBody as EventCommandBody,
   EventCommandPair,
 } from "./pickCommands";
-import { joinCommandBodies } from "./pickCommands";
 import type { EventCommandGroup } from "./types";
+import { joinCommandBodies } from "./commandGroop2/join";
 
 export abstract class BaseEventCommandGroup<
   Header extends RpgTypes.EventCommand,

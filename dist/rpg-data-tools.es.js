@@ -408,13 +408,13 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   e.useSkill ?? s()
 ], h = (e, a) => a ? e === a.code : !1, Y = "MessageHeader invalid command", U = "Invalid Head", p = (e) => typeof e[0] == "string" && e.length === 1, Te = (e, a) => a ? e === a.code && p(a.parameters) : !1, l = (e, a, t) => {
   const n = [];
-  for (let c = t; c < a.length; c++) {
-    const r = a[c];
-    if (h(e, r) && p(r.parameters))
+  for (let r = t; r < a.length; r++) {
+    const c = a[r];
+    if (h(e, c) && p(c.parameters))
       n.push({
         code: e,
-        indent: r.indent,
-        parameters: [r.parameters[0]]
+        indent: c.indent,
+        parameters: [c.parameters[0]]
       });
     else
       break;
@@ -429,22 +429,21 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
       parameters: [n.parameters[0]]
     };
   throw new Error(U, { cause: n });
-}, X = (e, a = `
-`) => e.map((t) => t.parameters[0]).join(a), $ = (e, a) => ({
+}, X = (e, a) => ({
   head: I(e, a, g),
   bodys: l(A, e, a + 1)
-}), j = (e, a) => ({
+}), $ = (e, a) => ({
   head: I(e, a, f),
   bodys: l(y, e, a + 1)
-}), K = (e, a) => {
+}), j = (e, a) => {
   const t = e[a];
-  if (t && Z(t))
+  if (t && K(t))
     return t;
   throw new Error(Y, { cause: t });
-}, Z = (e) => !e || e.code !== b || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", J = (e, a) => ({
-  head: K(e, a),
+}, K = (e) => !e || e.code !== b || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", Z = (e, a) => ({
+  head: j(e, a),
   bodys: l(M, e, a + 1)
-}), Q = "ScrollTextHeader invalid command", ee = (e, a) => {
+}), J = "ScrollTextHeader invalid command", Q = (e, a) => {
   const t = e[a];
   if (h(m, t))
     return t;
@@ -453,18 +452,19 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
     bodyCode: v,
     index: a
   };
-  throw new Error(Q, { cause: n });
-}, ae = (e, a) => ({
-  head: ee(e, a),
+  throw new Error(J, { cause: n });
+}, ee = (e, a) => ({
+  head: Q(e, a),
   bodys: l(v, e, a + 1)
-});
+}), ae = (e, a = `
+`) => e.map((t) => t.parameters[0]).join(a);
 class x {
   constructor(a) {
     this.pair = a;
   }
   getBodyText(a = `
 `) {
-    return X(this.getExpandedBodies(), a);
+    return ae(this.getExpandedBodies(), a);
   }
   joinCommandBodies() {
     return this.getExpandedBodies();
@@ -489,7 +489,10 @@ class S extends x {
       code: this.header.code,
       indent: this.header.indent,
       parameters: [...this.header.parameters]
-    }, t = {
+    };
+    if (this.bodies.length === 0)
+      return [a];
+    const t = {
       code: this.bodyCode,
       indent: 0,
       parameters: [this.getBodyText()]
@@ -516,18 +519,18 @@ class N extends x {
   }
 }
 const te = (e, a, t) => {
-  const n = J(e, a), c = new S(401, n);
-  return t(c);
+  const n = Z(e, a), r = new S(401, n);
+  return t(r);
 }, ne = (e, a, t) => {
-  const n = ae(e, a), c = new S(405, n);
-  return t(c);
+  const n = ee(e, a), r = new S(405, n);
+  return t(r);
 }, se = (e, a, t) => {
-  const n = $(e, a), c = new N(n);
-  return t(c);
-}, ce = (e, a, t) => {
-  const n = j(e, a), c = new N(n);
-  return t(c);
+  const n = X(e, a), r = new N(n);
+  return t(r);
 }, re = (e, a, t) => {
+  const n = $(e, a), r = new N(n);
+  return t(r);
+}, ce = (e, a, t) => {
   const n = e[a];
   switch (n.code) {
     case b:
@@ -537,7 +540,7 @@ const te = (e, a, t) => {
     case g:
       return se(e, a, t.comment);
     case f:
-      return ce(e, a, t.script);
+      return re(e, a, t.script);
     case H:
       return t.showChoices(n, a, e);
     case B:
@@ -552,16 +555,16 @@ const te = (e, a, t) => {
       return t.other(n, a, e);
   }
 }, Ce = (e, a) => e.map(
-  (t, n, c) => re(c, n, a)
+  (t, n, r) => ce(r, n, a)
 ), E = (e, a) => `<${e}:${a}>`, o = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), Ae = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
   const t = o(), n = [];
-  let c;
-  for (; (c = t.exec(e)) !== null; )
-    n.push(a(c[1], c[2]));
+  let r;
+  for (; (r = t.exec(e)) !== null; )
+    n.push(a(r[1], r[2]));
   return n;
-}, ye = (e, a) => e.replace(o(), (t, n, c) => {
-  const r = a(n, c);
-  return E(n, r);
+}, ye = (e, a) => e.replace(o(), (t, n, r) => {
+  const c = a(n, r);
+  return E(n, c);
 }), Me = (e, a) => {
   const t = o();
   let n;
@@ -570,7 +573,7 @@ const te = (e, a, t) => {
       return n[2];
 }, ke = (e, a, t) => {
   const n = o();
-  return e.replace(n, (c, r) => r === a ? E(r, t) : c);
+  return e.replace(n, (r, c) => c === a ? E(c, t) : r);
 }, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, oe = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
   controlChar: oe(a),
   text: a.name
@@ -591,10 +594,10 @@ const te = (e, a, t) => {
   "fs"
 ]), He = (e, a = de) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
-  let c;
-  for (; (c = t.exec(e)) !== null; ) {
-    const r = c[1].toLowerCase(), w = parseInt(c[2], 10);
-    a.has(r) && n.push({ char: c[1], id: w });
+  let r;
+  for (; (r = t.exec(e)) !== null; ) {
+    const c = r[1].toLowerCase(), w = parseInt(r[2], 10);
+    a.has(c) && n.push({ char: r[1], id: w });
   }
   return n;
 }, me = (e, a, t) => a.map((n) => t(n, e[n], e)), Ge = (e, a, t) => me(e, a, t), Oe = (e, a) => ({
@@ -609,7 +612,7 @@ const te = (e, a, t) => {
 export {
   x as BaseEventCommandGroup,
   N as CombinedEventCommandGroup,
-  Q as ERROR_MESSAGE,
+  J as ERROR_MESSAGE,
   S as SimpleEventCommandGroup,
   De as codeInfoText,
   h as codeTest,
@@ -647,26 +650,25 @@ export {
   Me as getNoteValue,
   se as handleGroupComment,
   te as handleGroupMessage,
-  ce as handleGroupScript,
+  re as handleGroupScript,
   ne as handleGroupScrollingText,
-  re as handlerDispatch,
+  ce as handlerDispatch,
   p as isBodyParams,
   Te as isHeadCommand,
-  Z as isMessageHeader,
-  X as joinCommandBodies,
+  K as isMessageHeader,
   o as makeRegex,
   Ce as mapTextCommand,
   Ve as pickCommandParamNumber,
   Oe as pickCommandParamString,
   l as pickCommands,
-  $ as pickComments,
+  X as pickComments,
   I as pickHead,
-  K as pickMessageHeader,
-  J as pickMessageWithHead,
+  j as pickMessageHeader,
+  Z as pickMessageWithHead,
   me as pickPropertys,
-  j as pickScripts,
-  ae as pickScrollText,
-  ee as pickScrollTextHeader,
+  $ as pickScripts,
+  ee as pickScrollText,
+  Q as pickScrollTextHeader,
   Ge as pickString,
   Ae as readNote,
   T as readNoteEx,
