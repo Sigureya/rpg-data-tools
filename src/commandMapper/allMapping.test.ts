@@ -2,6 +2,12 @@ import { describe, expect, test, vi } from "vitest";
 import type { MappingObject } from "./allCommandsMapper";
 import * as CMD from "@sigureya/rpgtypes";
 import { mappingCommand } from "./allMapping";
+import {
+  createMessageGroup,
+  EventCommandGroup_Comment,
+  SimpleEventCommandGroup,
+  type EventCommandGroup_Message,
+} from "./commandGroup";
 
 const createMockMapper = <Key extends string & keyof MappingObject<void>>(
   targetKey: Key
@@ -174,4 +180,19 @@ describe("mappingCommand", () => {
   //     indent: 0,
   //     parameters: [0],
   //   });
+});
+describe("mappingCommand(groop)", () => {
+  test("showMessage", () => {
+    const command: CMD.Command_ShowMessage = {
+      code: CMD.SHOW_MESSAGE,
+      indent: 0,
+      parameters: ["aaa", 0, 0, 0, ""],
+    };
+    const mapper = createMockMapper("showMessage");
+    mappingCommand([command], 0, mapper);
+    expect(mapper.showMessage).toHaveBeenCalledTimes(1);
+    expect(mapper.showMessage).toHaveBeenCalledWith<
+      [EventCommandGroup_Message]
+    >(createMessageGroup(command));
+  });
 });
