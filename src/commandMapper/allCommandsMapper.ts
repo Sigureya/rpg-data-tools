@@ -11,9 +11,14 @@ import type { CallBackFunc } from "./types";
 
 export interface MappingObject<T> {
   showMessage(groop: EventCommandGroup_Message): T;
+  showMessageBody(groop: RpgTypes.Command_ShowMessageBody): T;
   showScrollingText(groop: EventCommandGroup_ScrollingText): T;
+  showScrollingTextBody(groop: RpgTypes.Command_ShowScrollingTextBody): T;
   comment(groop: EventCommandGroup_Comment): T;
+  commentBody: CallBackFunc<RpgTypes.Command_CommentBody, T>;
+
   script(groop: EventCommandGroup_Script): T;
+  scriptBody(groop: RpgTypes.Command_ScriptBody): T;
 
   controlSwitch: CallBackFunc<RpgTypes.Command_ControlSwitches, T>;
   controlVariable: CallBackFunc<RpgTypes.Command_ControlVariables, T>;
@@ -27,7 +32,6 @@ export interface MappingObject<T> {
   changeName: CallBackFunc<RpgTypes.Command_ChangeName, T>;
   changeProfile: CallBackFunc<RpgTypes.Command_ChangeProfile, T>;
   changeNickname: CallBackFunc<RpgTypes.Command_ChangeNickName, T>;
-  commentBody: CallBackFunc<RpgTypes.Command_CommentBody, T>;
 
   label: CallBackFunc<RpgTypes.Command_Label, T>;
   labelJump: CallBackFunc<RpgTypes.Command_LabelJump, T>;
@@ -81,6 +85,7 @@ export interface MappingObject<T> {
   changeWeapon: CallBackFunc<RpgTypes.Command_ChangeWeapons, T>;
   changeArmor: CallBackFunc<RpgTypes.Command_ChangeArmors, T>;
   changePartyMember: CallBackFunc<RpgTypes.Command_ChangePartyMember, T>;
+  changeActorImages: CallBackFunc<RpgTypes.Command_ChangeActorImages, T>;
 
   tintScreen: CallBackFunc<RpgTypes.Command_TintScreen, T>;
   flashScreen: CallBackFunc<RpgTypes.Command_FlashScreen, T>;

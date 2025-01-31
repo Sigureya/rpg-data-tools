@@ -8,8 +8,8 @@ import {
   type EventCommand,
 } from "@sigureya/rpgtypes";
 import { pickCommands } from "./pickCommands";
-import type { EventCommandPair } from "./types";
 import { ERROR_COMMAND_MESSAGE } from "./errorConstants";
+import type { EventCommandPair } from "./pairTypes";
 
 export const pickMessageHeader = (
   arrya: ReadonlyArray<EventCommand>,

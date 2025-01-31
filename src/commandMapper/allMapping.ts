@@ -8,9 +8,9 @@ import {
   handleGroupScript,
 } from "./commandGroup";
 import type { CallBackFunc } from "./types";
-import type { MappingObject } from "./allCommandsMapper";
+import type { PartialMappingObject } from "./allCommandsMapper";
 
-const callHandler = <T, Command extends EventCommand>(
+export const callHandler = <T, Command extends EventCommand>(
   command: Command,
   index: number,
   array: ReadonlyArray<EventCommand>,
@@ -20,21 +20,35 @@ const callHandler = <T, Command extends EventCommand>(
   return handler ? handler(command, index, array) : fallback(command, index, array);
 };
 
-export const mappingXX = <T>(
+export const mappingCommand = <T>(
   array: ReadonlyArray<EventCommand>,
   index: number,
-  table: MappingObject<T>
+  table: PartialMappingObject<T>
 ): T => {
   const command: EventCommand = array[index];
   switch (command.code) {
     case Code.SHOW_MESSAGE:
-      return handleGroupMessage(array, index, table.showMessage);
+      return table.showMessage
+        ? handleGroupMessage(array, index, table.showMessage)
+        : table.other(command, index, array);
+    case Code.SHOW_MESSAGE_BODY:
+      return callHandler(command, index, array, table.showMessageBody, table.other);
     case Code.SHOW_SCROLLING_TEXT:
-      return handleGroupScrollingText(array, index, table.showScrollingText);
+      return table.showScrollingText
+        ? handleGroupScrollingText(array, index, table.showScrollingText)
+        : table.other(command, index, array);
+    case Code.SHOW_SCROLLING_TEXT_BODY:
+      return callHandler(command, index, array, table.showScrollingTextBody, table.other);
     case Code.COMMENT:
-      return handleGroupComment(array, index, table.comment);
+      return table.comment
+        ? handleGroupComment(array, index, table.comment)
+        : table.other(command, index, array);
+    case Code.COMMENT_BODY:
+      return callHandler(command, index, array, table.commentBody, table.other);
     case Code.SCRIPT_EVAL:
-      return handleGroupScript(array, index, table.script);
+      return table.script
+        ? handleGroupScript(array, index, table.script)
+        : table.other(command, index, array);
     case Code.CONTROL_SWITCHES:
       return callHandler(command, index, array, table.controlSwitch, table.other);
     case Code.CONTROL_VARIABLES:
@@ -56,15 +70,13 @@ export const mappingXX = <T>(
       return callHandler(command, index, array, table.changeProfile, table.other);
     case Code.CHANGE_NICKNAME:
       return callHandler(command, index, array, table.changeNickname, table.other);
-    case Code.COMMENT_BODY:
-      return callHandler(command, index, array, table.commentBody, table.other);
 
+    case Code.COMMON_EVENT:
+      return callHandler(command, index, array, table.commonEvent, table.other);
     case Code.LABEL:
       return callHandler(command, index, array, table.label, table.other);
     case Code.LABEL_JUMP:
       return callHandler(command, index, array, table.labelJump, table.other);
-    case Code.COMMON_EVENT:
-      return callHandler(command, index, array, table.commonEvent, table.other);
     case Code.CHANGE_BATTLE_BGM:
       return callHandler(command, index, array, table.changeBattleBGM, table.other);
     case Code.CHANGE_VICTORY_ME:
@@ -81,14 +93,18 @@ export const mappingXX = <T>(
       return callHandler(command, index, array, table.changeFormationAccess, table.other);
     case Code.CHANGE_WINDOW_COLOR:
       return callHandler(command, index, array, table.changeWindowColor, table.other);
-    case Code.SHAKE_SCREEN:
-      return callHandler(command, index, array, table.shakeScreen, table.other);
-    case Code.FLASH_SCREEN:
-      return callHandler(command, index, array, table.flashScreen, table.other);
     case Code.TINT_SCREEN:
       return callHandler(command, index, array, table.tintScreen, table.other);
+    case Code.FLASH_SCREEN:
+      return callHandler(command, index, array, table.flashScreen, table.other);
+    case Code.SHAKE_SCREEN:
+      return callHandler(command, index, array, table.shakeScreen, table.other);
     case Code.BATTLE_PROCESSING:
       return callHandler(command, index, array, table.battleProcessing, table.other);
+    case Code.WAIT:
+      return callHandler(command, index, array, table.wait, table.other);
+    case Code.CHANGE_ACTOR_IMAGES:
+      return callHandler(command, index, array, table.changeActorImages, table.other);
 
     case Code.CHANGE_GOLD:
       return callHandler(command, index, array, table.changeGold, table.other);

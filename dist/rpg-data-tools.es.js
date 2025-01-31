@@ -1,4 +1,4 @@
-import { COMMENT as g, COMMENT_BODY as A, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as y, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
+import { COMMENT as g, COMMENT_BODY as y, SCRIPT_EVAL as f, SCRIPT_EVAL_BODY as A, SHOW_MESSAGE as b, SHOW_MESSAGE_BODY as M, SHOW_SCROLLING_TEXT as m, SHOW_SCROLLING_TEXT_BODY as v, CHANGE_NICKNAME as k, CHANGE_PROFILE as D, CHANGE_NAME as R, SHOW_CHOICES_ITEM as B, SHOW_CHOICES as H } from "@sigureya/rpgtypes";
 const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   id: 0,
   name: "",
@@ -250,9 +250,9 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   optSideView: e.optSideView ?? !1,
   optSlipDeath: e.optSlipDeath ?? !1,
   optTransparent: e.optTransparent ?? !1,
-  boat: e.boat ?? d(),
-  ship: e.ship ?? d(),
-  airship: e.airship ?? d(),
+  boat: e.boat ?? o(),
+  ship: e.ship ?? o(),
+  airship: e.airship ?? o(),
   tileSize: e.tileSize ?? 0
 }), _ = (e = {}) => ({
   messages: P(e.messages ?? {}),
@@ -374,7 +374,7 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
   mainFontFilename: e.mainFontFilename ?? "",
   fallbackFonts: e.fallbackFonts ?? "",
   fontSize: e.fontSize ?? 0
-}), d = (e = {}) => ({
+}), o = (e = {}) => ({
   bgm: e.bgm ?? s(),
   characterIndex: e.characterIndex ?? 0,
   characterName: e.characterName ?? "",
@@ -429,22 +429,21 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
       parameters: [n.parameters[0]]
     };
   throw new Error(U, { cause: n });
-}, X = (e, a = `
-`) => e.map((t) => t.parameters[0]).join(a), $ = (e, a) => ({
+}, X = (e, a) => ({
   head: I(e, a, g),
-  bodys: l(A, e, a + 1)
-}), j = (e, a) => ({
-  head: I(e, a, f),
   bodys: l(y, e, a + 1)
-}), K = (e, a) => {
+}), $ = (e, a) => ({
+  head: I(e, a, f),
+  bodys: l(A, e, a + 1)
+}), j = (e, a) => {
   const t = e[a];
-  if (t && Z(t))
+  if (t && K(t))
     return t;
   throw new Error(Y, { cause: t });
-}, Z = (e) => !e || e.code !== b || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", J = (e, a) => ({
-  head: K(e, a),
+}, K = (e) => !e || e.code !== b || ![4, 5].includes(e.parameters.length) ? !1 : typeof e.parameters[0] == "string" && typeof e.parameters[1] == "number" && typeof e.parameters[2] == "number" && typeof e.parameters[3] == "number", Z = (e, a) => ({
+  head: j(e, a),
   bodys: l(M, e, a + 1)
-}), Q = "ScrollTextHeader invalid command", ee = (e, a) => {
+}), J = "ScrollTextHeader invalid command", Q = (e, a) => {
   const t = e[a];
   if (h(m, t))
     return t;
@@ -453,32 +452,27 @@ const i = () => [0, 0, 0, 0, 0, 0, 0, 0], he = (e) => ({
     bodyCode: v,
     index: a
   };
-  throw new Error(Q, { cause: n });
-}, ae = (e, a) => ({
-  head: ee(e, a),
+  throw new Error(J, { cause: n });
+}, ee = (e, a) => ({
+  head: Q(e, a),
   bodys: l(v, e, a + 1)
-});
+}), ae = (e, a = `
+`) => e.map((t) => t.parameters[0]).join(a);
 class x {
-  constructor(a) {
-    this.pair = a;
+  constructor(a, t) {
+    this.header = a, this.bodies = t;
   }
   getBodyText(a = `
 `) {
-    return X(this.getExpandedBodies(), a);
+    return ae(this.getExpandedBodies(), a);
   }
   joinCommandBodies() {
     return this.getExpandedBodies();
   }
-  get header() {
-    return this.pair.head;
-  }
-  get bodies() {
-    return this.pair.bodys;
-  }
 }
 class S extends x {
-  constructor(a, t) {
-    super(t), this.bodyCode = a;
+  constructor(a, t, n) {
+    super(t, n), this.bodyCode = a;
   }
   getExpandedBodies() {
     return this.bodies;
@@ -489,7 +483,10 @@ class S extends x {
       code: this.header.code,
       indent: this.header.indent,
       parameters: [...this.header.parameters]
-    }, t = {
+    };
+    if (this.bodies.length === 0)
+      return [a];
+    const t = {
       code: this.bodyCode,
       indent: 0,
       parameters: [this.getBodyText()]
@@ -498,8 +495,8 @@ class S extends x {
   }
 }
 class N extends x {
-  constructor(a) {
-    super(a);
+  constructor(a, t) {
+    super(a, t);
   }
   getExpandedBodies() {
     return [this.header, ...this.bodies];
@@ -516,16 +513,16 @@ class N extends x {
   }
 }
 const te = (e, a, t) => {
-  const n = J(e, a), c = new S(401, n);
+  const n = Z(e, a), c = new S(401, n.head, n.bodys);
   return t(c);
 }, ne = (e, a, t) => {
-  const n = ae(e, a), c = new S(405, n);
+  const n = ee(e, a), c = new S(405, n.head, n.bodys);
   return t(c);
 }, se = (e, a, t) => {
-  const n = $(e, a), c = new N(n);
+  const n = X(e, a), c = new N(n.head, n.bodys);
   return t(c);
 }, ce = (e, a, t) => {
-  const n = j(e, a), c = new N(n);
+  const n = $(e, a), c = new N(n.head, n.bodys);
   return t(c);
 }, re = (e, a, t) => {
   const n = e[a];
@@ -553,31 +550,31 @@ const te = (e, a, t) => {
   }
 }, Ce = (e, a) => e.map(
   (t, n, c) => re(c, n, a)
-), E = (e, a) => `<${e}:${a}>`, o = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), Ae = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
-  const t = o(), n = [];
+), E = (e, a) => `<${e}:${a}>`, d = () => /<([^<>:]+):([^>]*)>/g, we = (e, a) => T(e.note, (t, n) => a(t, n, e)), ye = (e) => T(e, (a, t) => [a, t]), T = (e, a) => {
+  const t = d(), n = [];
   let c;
   for (; (c = t.exec(e)) !== null; )
     n.push(a(c[1], c[2]));
   return n;
-}, ye = (e, a) => e.replace(o(), (t, n, c) => {
+}, Ae = (e, a) => e.replace(d(), (t, n, c) => {
   const r = a(n, c);
   return E(n, r);
 }), Me = (e, a) => {
-  const t = o();
+  const t = d();
   let n;
   for (; (n = t.exec(e)) !== null; )
     if (n[1] === a)
       return n[2];
 }, ke = (e, a, t) => {
-  const n = o();
+  const n = d();
   return e.replace(n, (c, r) => r === a ? E(r, t) : c);
-}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, oe = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
-  controlChar: oe(a),
+}, De = (e) => `code:${e}`, ie = "N", le = "V", C = (e, a) => `\\${e}[${a}]`, de = (e) => C(ie, e.id), Re = (e) => e.map((a) => ({
+  controlChar: de(a),
   text: a.name
 })), Be = (e) => e.variables.map((a, t) => ({
   text: a || "",
   controlChar: C(le, t)
-})).filter((a) => a.text !== ""), de = /* @__PURE__ */ new Set([
+})).filter((a) => a.text !== ""), oe = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -589,7 +586,7 @@ const te = (e, a, t) => {
   "c",
   "i",
   "fs"
-]), He = (e, a = de) => {
+]), He = (e, a = oe) => {
   const t = /\\([A-Za-z]+)\[(\d+)]/g, n = [];
   let c;
   for (; (c = t.exec(e)) !== null; ) {
@@ -609,7 +606,7 @@ const te = (e, a, t) => {
 export {
   x as BaseEventCommandGroup,
   N as CombinedEventCommandGroup,
-  Q as ERROR_MESSAGE,
+  J as ERROR_MESSAGE,
   S as SimpleEventCommandGroup,
   De as codeInfoText,
   h as codeTest,
@@ -639,8 +636,8 @@ export {
   Ee as createSystemData,
   q as createSystemSoundsArray,
   _ as createTerms,
-  d as createVehicle,
-  oe as fromActor,
+  o as createVehicle,
+  de as fromActor,
   Re as fromActors,
   Be as fromSystem,
   He as getControlChars,
@@ -652,26 +649,25 @@ export {
   re as handlerDispatch,
   p as isBodyParams,
   Te as isHeadCommand,
-  Z as isMessageHeader,
-  X as joinCommandBodies,
-  o as makeRegex,
+  K as isMessageHeader,
+  d as makeRegex,
   Ce as mapTextCommand,
   Ve as pickCommandParamNumber,
   Oe as pickCommandParamString,
   l as pickCommands,
-  $ as pickComments,
+  X as pickComments,
   I as pickHead,
-  K as pickMessageHeader,
-  J as pickMessageWithHead,
+  j as pickMessageHeader,
+  Z as pickMessageWithHead,
   me as pickPropertys,
-  j as pickScripts,
-  ae as pickScrollText,
-  ee as pickScrollTextHeader,
+  $ as pickScripts,
+  ee as pickScrollText,
+  Q as pickScrollTextHeader,
   Ge as pickString,
-  Ae as readNote,
+  ye as readNote,
   T as readNoteEx,
   we as readNoteObject,
-  ye as replaceNote,
+  Ae as replaceNote,
   ke as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
