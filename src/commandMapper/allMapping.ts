@@ -8,8 +8,7 @@ import {
   handleGroupScript,
 } from "./commandGroup";
 import type { CallBackFunc } from "./types";
-import type { MappingObject, PartialMappingObject } from "./allCommandsMapper";
-import { commonEvent } from "../constructData";
+import type { PartialMappingObject } from "./allCommandsMapper";
 
 export const callHandler = <T, Command extends EventCommand>(
   command: Command,
