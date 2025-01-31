@@ -1,4 +1,4 @@
-import type { EventCommand } from "@sigureya/rpgtypes";
+import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { MappingObject } from "./allCommandsMapper";
 import { mappingCommand } from "./allMapping";
 
@@ -16,7 +16,7 @@ export interface GroupJoinMapper<T>
     | "other"
   > {}
 
-const groupJoinMapper: GroupJoinMapper<EventCommand[]> = {
+const groupJoinMapper: GroupJoinMapper<RpgTypes.EventCommand[]> = {
   // body部分は空の要素で置き換える
   commentBody: () => [],
   showMessageBody: () => [],
@@ -30,7 +30,9 @@ const groupJoinMapper: GroupJoinMapper<EventCommand[]> = {
   other: (data) => [data],
 };
 
-export const normalizedCommands = (command: ReadonlyArray<EventCommand>) => {
+export const normalizedCommands = (
+  command: ReadonlyArray<RpgTypes.EventCommand>
+) => {
   return command.flatMap((cmd, index, array) => {
     return mappingCommand(array, index, groupJoinMapper);
   });
