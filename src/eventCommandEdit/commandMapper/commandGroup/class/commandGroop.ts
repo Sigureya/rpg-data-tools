@@ -10,7 +10,7 @@ export abstract class BaseEventCommandGroup<
 {
   constructor(public header: Header, public bodies: Body[]) {}
   protected abstract getExpandedBodies(): TextCommandBody[];
-  abstract normalizedCommands(): RpgTypes.EventCommand[];
+  abstract normalizedCommands(): [Header, Body] | [Header];
 
   getBodyText(separator: string = "\n"): string {
     return joinCommandBodies(this.getExpandedBodies(), separator);
