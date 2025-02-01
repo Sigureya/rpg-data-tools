@@ -4,6 +4,8 @@ import type {
   EventCommand,
   PickCommandByParam,
 } from "@sigureya/rpgtypes";
+
+import type * as RpgTypes from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
 import { ERROR_INVALID_HEAD } from "./errors/";
 
@@ -31,7 +33,11 @@ export const pickCommands = <Code extends EventCode>(
   code: Code,
   arrya: ReadonlyArray<EventCommand>,
   start: number
-) => {
+): Array<{
+  code: Code;
+  indent: number;
+  parameters: [string];
+}> => {
   const result: {
     code: Code;
     indent: number;

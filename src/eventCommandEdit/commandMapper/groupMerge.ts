@@ -29,18 +29,20 @@ export const isChoiceHelp = (command: RpgTypes.Command_Comment) => {
 const mergeComment = (comment: EventCommandGroup_Comment) => {
   if (isChoiceHelp(comment.header)) {
     const text: string = joinCommandBodies(comment.bodies);
-    return [
+
+    const result: [RpgTypes.Command_Comment, RpgTypes.Command_CommentBody] = [
       {
         code: RpgTypes.COMMENT,
         indent: 0,
         parameters: [CHOICE_HELP_TEXT],
-      } as RpgTypes.Command_Comment,
+      },
       {
         code: RpgTypes.COMMENT_BODY,
         indent: 0,
         parameters: [text],
-      } as RpgTypes.Command_CommentBody,
+      },
     ];
+    return result;
   }
   return comment.normalizedCommands();
 };
