@@ -50,7 +50,7 @@ export const replaceMapEvents = <
 export const replaceCommonEvents = (
   events: ReadonlyArray<Data_CommonEvent>,
   fn: EventCommandReplaceFunc
-): ReadonlyArray<Data_CommonEvent> => {
+): Array<Data_CommonEvent> => {
   return events.map((commonEvent) => replaceEventCommands(commonEvent, fn));
 };
 
