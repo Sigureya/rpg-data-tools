@@ -4,8 +4,7 @@ import {
   gatherEventCommandLocators,
   createMapEventContext,
 } from "./map";
-import type { MapEventLike, MapLike } from "./mapLike";
-import type { MapEventContext } from "./mapEventContext";
+import type { MapEventContext, MapEventLike, MapLike } from "./types";
 import type { Command_CommonEvent } from "@sigureya/rpgtypes";
 const mockEvnet: MapEventLike = {
   id: 1,
