@@ -48,26 +48,17 @@ export const replaceMapEvents = <
     }),
   };
 };
-/**
- * コモンイベントのコマンドを変換する
- * @note 旧システムの仕様により `null` を先頭に維持
- */
+
 export const replaceCommonEvents = (
-  events: IdentifiedItems<Data_CommonEvent>,
+  events: ReadonlyArray<Data_CommonEvent>,
   fn: EventCommandReplaceFunc
-): IdentifiedItems<Data_CommonEvent> => {
-  const list: Data_CommonEvent[] = events.filter(isValidEvent);
-  return [null, ...list.map((event) => replaceEventCommands(event, fn))];
+): ReadonlyArray<Data_CommonEvent> => {
+  return events.map((commonEvent) => replaceEventCommands(commonEvent, fn));
 };
 
-/**
- * バトルイベント (Troop) のコマンドを変換する
- * @note 旧システムの仕様により `null` を先頭に維持
- */
 export const replaceTroops = (
-  troops: IdentifiedItems<Data_Troop>,
+  list: ReadonlyArray<Data_Troop>,
   fn: EventCommandReplaceFunc
-): IdentifiedItems<Data_Troop> => {
-  const list: Data_Troop[] = troops.filter(isValidEvent);
-  return [null, ...list.map((troop) => replacePages(troop, fn))];
+): ReadonlyArray<Data_Troop> => {
+  return list.map((troop) => replacePages(troop, fn));
 };

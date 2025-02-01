@@ -101,10 +101,9 @@ describe("replaceCommonEvents", () => {
       { id: 1, list: [createMockCommand(211)], name: "to-kai", trigger: 0 },
       { id: 2, list: [createMockCommand(217)], name: "yokosuka", trigger: 0 },
     ];
-    const result = replaceCommonEvents([null, ...events], mockTransform);
+    const result = replaceCommonEvents(events, mockTransform);
 
     expect(result).toEqual([
-      null,
       {
         id: 1,
         list: [{ code: 211, indent: 8, parameters: [] }],
