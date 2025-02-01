@@ -1,6 +1,5 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
-import type { MapEventContext } from "./mapEventContext";
-import type { MapEventLike, MapLike } from "./mapLike";
+import type { MapEventContext, MapEventLike, MapLike } from "./types";
 
 export const isValidEvent = <T>(event: T | null | undefined): event is T => {
   return !!event;
