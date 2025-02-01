@@ -6,7 +6,7 @@ import type {
 import { replaceCommonEvents, replaceMapEvents, replaceTroops } from "./rpg";
 import { normalizedCommands } from "./commandMapper/";
 
-export const normalizedMapData = (map: Data_Map) => {
+export const normalizedMapData = (map: Data_Map): Data_Map => {
   return replaceMapEvents(map, (list) => normalizedCommands(list).flat());
 };
 export const normalizedCommonEvents = (
@@ -17,6 +17,8 @@ export const normalizedCommonEvents = (
   );
 };
 
-export const normalizedTroops = (troops: ReadonlyArray<Data_Troop>) => {
+export const normalizedTroops = (
+  troops: ReadonlyArray<Data_Troop>
+): Data_Troop[] => {
   return replaceTroops(troops, (list) => normalizedCommands(list).flat());
 };

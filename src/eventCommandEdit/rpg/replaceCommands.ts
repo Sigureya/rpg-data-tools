@@ -57,6 +57,6 @@ export const replaceCommonEvents = (
 export const replaceTroops = (
   list: ReadonlyArray<Data_Troop>,
   fn: EventCommandReplaceFunc
-): ReadonlyArray<Data_Troop> => {
+): Array<Data_Troop> => {
   return list.map((troop) => replacePages(troop, fn));
 };
