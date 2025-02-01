@@ -48,7 +48,10 @@ export const replaceMapEvents = <
     }),
   };
 };
-
+/**
+ * コモンイベントのコマンドを変換する
+ * @note 旧システムの仕様により `null` を先頭に維持
+ */
 export const replaceCommonEvents = (
   events: IdentifiedItems<Data_CommonEvent>,
   fn: EventCommandReplaceFunc
@@ -57,6 +60,10 @@ export const replaceCommonEvents = (
   return [null, ...list.map((event) => replaceEventCommands(event, fn))];
 };
 
+/**
+ * バトルイベント (Troop) のコマンドを変換する
+ * @note 旧システムの仕様により `null` を先頭に維持
+ */
 export const replaceTroops = (
   troops: IdentifiedItems<Data_Troop>,
   fn: EventCommandReplaceFunc
