@@ -11,9 +11,13 @@ export abstract class BaseEventCommandGroup<
   constructor(public header: Header, public bodies: Body[]) {}
   protected abstract getExpandedBodies(): TextCommandBody[];
   abstract normalizedCommands(): [Header, Body] | [Header];
+  abstract mergedBody(): TextCommandBody;
 
   getBodyText(separator: string = "\n"): string {
     return joinCommandBodies(this.getExpandedBodies(), separator);
+  }
+  jopinHedderAndBody(): [Header, ...Body[]] {
+    return [this.header, ...this.bodies];
   }
 
   joinCommandBodies() {
@@ -25,11 +29,7 @@ export class SimpleEventCommandGroup<
   Header extends RpgTypes.EventCommand,
   Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
-  constructor(
-    public readonly bodyCode: Body["code"],
-    header: Header,
-    bodies: Body[]
-  ) {
+  constructor(public bodyCode: Body["code"], header: Header, bodies: Body[]) {
     super(header, bodies);
   }
   protected getExpandedBodies(): Body[] {
@@ -45,12 +45,14 @@ export class SimpleEventCommandGroup<
     if (this.bodies.length === 0) {
       return [headder];
     }
-    const body = {
+    return [headder, this.mergedBody()];
+  }
+  mergedBody(): Body {
+    return {
       code: this.bodyCode,
-      indent: 0,
+      indent: this.header.indent,
       parameters: [this.getBodyText()],
-    };
-    return [headder, body as Body];
+    } as Body;
   }
 }
 
@@ -58,20 +60,18 @@ export class CombinedEventCommandGroup<
   Header extends TextCommandBody,
   Body extends TextCommandBody
 > extends BaseEventCommandGroup<Header, Body> {
-  constructor(header: Header, bodies: Body[]) {
-    super(header, bodies);
-  }
   protected getExpandedBodies(): [Header, ...Body[]] {
     return [this.header, ...this.bodies];
   }
+  mergedBody(): Header {
+    return {
+      code: this.header.code,
+      indent: this.header.indent,
+      parameters: [this.getBodyText()],
+    } as Header;
+  }
+
   normalizedCommands(): [Header] {
-    const text: string = this.getBodyText();
-    return [
-      {
-        code: this.header.code,
-        parameters: [text],
-        indent: this.header.indent,
-      } as Header,
-    ];
+    return [this.mergedBody()];
   }
 }
