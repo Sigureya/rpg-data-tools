@@ -51,7 +51,7 @@ describe("showMessage", () => {
   });
 });
 
-const createScrlloingTextMock = () => {
+const createScrlloingTextMock = (indent = 0) => {
   return new SimpleEventCommandGroup<
     RpgTypes.Command_ShowScrollingText,
     RpgTypes.Command_ShowScrollingTextBody
@@ -59,12 +59,12 @@ const createScrlloingTextMock = () => {
     405,
     {
       code: 105,
-      indent: 0,
+      indent: indent,
       parameters: [0, false],
     },
     ["aaa", "bbb"].map<RpgTypes.Command_ShowScrollingTextBody>((text) => ({
       code: 405,
-      indent: 0,
+      indent: indent,
       parameters: [text],
     }))
   );
@@ -72,18 +72,18 @@ const createScrlloingTextMock = () => {
 
 describe("ShowScrollingText", () => {
   const scrollingText: EventCommandGroup_ScrollingText =
-    createScrlloingTextMock();
+    createScrlloingTextMock(2);
   test("normalizedCommands", () => {
     const result = scrollingText.normalizedCommands();
     expect(result.length).toBe(2);
     expect(result[0]).toMatchObject({
       code: 105,
-      indent: 0,
+      indent: 2,
       parameters: [0, false],
     });
     expect(result[1]).toMatchObject<RpgTypes.Command_ShowScrollingTextBody>({
       code: 405,
-      indent: 0,
+      indent: 2,
       parameters: ["aaa\nbbb"],
     });
   });
