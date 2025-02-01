@@ -6,7 +6,7 @@ export declare abstract class BaseEventCommandGroup<Header extends RpgTypes.Even
     bodies: Body[];
     constructor(header: Header, bodies: Body[]);
     protected abstract getExpandedBodies(): TextCommandBody[];
-    abstract normalizedCommands(): RpgTypes.EventCommand[];
+    abstract normalizedCommands(): [Header, Body] | [Header];
     getBodyText(separator?: string): string;
     joinCommandBodies(): TextCommandBody[];
 }
