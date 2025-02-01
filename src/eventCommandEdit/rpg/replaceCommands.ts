@@ -2,10 +2,8 @@ import type {
   Data_CommonEvent,
   Data_Troop,
   EventCommand,
-  IdentifiedItems,
 } from "@sigureya/rpgtypes";
 import type { EventContainer, EventPageContainer } from "./map/";
-import { isValidEvent } from "./map/";
 
 type EventCommandReplaceFunc = (
   list: ReadonlyArray<EventCommand>
@@ -52,13 +50,13 @@ export const replaceMapEvents = <
 export const replaceCommonEvents = (
   events: ReadonlyArray<Data_CommonEvent>,
   fn: EventCommandReplaceFunc
-): ReadonlyArray<Data_CommonEvent> => {
+): Array<Data_CommonEvent> => {
   return events.map((commonEvent) => replaceEventCommands(commonEvent, fn));
 };
 
 export const replaceTroops = (
   list: ReadonlyArray<Data_Troop>,
   fn: EventCommandReplaceFunc
-): ReadonlyArray<Data_Troop> => {
+): Array<Data_Troop> => {
   return list.map((troop) => replacePages(troop, fn));
 };

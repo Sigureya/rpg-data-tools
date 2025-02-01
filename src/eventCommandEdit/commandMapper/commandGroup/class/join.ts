@@ -5,6 +5,6 @@ export const joinCommandBodies = <
 >(
   array: ReadonlyArray<Command>,
   sepadrator = "\n"
-) => {
+): string => {
   return array.map((v) => v.parameters[0]).join(sepadrator);
 };
