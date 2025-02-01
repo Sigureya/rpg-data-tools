@@ -4,8 +4,8 @@ import type {
   EventCommand,
   IdentifiedItems,
 } from "@sigureya/rpgtypes";
-import type { EventContainer, EventPageContainer } from "./map/types";
-import { isValidEvent } from "./map/map";
+import type { EventContainer, EventPageContainer } from "./map/";
+import { isValidEvent } from "./map/";
 
 type EventCommandReplaceFunc = (
   list: ReadonlyArray<EventCommand>
