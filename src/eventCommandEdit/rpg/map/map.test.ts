@@ -1,5 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { locateEventCommands, gatherEventCommandLocators } from "./map";
+import {
+  locateEventCommands,
+  gatherEventCommandLocators,
+  createMapEventContext,
+} from "./map";
 import type { MapEventLike, MapLike } from "./mapLike";
 import type { MapEventContext } from "./mapEventContext";
 import type { Command_CommonEvent } from "@sigureya/rpgtypes";
@@ -28,7 +32,7 @@ const mockMap: MapLike = {
 };
 describe("locateEventCommands", () => {
   test("should locate commands for a given map event", () => {
-    const result = locateEventCommands(mockEvnet);
+    const result = locateEventCommands(mockEvnet, createMapEventContext);
     const expected: MapEventContext[][] = [
       [
         {
