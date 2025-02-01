@@ -1,13 +1,22 @@
 import type {
   Data_CommonEvent,
   Data_Map,
-  IdentifiedItems,
+  Data_Troop,
 } from "@sigureya/rpgtypes";
-import { replaceMapEvents } from "./rpg";
-import { normalizedCommands } from "./commandMapper/groupMerge";
-import { commonEvent } from "../constructData";
+import { replaceCommonEvents, replaceMapEvents, replaceTroops } from "./rpg";
+import { normalizedCommands } from "./commandMapper/";
 
-const x = (map: Data_Map) => {
+export const normalizedMapData = (map: Data_Map) => {
   return replaceMapEvents(map, (list) => normalizedCommands(list).flat());
 };
-const y = (commonEvents: IdentifiedItems<Data_CommonEvent>) => {};
+export const normalizedCommonEvents = (
+  commonEvents: ReadonlyArray<Data_CommonEvent>
+): Data_CommonEvent[] => {
+  return replaceCommonEvents(commonEvents, (list) =>
+    normalizedCommands(list).flat()
+  );
+};
+
+export const normalizedTroops = (troops: ReadonlyArray<Data_Troop>) => {
+  return replaceTroops(troops, (list) => normalizedCommands(list).flat());
+};
