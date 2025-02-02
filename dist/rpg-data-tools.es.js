@@ -1,6 +1,6 @@
 import * as a from "@sigureya/rpgtypes";
 import { COMMENT as S, COMMENT_BODY as V, SCRIPT_EVAL as N, SCRIPT_EVAL_BODY as W, SHOW_MESSAGE as T, SHOW_MESSAGE_BODY as F, SHOW_SCROLLING_TEXT as h, SHOW_SCROLLING_TEXT_BODY as A, CHANGE_NICKNAME as P, CHANGE_PROFILE as x, CHANGE_NAME as z, SHOW_CHOICES_ITEM as Y, SHOW_CHOICES as y } from "@sigureya/rpgtypes";
-const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
+const m = () => [0, 0, 0, 0, 0, 0, 0, 0], De = (e) => ({
   id: 0,
   name: "",
   nickname: "",
@@ -17,7 +17,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   traits: [],
   equips: [],
   ...e
-}), De = (e) => ({
+}), ke = (e) => ({
   battlerHue: 0,
   id: 0,
   name: "",
@@ -30,7 +30,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   dropItems: [],
   actions: [],
   ...e
-}), ke = (e) => ({
+}), Ve = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -41,7 +41,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   params: m(),
   traits: [],
   ...e
-}), Ve = (e) => ({
+}), We = (e) => ({
   price: 0,
   id: 0,
   name: "",
@@ -54,7 +54,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   traits: [],
   damage: p(),
   ...e
-}), We = (e) => ({
+}), Fe = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -70,7 +70,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   variance: 20,
   critical: !1,
   ...e
-}), Fe = (e) => ({
+}), Pe = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -89,7 +89,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   damage: p(),
   effects: [],
   ...e
-}), Pe = (e) => ({
+}), xe = (e) => ({
   animationId: 0,
   damage: p(),
   description: "",
@@ -114,7 +114,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   effects: [],
   messageType: 0,
   ...e
-}), xe = (e) => ({
+}), ze = (e) => ({
   id: 0,
   name: "",
   iconIndex: 0,
@@ -138,7 +138,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   traits: [],
   note: "",
   ...e
-}), ze = (e) => ({
+}), Ye = (e) => ({
   autoplayBgm: !0,
   autoplayBgs: !1,
   battleback1Name: "",
@@ -160,7 +160,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   parallaxSx: 0,
   parallaxSy: 0,
   ...e
-}), Ye = (e) => ({
+}), ye = (e) => ({
   id: 0,
   name: "",
   note: "",
@@ -208,7 +208,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   pan: 0,
   pitch: 100,
   volume: 90
-}), ye = (e = {}) => ({
+}), Ue = (e = {}) => ({
   local: e.local ?? "",
   gameTitle: e.gameTitle ?? "",
   currencyUnit: e.currencyUnit ?? "",
@@ -407,7 +407,7 @@ const m = () => [0, 0, 0, 0, 0, 0, 0, 0], Le = (e) => ({
   e.shop ?? o(),
   e.useItem ?? o(),
   e.useSkill ?? o()
-], g = (e, t) => t ? e === t.code : !1, ee = "MessageHeader invalid command", Ue = "Script invalid command", te = "Invalid Head", E = (e) => typeof e[0] == "string" && e.length === 1, Xe = (e, t) => t ? e === t.code && E(t.parameters) : !1, u = (e, t, n) => {
+], g = (e, t) => t ? e === t.code : !1, ee = "MessageHeader invalid command", Xe = "Script invalid command", te = "Invalid Head", E = (e) => typeof e[0] == "string" && e.length === 1, qe = (e, t) => t ? e === t.code && E(t.parameters) : !1, u = (e, t, n) => {
   const s = [];
   for (let c = n; c < t.length; c++) {
     const i = t[c];
@@ -556,7 +556,7 @@ const le = "選択肢ヘルプ", de = (e) => e.parameters[0] === le, he = (e, t 
     default:
       return n.other(s, t, e);
   }
-}, qe = (e, t) => e.map(
+}, je = (e, t) => e.map(
   (n, s, c) => Ce(c, s, t)
 ), r = (e, t, n, s, c) => s ? s(e, t, n) : c(e, t, n), fe = (e, t) => e.map((n, s) => Se(e, s, t)), Se = (e, t, n) => {
   const s = e[t];
@@ -663,7 +663,10 @@ const le = "選択肢ヘルプ", de = (e) => e.parameters[0] === le, he = (e, t 
   pageIndex: n
 }), Ie = (e, t) => e.pages.map(
   (n, s) => n.list.map((c) => t(c, e.id, s))
-), je = (e) => e.events.filter(Te).map((n) => Ie(n, Ae)).flat(2), H = (e, t) => {
+), ve = (e, t) => e.events.filter(Te).map((n) => Ie(n, t)), Ke = (e) => ve(
+  e,
+  Ae
+).flat(2), H = (e, t) => {
   const n = t(e.list);
   return {
     ...e,
@@ -672,37 +675,37 @@ const le = "選択肢ヘルプ", de = (e) => e.parameters[0] === le, he = (e, t 
 }, B = (e, t) => ({
   ...e,
   pages: e.pages.map((n) => H(n, t))
-}), ve = (e, t) => ({
+}), _e = (e, t) => ({
   ...e,
   events: e.events.map((n) => n ? B(n, t) : null)
-}), _e = (e, t) => e.map((n) => H(n, t)), Me = (e, t) => e.map((n) => B(n, t)), Ke = (e) => ve(e, (t) => f(t).flat()), $e = (e) => _e(
+}), Me = (e, t) => e.map((n) => H(n, t)), Oe = (e, t) => e.map((n) => B(n, t)), $e = (e) => _e(e, (t) => f(t).flat()), Je = (e) => Me(
   e,
   (t) => f(t).flat()
-), Je = (e) => Me(e, (t) => f(t).flat()), G = (e, t) => `<${e}:${t}>`, l = () => /<([^<>:]+):([^>]*)>/g, Ze = (e, t) => L(e.note, (n, s) => t(n, s, e)), Qe = (e) => L(e, (t, n) => [t, n]), L = (e, t) => {
+), Ze = (e) => Oe(e, (t) => f(t).flat()), G = (e, t) => `<${e}:${t}>`, l = () => /<([^<>:]+):([^>]*)>/g, Qe = (e, t) => L(e.note, (n, s) => t(n, s, e)), be = (e) => L(e, (t, n) => [t, n]), L = (e, t) => {
   const n = l(), s = [];
   let c;
   for (; (c = n.exec(e)) !== null; )
     s.push(t(c[1], c[2]));
   return s;
-}, be = (e, t) => e.replace(l(), (n, s, c) => {
+}, et = (e, t) => e.replace(l(), (n, s, c) => {
   const i = t(s, c);
   return G(s, i);
-}), et = (e, t) => {
+}), tt = (e, t) => {
   const n = l();
   let s;
   for (; (s = n.exec(e)) !== null; )
     if (s[1] === t)
       return s[2];
-}, tt = (e, t, n) => {
+}, nt = (e, t, n) => {
   const s = l();
   return e.replace(s, (c, i) => i === t ? G(i, n) : c);
-}, nt = (e) => `code:${e}`, Oe = "N", we = "V", D = (e, t) => `\\${e}[${t}]`, Re = (e) => D(Oe, e.id), st = (e) => e.map((t) => ({
-  controlChar: Re(t),
+}, st = (e) => `code:${e}`, we = "N", Re = "V", D = (e, t) => `\\${e}[${t}]`, He = (e) => D(we, e.id), at = (e) => e.map((t) => ({
+  controlChar: He(t),
   text: t.name
-})), at = (e) => e.variables.map((t, n) => ({
+})), rt = (e) => e.variables.map((t, n) => ({
   text: t || "",
-  controlChar: D(we, n)
-})).filter((t) => t.text !== ""), He = /* @__PURE__ */ new Set([
+  controlChar: D(Re, n)
+})).filter((t) => t.text !== ""), Be = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -714,7 +717,7 @@ const le = "選択肢ヘルプ", de = (e) => e.parameters[0] === le, he = (e, t 
   "c",
   "i",
   "fs"
-]), rt = (e, t = He) => {
+]), ct = (e, t = Be) => {
   const n = /\\([A-Za-z]+)\[(\d+)]/g, s = [];
   let c;
   for (; (c = n.exec(e)) !== null; ) {
@@ -722,11 +725,11 @@ const le = "選択肢ヘルプ", de = (e) => e.parameters[0] === le, he = (e, t 
     t.has(i) && s.push({ char: c[1], id: k });
   }
   return s;
-}, Be = (e, t, n) => t.map((s) => n(s, e[s], e)), ct = (e, t, n) => Be(e, t, n), ot = (e, t) => ({
+}, Ge = (e, t, n) => t.map((s) => n(s, e[s], e)), ot = (e, t, n) => Ge(e, t, n), it = (e, t) => ({
   code: e.code,
   paramIndex: t,
   value: e.parameters[t]
-}), it = (e, t) => ({
+}), mt = (e, t) => ({
   code: e.code,
   paramIndex: t,
   value: e.parameters[t]
@@ -736,23 +739,23 @@ export {
   le as CHOICE_HELP_TEXT,
   _ as CombinedEventCommandGroup,
   ee as ERROR_COMMAND_MESSAGE,
-  Ue as ERROR_COMMAND_SCRIPT,
+  Xe as ERROR_COMMAND_SCRIPT,
   te as ERROR_INVALID_HEAD,
   oe as ERROR_MESSAGE,
   C as SimpleEventCommandGroup,
   r as callHandler,
-  nt as codeInfoText,
+  st as codeInfoText,
   g as codeTest,
-  Le as constructActor,
-  ke as constructArmor,
-  We as constructClass,
+  De as constructActor,
+  Ve as constructArmor,
+  Fe as constructClass,
   p as constructDamage,
-  De as constructEnemy,
-  Fe as constructItem,
+  ke as constructEnemy,
+  Pe as constructItem,
   m as constructParamArray,
-  Pe as constructSkill,
-  xe as constructState,
-  Ve as constructWeapon,
+  xe as constructSkill,
+  ze as constructState,
+  We as constructWeapon,
   Q as createAdvanced,
   o as createAudio,
   K as createBasicTerms,
@@ -761,8 +764,8 @@ export {
   U as createCondtion,
   D as createControlCharFormat,
   q as createEventPage,
-  ze as createMap,
-  Ye as createMapEvent,
+  Ye as createMap,
+  ye as createMapEvent,
   Ae as createMapEventContext,
   X as createMapEventImage,
   he as createMessageGroup,
@@ -771,16 +774,16 @@ export {
   $ as createParamNamesArray,
   Ee as createScriptGroup,
   pe as createScrlloingTextGroup,
-  ye as createSystemData,
+  Ue as createSystemData,
   b as createSystemSoundsArray,
   j as createTerms,
   d as createVehicle,
-  Re as fromActor,
-  st as fromActors,
-  at as fromSystem,
-  je as gatherEventCommandLocators,
-  rt as getControlChars,
-  et as getNoteValue,
+  He as fromActor,
+  at as fromActors,
+  rt as fromSystem,
+  Ke as gatherEventCommandLocators,
+  ct as getControlChars,
+  tt as getNoteValue,
   w as handleGroupComment,
   M as handleGroupMessage,
   R as handleGroupScript,
@@ -788,40 +791,41 @@ export {
   Ce as handlerDispatch,
   E as isBodyParams,
   de as isChoiceHelp,
-  Xe as isHeadCommand,
+  qe as isHeadCommand,
   re as isMessageHeader,
   Te as isValidEvent,
   ue as joinCommandBodies,
   Ie as locateEventCommands,
+  ve as locateMapEvents,
   l as makeRegex,
-  qe as mapTextCommand,
+  je as mapTextCommand,
   Se as mappingCommand,
   fe as mappingCommandList,
   f as normalizedCommands,
-  $e as normalizedCommonEvents,
-  Ke as normalizedMapData,
-  Je as normalizedTroops,
-  it as pickCommandParamNumber,
-  ot as pickCommandParamString,
+  Je as normalizedCommonEvents,
+  $e as normalizedMapData,
+  Ze as normalizedTroops,
+  mt as pickCommandParamNumber,
+  it as pickCommandParamString,
   u as pickCommands,
   ne as pickComments,
   I as pickHead,
   ae as pickMessageHeader,
   ce as pickMessageWithHead,
-  Be as pickPropertys,
+  Ge as pickPropertys,
   se as pickScripts,
   me as pickScrollText,
   ie as pickScrollTextHeader,
-  ct as pickString,
-  Qe as readNote,
+  ot as pickString,
+  be as readNote,
   L as readNoteEx,
-  Ze as readNoteObject,
-  _e as replaceCommonEvents,
+  Qe as readNoteObject,
+  Me as replaceCommonEvents,
   H as replaceEventCommands,
-  ve as replaceMapEvents,
-  be as replaceNote,
+  _e as replaceMapEvents,
+  et as replaceNote,
   B as replacePages,
-  Me as replaceTroops,
-  tt as setNoteValue
+  Oe as replaceTroops,
+  nt as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
