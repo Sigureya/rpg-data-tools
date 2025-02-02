@@ -15,6 +15,7 @@ export interface EventCommandGroup<
   Header extends EventCommand,
   Body extends PickCommandByParam<[string]>
 > {
+  mergedBody(): PickCommandByParam<[string]>;
   normalizedCommands(): [Header] | [Header, Body];
   getBodyText(separator?: string): string;
   joinCommandBodies(): PickCommandByParam<[string]>[];

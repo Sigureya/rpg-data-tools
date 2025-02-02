@@ -12,6 +12,7 @@ import {
   CombinedEventCommandGroup,
   SimpleEventCommandGroup,
 } from "./commandGroop";
+import { isChoiceHelp } from "./commentUtils";
 
 export const createMessageGroup = (
   hedder: Command_ShowMessage,
@@ -37,6 +38,13 @@ export const createCommentGroup = (
   hedder: Command_Comment,
   bodies: Command_CommentBody[] = []
 ) => {
+  if (isChoiceHelp(hedder)) {
+    return new SimpleEventCommandGroup<Command_Comment, Command_CommentBody>(
+      408,
+      hedder,
+      bodies
+    );
+  }
   return new CombinedEventCommandGroup<Command_Comment, Command_CommentBody>(
     hedder,
     bodies

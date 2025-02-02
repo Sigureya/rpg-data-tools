@@ -1,8 +1,6 @@
-import * as RpgTypes from "@sigureya/rpgtypes";
+import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { MappingObject } from "./allCommandsMapper";
 import { mappingCommand } from "./allMapping";
-import type { EventCommandGroup_Comment } from "./commandGroup";
-import { joinCommandBodies } from "./commandGroup";
 
 export interface GroupJoinMapper<T>
   extends Pick<
@@ -17,35 +15,6 @@ export interface GroupJoinMapper<T>
     | "showScrollingTextBody"
     | "other"
   > {}
-/**
- * @description 『MPP_ChoiceEx.js』に対応するための特殊文字列
- */
-export const CHOICE_HELP_TEXT = "選択肢ヘルプ" as const;
-
-export const isChoiceHelp = (command: RpgTypes.Command_Comment) => {
-  return command.parameters[0] === CHOICE_HELP_TEXT;
-};
-
-const mergeComment = (comment: EventCommandGroup_Comment) => {
-  if (isChoiceHelp(comment.header)) {
-    const text: string = joinCommandBodies(comment.bodies);
-
-    const result: [RpgTypes.Command_Comment, RpgTypes.Command_CommentBody] = [
-      {
-        code: RpgTypes.COMMENT,
-        indent: 0,
-        parameters: [CHOICE_HELP_TEXT],
-      },
-      {
-        code: RpgTypes.COMMENT_BODY,
-        indent: 0,
-        parameters: [text],
-      },
-    ];
-    return result;
-  }
-  return comment.normalizedCommands();
-};
 
 const groupJoinMapper: GroupJoinMapper<RpgTypes.EventCommand[]> = {
   // body部分は空の要素で置き換える
@@ -56,7 +25,7 @@ const groupJoinMapper: GroupJoinMapper<RpgTypes.EventCommand[]> = {
   // ヘッダ側を基準に、Header+Bodyで生成
   showMessage: (data) => data.normalizedCommands(),
   showScrollingText: (data) => data.normalizedCommands(),
-  comment: (data) => mergeComment(data),
+  comment: (data) => data.normalizedCommands(),
   script: (data) => data.normalizedCommands(),
   other: (data) => [data],
 };
