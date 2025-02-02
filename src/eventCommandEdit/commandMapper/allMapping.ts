@@ -19,6 +19,12 @@ export const callHandler = <T, Command extends EventCommand>(
 ): T => {
   return handler ? handler(command, index, array) : fallback(command, index, array);
 };
+export const mappingCommandList = <T>(
+  array: ReadonlyArray<EventCommand>,
+  table: PartialMappingObject<T>
+): T[] => {
+  return array.map<T>((command, index) => mappingCommand(array, index, table));
+};
 
 export const mappingCommand = <T>(
   array: ReadonlyArray<EventCommand>,

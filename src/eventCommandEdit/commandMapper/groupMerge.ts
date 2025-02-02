@@ -1,6 +1,6 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { MappingObject } from "./allCommandsMapper";
-import { mappingCommand } from "./allMapping";
+import { mappingCommand, mappingCommandList } from "./allMapping";
 
 export interface GroupJoinMapper<T>
   extends Pick<
@@ -33,7 +33,5 @@ const groupJoinMapper: GroupJoinMapper<RpgTypes.EventCommand[]> = {
 export const normalizedCommands = <Command extends RpgTypes.EventCommand>(
   command: ReadonlyArray<Command>
 ): RpgTypes.EventCommand[][] => {
-  return command.map((cmd, index, array) => {
-    return mappingCommand(array, index, groupJoinMapper);
-  });
+  return mappingCommandList(command, groupJoinMapper);
 };
