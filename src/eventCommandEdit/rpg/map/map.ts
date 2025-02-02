@@ -24,9 +24,19 @@ export const locateEventCommands = <T>(
   );
 };
 
-export const gatherEventCommandLocators = (map: MapLike): MapEventContext[] => {
-  const list: MapEventContext[][][] = map.events
+export const locateMapEvents = <Map extends MapLike, T>(
+  map: Map,
+  func: (command: EventCommand, eventId: number, pageIndex: number) => T
+): T[][][] => {
+  return map.events
     .filter(isValidEvent)
-    .map((ev) => locateEventCommands(ev, createMapEventContext));
+    .map((ev) => locateEventCommands(ev, func));
+};
+
+export const gatherEventCommandLocators = (map: MapLike): MapEventContext[] => {
+  const list: MapEventContext[][][] = locateMapEvents(
+    map,
+    createMapEventContext
+  );
   return list.flat(2);
 };
