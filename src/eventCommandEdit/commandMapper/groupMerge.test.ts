@@ -1,6 +1,7 @@
 import * as Types from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
-import { CHOICE_HELP_TEXT, normalizedCommands } from "./groupMerge";
+import { normalizedCommands } from "./groupMerge";
+import { CHOICE_HELP_TEXT } from "./commandGroup";
 
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
