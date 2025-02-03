@@ -66,14 +66,13 @@ export interface MappingObject<T> {
   playBGM: CallBackFunc<RpgTypes.Command_PlayBGM, T>;
   fadeOutBGM: CallBackFunc<RpgTypes.Command_FadeOutBGM, T>;
   saveBGM: CallBackFunc<RpgTypes.Command_SaveBGM, T>;
-  // resumeBGM: CallBackFunc<RpgTypes.Command_ResumeBGM, T>;
+  resumeBGM: CallBackFunc<RpgTypes.Command_ResumeBGM, T>;
   playBGS: CallBackFunc<RpgTypes.Command_PlayBGS, T>;
   fadeOutBGS: CallBackFunc<RpgTypes.Command_FadeOutBGS, T>;
   playME: CallBackFunc<RpgTypes.Command_PlayME, T>;
   playSE: CallBackFunc<RpgTypes.Command_PlaySE, T>;
   stopSE: CallBackFunc<RpgTypes.Command_StopSE, T>;
   playMovie: CallBackFunc<RpgTypes.Command_PlayMovie, T>;
-  //  messageSettings: CallBackFunc<RpgTypes.Command_MessageSettings, T>;
   changePlayerFollowers: CallBackFunc<
     RpgTypes.Command_ChangePlayerFollowers,
     T
