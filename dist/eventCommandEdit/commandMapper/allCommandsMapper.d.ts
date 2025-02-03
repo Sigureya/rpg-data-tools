@@ -1,6 +1,6 @@
 import { EventCommand } from '@sigureya/rpgtypes/';
 import { EventCommandGroup_Message, EventCommandGroup_ScrollingText, EventCommandGroup_Comment, EventCommandGroup_Script } from './commandGroup';
-import { CallBackFunc } from './types';
+import { CallBackFunc } from './types/';
 import type * as RpgTypes from "@sigureya/rpgtypes";
 export interface MappingObject<T> {
     showMessage(groop: EventCommandGroup_Message): T;
@@ -51,6 +51,7 @@ export interface MappingObject<T> {
     playBGM: CallBackFunc<RpgTypes.Command_PlayBGM, T>;
     fadeOutBGM: CallBackFunc<RpgTypes.Command_FadeOutBGM, T>;
     saveBGM: CallBackFunc<RpgTypes.Command_SaveBGM, T>;
+    resumeBGM: CallBackFunc<RpgTypes.Command_ResumeBGM, T>;
     playBGS: CallBackFunc<RpgTypes.Command_PlayBGS, T>;
     fadeOutBGS: CallBackFunc<RpgTypes.Command_FadeOutBGS, T>;
     playME: CallBackFunc<RpgTypes.Command_PlayME, T>;
