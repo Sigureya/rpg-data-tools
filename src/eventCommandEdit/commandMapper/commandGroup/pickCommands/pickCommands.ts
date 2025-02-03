@@ -2,7 +2,7 @@ import type {
   EventCommandLike,
   EventCode,
   EventCommand,
-  PickCommandByParam,
+  ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
 
 import type * as RpgTypes from "@sigureya/rpgtypes";
@@ -58,7 +58,7 @@ export const pickCommands = <Code extends EventCode>(
   return result;
 };
 
-export const pickHead = <Code extends PickCommandByParam<[string]>["code"]>(
+export const pickHead = <Code extends ExtractCommandByParam<[string]>["code"]>(
   commands: ReadonlyArray<EventCommand>,
   index: number,
   code: Code

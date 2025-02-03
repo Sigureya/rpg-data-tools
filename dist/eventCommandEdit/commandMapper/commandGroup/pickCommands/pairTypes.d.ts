@@ -1,5 +1,5 @@
-import { EventCommandLike, Command_ShowMessage, Command_ShowMessageBody, Command_ShowScrollingText, Command_ShowScrollingTextBody, Command_Comment, Command_CommentBody, Command_ScriptHeader, Command_ScriptBody, PickCommandByParam } from '@sigureya/rpgtypes';
-export interface EventCommandPair<Headder extends EventCommandLike, Body extends PickCommandByParam<[string]>> {
+import { EventCommandLike, Command_ShowMessage, Command_ShowMessageBody, Command_ShowScrollingText, Command_ShowScrollingTextBody, Command_Comment, Command_CommentBody, Command_ScriptHeader, Command_ScriptBody, ExtractCommandByParam } from '@sigureya/rpgtypes';
+export interface EventCommandPair<Headder extends EventCommandLike, Body extends ExtractCommandByParam<[string]>> {
     head: Headder;
     bodys: Body[];
 }

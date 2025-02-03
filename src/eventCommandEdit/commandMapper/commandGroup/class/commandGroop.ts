@@ -2,7 +2,7 @@ import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { EventCommandGroup } from "./groopTypes";
 import { joinCommandBodies } from "./join";
 
-type TextCommandBody = RpgTypes.PickCommandByParam<[string]>;
+type TextCommandBody = RpgTypes.ExtractCommandByParam<[string]>;
 export abstract class BaseEventCommandGroup<
   Header extends RpgTypes.EventCommand,
   Body extends TextCommandBody

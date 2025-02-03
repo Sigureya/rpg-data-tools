@@ -8,17 +8,17 @@ import type {
   Command_ShowScrollingText,
   Command_ShowScrollingTextBody,
   EventCommand,
-  PickCommandByParam,
+  ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
 
 export interface EventCommandGroup<
   Header extends EventCommand,
-  Body extends PickCommandByParam<[string]>
+  Body extends ExtractCommandByParam<[string]>
 > {
-  mergedBody(): PickCommandByParam<[string]>;
+  mergedBody(): ExtractCommandByParam<[string]>;
   normalizedCommands(): [Header] | [Header, Body];
   getBodyText(separator?: string): string;
-  joinCommandBodies(): PickCommandByParam<[string]>[];
+  joinCommandBodies(): ExtractCommandByParam<[string]>[];
   header: Header;
   bodies: Body[];
 }
