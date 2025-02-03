@@ -737,6 +737,10 @@ const le = "選択肢ヘルプ", he = (e) => e.parameters[0] === le, pe = (e, t 
   code: e.code,
   paramIndex: t,
   value: e.parameters[t]
+}), ht = (e, t) => ({
+  code: e.code,
+  paramIndex: t,
+  value: e.parameters[t]
 });
 export {
   v as BaseEventCommandGroup,
@@ -807,6 +811,7 @@ export {
   be as normalizedCommonEvents,
   Qe as normalizedMapData,
   et as normalizedTroops,
+  ht as pickCommandParamAudio,
   lt as pickCommandParamNumber,
   dt as pickCommandParamString,
   u as pickCommands,
