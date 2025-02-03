@@ -117,9 +117,13 @@ export const processTroopEvents = <Result>(
  */
 export const processCommonEvents = <T>(
   events: ReadonlyArray<Data_CommonEvent>,
-  func: (common: Readonly<Data_CommonEvent>, index: number) => T
+  func: (
+    common: Readonly<Data_CommonEvent>,
+    index: number,
+    common2: { id: number }
+  ) => T
 ): T[] => {
-  return events.map(func);
+  return events.map((common, index) => func(common, index, { id: common.id }));
 };
 
 /**
