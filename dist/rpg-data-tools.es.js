@@ -754,7 +754,7 @@ export {
   r as callHandler,
   ot as codeInfoText,
   g as codeTest,
-  $e as collectEventCommands,
+  $e as collectMapEvents,
   De as constructActor,
   Ve as constructArmor,
   Fe as constructClass,

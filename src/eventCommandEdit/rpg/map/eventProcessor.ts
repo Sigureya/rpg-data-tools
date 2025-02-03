@@ -92,7 +92,7 @@ export const processMapEvents = <Result, Command>(
     .map((event) => processEventPages(event, fn));
 };
 
-export const collectEventCommands = <Result, Command>(
+export const collectMapEvents = <Result, Command>(
   map: MapEventContainer<Command>,
   fn: (
     page: NonNullable<(typeof map)["events"][number]>["pages"][number],
