@@ -1,6 +1,6 @@
 import { EventCommand } from '@sigureya/rpgtypes/';
 import { EventCommandGroup_Message, EventCommandGroup_ScrollingText, EventCommandGroup_Comment, EventCommandGroup_Script } from './commandGroup';
-import { CallBackFunc } from './types/';
+import { CallBackFunc } from './types';
 import type * as RpgTypes from "@sigureya/rpgtypes";
 export interface MappingObject<T> {
     showMessage(groop: EventCommandGroup_Message): T;
