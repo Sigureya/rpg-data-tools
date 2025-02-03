@@ -54,13 +54,13 @@ export const replaceMapEvents = <Map extends MapEventContainer<EventCommand>>(
 export const replaceCommonEvents = (
   events: ReadonlyArray<Data_CommonEvent>,
   fn: EventCommandReplaceFunc
-): Array<Data_CommonEvent> => {
+): Data_CommonEvent[] => {
   return events.map((commonEvent) => replaceEventCommands(commonEvent, fn));
 };
 
 export const replaceTroops = (
   list: ReadonlyArray<Data_Troop>,
   fn: EventCommandReplaceFunc
-): Array<Data_Troop> => {
+): Data_Troop[] => {
   return list.map((troop) => replacePages(troop, fn));
 };
