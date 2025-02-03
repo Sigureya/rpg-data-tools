@@ -2,7 +2,6 @@ import type {
   BattleEventPage,
   Data_CommonEvent,
   Data_Troop,
-  MapEventContainer,
   ReadonlyMapEventContainer,
 } from "@sigureya/rpgtypes";
 import type { MapEventContext } from "./types";
