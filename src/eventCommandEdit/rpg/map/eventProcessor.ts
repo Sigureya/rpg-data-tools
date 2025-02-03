@@ -2,7 +2,7 @@ import type {
   BattleEventPage,
   Data_CommonEvent,
   Data_Troop,
-  ReadonlyMapEventContainer,
+  MapEventContainer,
 } from "@sigureya/rpgtypes";
 import type { MapEventContext } from "./types";
 
@@ -80,7 +80,7 @@ export const processEventPages = <
  * @returns A 2D array where each element represents the processed result of an event's pages.
  */
 export const processMapEvents = <Result, Command>(
-  map: ReadonlyMapEventContainer<Command>,
+  map: MapEventContainer<Command>,
   fn: (
     page: NonNullable<(typeof map)["events"][number]>["pages"][number],
     pageIndex: number,
@@ -128,7 +128,7 @@ export const processCommonEvents = <T>(
  * @returns A flattened array of MapEventContext objects representing all event commands in the map.
  */
 export const gatherEventCommandContext = <Command>(
-  map: ReadonlyMapEventContainer<Command>
+  map: MapEventContainer<Command>
 ): MapEventContext<Command>[] => {
   const list: MapEventContext<Command>[][][] = processMapEvents(
     map,
