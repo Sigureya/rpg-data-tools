@@ -10,17 +10,6 @@ export interface MapEventLike {
   pages: EventCommandContainer[];
 }
 
-export interface MapLike {
-  events: (MapEventLike | null)[];
-}
-/**
- * @deprecated
- */
-export interface MapEventContextOld {
-  eventId: number;
-  pageIndex: number;
-  command: EventCommand;
-}
 export interface MapEventContext<T> {
   eventId: number;
   pageIndex: number;
