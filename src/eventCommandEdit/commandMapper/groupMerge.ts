@@ -1,6 +1,6 @@
 import type * as RpgTypes from "@sigureya/rpgtypes";
 import type { MappingObject } from "./allCommandsMapper";
-import { mappingCommand, mappingCommandList } from "./allMapping";
+import { mappingCommandList } from "./allMapping";
 
 export interface GroupJoinMapper<T>
   extends Pick<
