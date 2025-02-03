@@ -1,12 +1,15 @@
 import type {
   Data_CommonEvent,
-  Data_Map,
   Data_Troop,
+  EventCommand,
+  MapEventContainer,
 } from "@sigureya/rpgtypes";
 import { replaceCommonEvents, replaceMapEvents, replaceTroops } from "./rpg";
-import { normalizedCommands } from "./commandMapper/";
+import { normalizedCommands } from "./commandMapper";
 
-export const normalizedMapData = (map: Data_Map): Data_Map => {
+export const normalizedMapData = <Map extends MapEventContainer<EventCommand>>(
+  map: Map
+): Map => {
   return replaceMapEvents(map, (list) => normalizedCommands(list).flat());
 };
 export const normalizedCommonEvents = (
