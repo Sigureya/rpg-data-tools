@@ -1,4 +1,4 @@
-import { IndexOfCommandParameter } from '@sigureya/rpgtypes';
+import { AudioFileParams, IndexOfCommandParameter } from '@sigureya/rpgtypes';
 export interface CommandParameter<T> {
     code: number;
     paramIndex: number;
@@ -15,6 +15,13 @@ export declare const pickCommandParamNumber: <Params extends unknown[], Index ex
     code: number;
     parameters: Params;
 }, number>>(command: {
+    code: number;
+    parameters: Params;
+}, index: Index) => CommandParameter<Params[Index]>;
+export declare const pickCommandParamAudio: <Params extends unknown[], Index extends IndexOfCommandParameter<{
+    code: number;
+    parameters: Params;
+}, AudioFileParams>>(command: {
     code: number;
     parameters: Params;
 }, index: Index) => CommandParameter<Params[Index]>;
