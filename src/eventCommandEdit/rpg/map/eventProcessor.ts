@@ -6,6 +6,12 @@ import type {
 } from "@sigureya/rpgtypes";
 import type { MapEventContext } from "./types";
 
+interface EventContainer<Command> {
+  id: number;
+  pages: {
+    list: Command[];
+  }[];
+}
 /**
  * Checks whether an event is valid (not null or undefined).
  * @param event The event to check.
@@ -79,12 +85,12 @@ export const processEventPages = <
  * @param fn The function to apply to each event page.
  * @returns A 2D array where each element represents the processed result of an event's pages.
  */
-export const processMapEvents = <Result, Command>(
-  map: MapEventContainer<Command>,
+export const processMapEvents = <Result, Command, Event extends object>(
+  map: MapEventContainer<Command, Event & EventContainer<Command>>,
   fn: (
     page: NonNullable<(typeof map)["events"][number]>["pages"][number],
     pageIndex: number,
-    container: NonNullable<(typeof map)["events"][number]>
+    container: NonNullable<Event & { id: number; pages: { list: Command[] }[] }>
   ) => Result
 ): Result[][] => {
   return map.events
@@ -92,8 +98,8 @@ export const processMapEvents = <Result, Command>(
     .map((event) => processEventPages(event, fn));
 };
 
-export const collectMapEvents = <Result, Command>(
-  map: MapEventContainer<Command>,
+export const collectMapEvents = <Result, Command, Event extends { id: number }>(
+  map: MapEventContainer<Command, Event & EventContainer<Command>>,
   fn: (
     page: NonNullable<(typeof map)["events"][number]>["pages"][number],
     pageIndex: number,
@@ -131,10 +137,10 @@ export const processCommonEvents = <T>(
   func: (
     common: Readonly<Data_CommonEvent>,
     index: number,
-    common2: { id: number }
+    common2: Readonly<Data_CommonEvent>
   ) => T
 ): T[] => {
-  return events.map((common, index) => func(common, index, { id: common.id }));
+  return events.map((common, index) => func(common, index, common));
 };
 
 /**
@@ -142,8 +148,11 @@ export const processCommonEvents = <T>(
  * @param map The map containing events.
  * @returns A flattened array of MapEventContext objects representing all event commands in the map.
  */
-export const gatherEventCommandContext = <Command>(
-  map: MapEventContainer<Command>
+export const gatherEventCommandContext = <
+  Command,
+  Event extends EventContainer<Command> = EventContainer<Command>
+>(
+  map: MapEventContainer<Command, Event>
 ): MapEventContext<Command>[] => {
   const list: MapEventContext<Command>[][][] = processMapEvents(
     map,
