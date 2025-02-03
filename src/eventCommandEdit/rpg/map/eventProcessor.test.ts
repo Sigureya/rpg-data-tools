@@ -3,7 +3,7 @@ import type {
   Command_ChangeNickName,
   Command_CommonEvent,
   EventCommand,
-  ReadonlyMapEventContainer,
+  MapEventContainer,
 } from "@sigureya/rpgtypes";
 import {
   createEventContext,
@@ -42,7 +42,7 @@ const mockEvent3 = {
   pages: [{ list: [mockCommandB] }],
 };
 
-const mockMap: ReadonlyMapEventContainer<EventCommand> = Object.freeze({
+const mockMap = Object.freeze<MapEventContainer<EventCommand>>({
   events: [mockEvent1, null, mockEvent2, mockEvent3, null],
 });
 
