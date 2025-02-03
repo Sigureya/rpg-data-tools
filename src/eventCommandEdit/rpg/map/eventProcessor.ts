@@ -92,6 +92,17 @@ export const processMapEvents = <Result, Command>(
     .map((event) => processEventPages(event, fn));
 };
 
+export const collectEventCommands = <Result, Command>(
+  map: MapEventContainer<Command>,
+  fn: (
+    page: NonNullable<(typeof map)["events"][number]>["pages"][number],
+    pageIndex: number,
+    container: NonNullable<(typeof map)["events"][number]>
+  ) => Result[]
+): Result[] => {
+  return processMapEvents(map, fn).flat(2);
+};
+
 /**
  * Processes all troop event pages.
  * @param list The list of troop events.
