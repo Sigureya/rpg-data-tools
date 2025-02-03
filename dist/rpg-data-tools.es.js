@@ -667,7 +667,7 @@ const he = "選択肢ヘルプ", pe = (e) => e.parameters[0] === he, ge = (e, t 
   pageIndex: t
 })), H = (e, t) => e.pages.map(
   (n, s) => t(n, s, e)
-), B = (e, t) => e.events.filter(Ie).map((n) => H(n, t)), $e = (e, t) => B(e, t).flat(2), Je = (e, t) => e.map((n) => H(n, t)), Ze = (e, t) => e.map(t), Qe = (e) => B(
+), B = (e, t) => e.events.filter(Ie).map((n) => H(n, t)), $e = (e, t) => B(e, t).flat(2), Je = (e, t) => e.map((n) => H(n, t)), Ze = (e, t) => e.map((n, s) => t(n, s, { id: n.id })), Qe = (e) => B(
   e,
   ve
 ).flat(2), G = (e, t) => {
