@@ -1,19 +1,14 @@
 import { EventCommand } from '@sigureya/rpgtypes';
-export interface EventContainer {
-    list: EventCommand[];
-}
-export interface EventPageContainer {
-    pages: EventContainer[];
+export type EventCommandContainer = CommandContainer<EventCommand>;
+export interface CommandContainer<Command> {
+    list: ReadonlyArray<Command>;
 }
 export interface MapEventLike {
     id: number;
-    pages: EventContainer[];
+    pages: EventCommandContainer[];
 }
-export interface MapLike {
-    events: (MapEventLike | null)[];
-}
-export interface MapEventContext {
+export interface MapEventContext<T> {
     eventId: number;
     pageIndex: number;
-    command: EventCommand;
+    data: T;
 }
