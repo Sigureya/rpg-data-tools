@@ -8,12 +8,12 @@ import type {
   Command_CommentBody,
   Command_ScriptHeader,
   Command_ScriptBody,
-  PickCommandByParam,
+  ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
 
 export interface EventCommandPair<
   Headder extends EventCommandLike,
-  Body extends PickCommandByParam<[string]>
+  Body extends ExtractCommandByParam<[string]>
 > {
   head: Headder;
   bodys: Body[];

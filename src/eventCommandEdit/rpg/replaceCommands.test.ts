@@ -3,7 +3,7 @@ import type {
   Data_CommonEvent,
   EventCommand,
   MapEventContainer,
-  PickCommandByParam,
+  ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
 import {
   replaceEventCommands,
@@ -14,8 +14,8 @@ import {
 
 // Helper function to create a mock EventCommand
 const createMockCommand = (
-  code: PickCommandByParam<[]>["code"]
-): PickCommandByParam<[]> => ({
+  code: ExtractCommandByParam<[]>["code"]
+): ExtractCommandByParam<[]> => ({
   code,
   indent: 0,
   parameters: [],

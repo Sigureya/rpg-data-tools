@@ -6,7 +6,7 @@ import { CHOICE_HELP_TEXT } from "./commandGroup";
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
 const createMockCommand = <
-  Code extends Types.PickCommandByParam<[string]>["code"]
+  Code extends Types.ExtractCommandByParam<[string]>["code"]
 >(
   code: Code,
   textList = ["The quick", "brown fox", "jumps over"]
@@ -19,7 +19,7 @@ const createMockCommand = <
 
 const testCommandRemoval = (
   name: string,
-  command: Types.PickCommandByParam<[string]>
+  command: Types.ExtractCommandByParam<[string]>
 ) => {
   test(`code:${command.code} (${name}) should be removed`, () => {
     const result = normalizedCommands([command]);
@@ -52,8 +52,8 @@ describe("Body-only commands should be removed", () => {
 });
 const testCommandMerge = (
   name: string,
-  commands: [Types.EventCommand, ...Types.PickCommandByParam<[string]>[]],
-  expectedBody: Types.PickCommandByParam<[string]>
+  commands: [Types.EventCommand, ...Types.ExtractCommandByParam<[string]>[]],
+  expectedBody: Types.ExtractCommandByParam<[string]>
 ) => {
   test(`code:${commands[0].code} (${name}) should be merged`, () => {
     const result: Types.EventCommand[][] = normalizedCommands(commands);
@@ -137,8 +137,8 @@ describe("選択肢ヘルプ", () => {
 });
 
 const testCommandMergeToSingle = <
-  Head extends Types.PickCommandByParam<[string]>,
-  Body extends Exclude<Types.PickCommandByParam<[string]>, Head>
+  Head extends Types.ExtractCommandByParam<[string]>,
+  Body extends Exclude<Types.ExtractCommandByParam<[string]>, Head>
 >(
   name: string,
   commands: [Head, ...Body[]],
