@@ -86,6 +86,16 @@ export interface MappingObject<T> {
   changePartyMember: CallBackFunc<RpgTypes.Command_ChangePartyMember, T>;
   changeActorImages: CallBackFunc<RpgTypes.Command_ChangeActorImages, T>;
 
+  changeTileset: CallBackFunc<RpgTypes.Command_ChangeTileset, T>;
+  changeBattleBackground: CallBackFunc<
+    RpgTypes.Command_ChangeBattleBackground,
+    T
+  >;
+  changeParallax: CallBackFunc<RpgTypes.Command_ChangeParallax, T>;
+  getLocationsInfo: CallBackFunc<RpgTypes.Command_GetLocationsInfo, T>;
+
+  changeVehicleImage: CallBackFunc<RpgTypes.Command_ChangeVehicleImage, T>;
+
   tintScreen: CallBackFunc<RpgTypes.Command_TintScreen, T>;
   flashScreen: CallBackFunc<RpgTypes.Command_FlashScreen, T>;
   shakeScreen: CallBackFunc<RpgTypes.Command_ShakeScreen, T>;
