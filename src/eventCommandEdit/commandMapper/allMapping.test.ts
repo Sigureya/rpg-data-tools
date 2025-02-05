@@ -116,11 +116,7 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: [0, 0, 0, 0, 6],
   });
-  testMapping<CMD.Command_GameOver>("gameover", {
-    code: CMD.GAME_OVER,
-    indent: 0,
-    parameters: [],
-  });
+  testMapping<CMD.Command_GameOver>("gameover", RmmzMock.MockGameOver);
   testMapping<CMD.Command_TintScreen>("tintScreen", RmmzMock.MockTintScreen);
   testMapping<CMD.Command_FlashScreen>("flashScreen", RmmzMock.MockFlashScreen);
   testMapping<CMD.Command_ShakeScreen>("shakeScreen", RmmzMock.MockShakeScreen);
