@@ -1,3 +1,4 @@
 import { PickByType } from '@sigureya/rpgtypes';
-export declare const pickPropertys: <Result, Value, T extends Record<KeyType, Value> = Record<string, Value>, KeyType extends string & keyof PickByType<T, Value> = string & { [K in keyof T]: T[K] extends Value ? K : never; }[keyof T]>(data: T, keyList: ReadonlyArray<string & keyof PickByType<T, Value>>, fn: (key: string, value: Value, data: T) => Result) => Result[];
-export declare const pickString: <Result, T extends Record<KeyType, string> = Record<string, string>, KeyType extends string & keyof PickByType<T, string> = string & { [K in keyof T]: T[K] extends string ? K : never; }[keyof T]>(data: T, keyList: ReadonlyArray<KeyType>, fn: (key: string, value: string, data: T) => Result) => Result[];
+export type PickableRecordType<T, Value> = Record<string & keyof PickByType<T, Value>, Value>;
+export declare const pickPropertys: <Result, Value, T extends PickableRecordType<T, Value>>(data: T, keyList: ReadonlyArray<keyof PickableRecordType<T, string>>, fn: (key: string, value: Value, data: T) => Result) => Result[];
+export declare const pickString: <Result, T extends PickableRecordType<T, string>>(data: T, keyList: ReadonlyArray<keyof PickableRecordType<T, string>>, fn: (key: string, value: string, data: T) => Result) => Result[];
