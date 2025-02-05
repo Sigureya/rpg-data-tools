@@ -102,16 +102,23 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.changeVehicleImage, table.other);
 
     // BGM・音楽関連
-    case Code.PLAY_BGM:
-      return callHandler(command, index, array, table.playBGM, table.other);
-    case Code.FADEOUT_BGM:
-      return callHandler(command, index, array, table.fadeOutBGM, table.other);
     case Code.CHANGE_BATTLE_BGM:
       return callHandler(command, index, array, table.changeBattleBGM, table.other);
     case Code.CHANGE_VICTORY_ME:
       return callHandler(command, index, array, table.changeVictoryME, table.other);
     case Code.CHANGE_DEFEAT_ME:
       return callHandler(command, index, array, table.changeDefeatME, table.other);
+
+    case Code.PLAY_BGM:
+      return callHandler(command, index, array, table.playBGM, table.other);
+    case Code.FADEOUT_BGM:
+      return callHandler(command, index, array, table.fadeOutBGM, table.other);
+    case Code.PLAY_SE:
+      return callHandler(command, index, array, table.playSE, table.other);
+    case Code.STOP_SE:
+      return callHandler(command, index, array, table.stopSE, table.other);
+    case Code.PLAY_ME:
+      return callHandler(command, index, array, table.playME, table.other);
 
     // ラベル・ジャンプ
     case Code.LABEL:
@@ -150,6 +157,9 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.gameover, table.other);
 
     // 未整理
+
+    case Code.PLAY_MOVIE:
+      return callHandler(command, index, array, table.playMovie, table.other);
     case Code.CHANGE_TRANSPARENCY:
       return callHandler(command, index, array, table.changeTransparency, table.other);
     case Code.SET_WEATHER_EFFECT:
