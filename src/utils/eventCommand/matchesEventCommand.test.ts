@@ -1,76 +1,69 @@
 import { describe, expect, test } from "vitest";
 import { isAudioCommand, isImageCommand } from "./matchesEventCommand";
-import * as RpgTypes from "@sigureya/rpgtypes";
-const mockAudio: RpgTypes.AudioFileParams = {
-  name: "test",
-  pan: 0,
-  pitch: 100,
-  volume: 100,
-};
-const createMockAudioCommand = <Code extends RpgTypes.EventCode>(
-  code: Code
-) => ({
-  code,
-  parameters: [mockAudio] as [RpgTypes.AudioFileParams],
-  indent: 0,
-});
-const playBGM: RpgTypes.Command_PlayBGM = createMockAudioCommand(
-  RpgTypes.PLAY_BGM
-);
-const playBGS: RpgTypes.Command_PlayBGS = createMockAudioCommand(
-  RpgTypes.PLAY_BGS
-);
-const playME: RpgTypes.Command_PlayME = createMockAudioCommand(
-  RpgTypes.PLAY_ME
-);
-const playSE: RpgTypes.Command_PlaySE = createMockAudioCommand(
-  RpgTypes.PLAY_SE
-);
-const changeBattleBGM: RpgTypes.Command_ChangeBattleBGM =
-  createMockAudioCommand(RpgTypes.CHANGE_BATTLE_BGM);
-const changeVictoryME: RpgTypes.Command_ChangeVictoryME =
-  createMockAudioCommand(RpgTypes.CHANGE_VICTORY_ME);
-const changeDefeatME: RpgTypes.Command_ChangeDefeatME = createMockAudioCommand(
-  RpgTypes.CHANGE_DEFEAT_ME
-);
+import * as RmmzMock from "@sigureya/rmmzmock";
 const audioCommands = [
-  playBGM,
-  playBGS,
-  playME,
-  playSE,
-  changeBattleBGM,
-  changeVictoryME,
-  changeDefeatME,
+  RmmzMock.MockPlayBGM,
+  RmmzMock.MockPlayBGS,
+  RmmzMock.MockPlayME,
+  RmmzMock.MockPlaySE,
+  RmmzMock.MockChangeBattleBGM,
+  RmmzMock.MockChangeVictoryME,
+  RmmzMock.MockChangeDefeatME,
 ];
+
+const imageCommands = [
+  RmmzMock.MockShowPicture,
+  RmmzMock.MockChangeActorImages,
+
+  RmmzMock.MockChangeVehicleImage,
+];
+
 describe("isAudioCommand", () => {
   test("playBGM", () => {
-    expect(isAudioCommand(playBGM)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockPlayBGM)).toBe(true);
   });
   test("playBGS", () => {
-    expect(isAudioCommand(playBGS)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockPlayBGS)).toBe(true);
   });
   test("playME", () => {
-    expect(isAudioCommand(playME)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockPlayME)).toBe(true);
   });
   test("playSE", () => {
-    expect(isAudioCommand(playSE)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockPlaySE)).toBe(true);
   });
   test("changeBattleBGM", () => {
-    expect(isAudioCommand(changeBattleBGM)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockChangeBattleBGM)).toBe(true);
   });
   test("changeVictoryME", () => {
-    expect(isAudioCommand(changeVictoryME)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockChangeVictoryME)).toBe(true);
   });
   test("changeDefeatME", () => {
-    expect(isAudioCommand(changeDefeatME)).toBe(true);
+    expect(isAudioCommand(RmmzMock.MockChangeDefeatME)).toBe(true);
   });
 
   test("filter", () => {
     expect(audioCommands.filter(isAudioCommand)).toEqual(audioCommands);
   });
+  test("filter2", () => {
+    expect(imageCommands.filter(isAudioCommand)).toEqual([]);
+  });
 });
 
 describe("isImageCommand", () => {
+  test("showPicture", () => {
+    expect(isImageCommand(RmmzMock.MockShowPicture)).toBe(true);
+  });
+  test("changeActorImages", () => {
+    expect(isImageCommand(RmmzMock.MockChangeActorImages)).toBe(true);
+  });
+  test("changeVehicleImage", () => {
+    expect(isImageCommand(RmmzMock.MockChangeVehicleImage)).toBe(true);
+  });
+
+  test("fileter", () => {
+    expect(imageCommands.filter(isImageCommand)).toEqual(imageCommands);
+  });
+
   test("audio commands are not image commands", () => {
     expect(audioCommands.filter(isImageCommand)).toEqual([]);
   });
