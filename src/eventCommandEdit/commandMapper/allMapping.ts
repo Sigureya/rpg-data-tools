@@ -78,7 +78,10 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.changeProfile, table.other);
     case Code.CHANGE_NICKNAME:
       return callHandler(command, index, array, table.changeNickname, table.other);
-
+    case Code.PLAY_BGM:
+      return callHandler(command, index, array, table.playBGM, table.other);
+    case Code.FADEOUT_BGM:
+      return callHandler(command, index, array, table.fadeOutBGM, table.other);
     case Code.COMMON_EVENT:
       return callHandler(command, index, array, table.commonEvent, table.other);
     case Code.LABEL:
@@ -113,6 +116,22 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.wait, table.other);
     case Code.CHANGE_ACTOR_IMAGES:
       return callHandler(command, index, array, table.changeActorImages, table.other);
+    case Code.CHANGE_VEHICLE_IMAGE:
+      return callHandler(command, index, array, table.changeVehicleImage, table.other);
+    case Code.SHOW_PICTURE:
+      return callHandler(command, index, array, table.showPicture, table.other);
+    case Code.MOVE_PICTURE:
+      return callHandler(command, index, array, table.movePicture, table.other);
+    case Code.ROTATE_PICTURE:
+      return callHandler(command, index, array, table.rotatePicture, table.other);
+    case Code.TINT_PICTURE:
+      return callHandler(command, index, array, table.tintPicture, table.other);
+    case Code.ERASE_PICTURE:
+      return callHandler(command, index, array, table.erasePicture, table.other);
+    case Code.CHANGE_TRANSPARENCY:
+      return callHandler(command, index, array, table.changeTransparency, table.other);
+    case Code.SET_WEATHER_EFFECT:
+      return callHandler(command, index, array, table.setWeatherEffects, table.other);
 
     case Code.CHANGE_GOLD:
       return callHandler(command, index, array, table.changeGold, table.other);
