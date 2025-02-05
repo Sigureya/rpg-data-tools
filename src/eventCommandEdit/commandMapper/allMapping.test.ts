@@ -173,11 +173,77 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: [mockAudioFile],
   });
-  //   testMapping<CMD.Command_ChangeTransparency>("changeTransparency", {
-  //     code: CMD.CHANGE_TRANSPARENCY,
-  //     indent: 0,
-  //     parameters: [0],
-  //   });
+  testMapping<CMD.Command_ChangeVehicleImage>("changeVehicleImage", {
+    code: CMD.CHANGE_VEHICLE_IMAGE,
+    indent: 0,
+    parameters: [0, "name", 0],
+  });
+  testMapping<CMD.Command_ShowPicture>("showPicture", {
+    code: CMD.SHOW_PICTURE,
+    indent: 0,
+    parameters: [0, "pic", 0, 0, 0, 0, 0, 0, 0],
+  });
+  testMapping<CMD.Command_MovePicture>("movePicture", {
+    code: CMD.MOVE_PICTURE,
+    indent: 0,
+    parameters: [0, 0, 0, 0, 0, 0, 0, 0, false, 0],
+  });
+  testMapping<CMD.Command_RotatePicture>("rotatePicture", {
+    code: CMD.ROTATE_PICTURE,
+    indent: 0,
+    parameters: [0, 0],
+  });
+  testMapping<CMD.Command_TintPicture>("tintPicture", {
+    code: CMD.TINT_PICTURE,
+    indent: 0,
+    parameters: [0, mockColor, 0, true],
+  });
+  testMapping<CMD.Command_ErasePicture>("erasePicture", {
+    code: CMD.ERASE_PICTURE,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_SetWeatherEffect>("setWeatherEffects", {
+    code: CMD.SET_WEATHER_EFFECT,
+    indent: 0,
+    parameters: ["", 0, 0, false],
+  });
+  testMapping<CMD.Command_PlayBGM>("playBGM", {
+    code: CMD.PLAY_BGM,
+    indent: 0,
+    parameters: [mockAudioFile],
+  });
+  testMapping<CMD.Command_FadeOutBGM>("fadeOutBGM", {
+    code: CMD.FADEOUT_BGM,
+    indent: 0,
+    parameters: [0],
+  });
+  testMapping<CMD.Command_PlaySE>("playSE", {
+    code: CMD.PLAY_SE,
+    indent: 0,
+    parameters: [mockAudioFile],
+  });
+  testMapping<CMD.Command_StopSE>("stopSE", {
+    code: CMD.STOP_SE,
+    indent: 0,
+    parameters: [],
+  });
+  testMapping<CMD.Command_PlayMovie>("playMovie", {
+    code: CMD.PLAY_MOVIE,
+    indent: 0,
+    parameters: [""],
+  });
+  // testMapping<CMD.Command_ChangePlayerFollowers>("changePlayerFollowers", {
+  //   code: CMD.CHANGE_PLAYER_FOLLOWERS,
+  //   indent: 0,
+  //   parameters: [0, 0],
+  // });
+
+  testMapping<CMD.Command_ChangeTransparency>("changeTransparency", {
+    code: CMD.CHANGE_TRANSPARENCY,
+    indent: 0,
+    parameters: [0],
+  });
 });
 describe("mappingCommand(groop)", () => {
   test("showMessage", () => {
