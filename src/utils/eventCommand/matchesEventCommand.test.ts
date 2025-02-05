@@ -42,6 +42,26 @@ const audioCommands = [
   changeVictoryME,
   changeDefeatME,
 ];
+const showPicture: RpgTypes.Command_ShowPicture = {
+  code: RpgTypes.SHOW_PICTURE,
+  parameters: [1, "test", 0, 0, 100, 100, 255, 0, 0],
+  indent: 0,
+};
+
+const changeActorImages: RpgTypes.Command_ChangeActorImages = {
+  code: RpgTypes.CHANGE_ACTOR_IMAGES,
+  parameters: [1, "character", 0, "face", 100, "sv"],
+  indent: 0,
+};
+
+const changeVehicleImage: RpgTypes.Command_ChangeVehicleImage = {
+  code: RpgTypes.CHANGE_VEHICLE_IMAGE,
+  parameters: [0, "test", 0],
+  indent: 0,
+};
+
+const imageCommands = [showPicture, changeActorImages, changeVehicleImage];
+
 describe("isAudioCommand", () => {
   test("playBGM", () => {
     expect(isAudioCommand(playBGM)).toBe(true);
@@ -68,9 +88,26 @@ describe("isAudioCommand", () => {
   test("filter", () => {
     expect(audioCommands.filter(isAudioCommand)).toEqual(audioCommands);
   });
+  test("filter2", () => {
+    expect(imageCommands.filter(isAudioCommand)).toEqual([]);
+  });
 });
 
 describe("isImageCommand", () => {
+  test("showPicture", () => {
+    expect(isImageCommand(showPicture)).toBe(true);
+  });
+  test("changeActorImages", () => {
+    expect(isImageCommand(changeActorImages)).toBe(true);
+  });
+  test("changeVehicleImage", () => {
+    expect(isImageCommand(changeVehicleImage)).toBe(true);
+  });
+
+  test("fileter", () => {
+    expect(imageCommands.filter(isImageCommand)).toEqual(imageCommands);
+  });
+
   test("audio commands are not image commands", () => {
     expect(audioCommands.filter(isImageCommand)).toEqual([]);
   });
