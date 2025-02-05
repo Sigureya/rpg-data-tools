@@ -2,6 +2,7 @@ import * as Types from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
 import { normalizedCommands } from "./groupMerge";
 import { CHOICE_HELP_TEXT } from "./commandGroup";
+import * as RmmzMock from "@sigureya/rmmzmock";
 
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
@@ -67,14 +68,7 @@ const testCommandMerge = (
 describe("case showMessage", () => {
   testCommandMerge(
     "showMessage",
-    [
-      {
-        code: Types.SHOW_MESSAGE,
-        indent: 0,
-        parameters: ["test", 0, 0, 0, "speaker"],
-      },
-      ...createMockCommand(Types.SHOW_MESSAGE_BODY),
-    ],
+    [RmmzMock.MockShowMessage, ...createMockCommand(Types.SHOW_MESSAGE_BODY)],
     {
       code: Types.SHOW_MESSAGE_BODY,
       indent: 0,
@@ -84,11 +78,7 @@ describe("case showMessage", () => {
   testCommandMerge(
     "showMessage2",
     [
-      {
-        code: Types.SHOW_MESSAGE,
-        indent: 0,
-        parameters: ["test", 0, 0, 0, "speaker"],
-      },
+      RmmzMock.MockShowMessage,
       ...createMockCommand(Types.SHOW_MESSAGE_BODY, ["Hello world!"]),
     ],
     {
