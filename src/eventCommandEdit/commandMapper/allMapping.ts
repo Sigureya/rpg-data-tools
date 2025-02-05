@@ -157,6 +157,10 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.gameover, table.other);
 
     // 未整理
+    case Code.CHANGE_PARALLAX:
+      return callHandler(command, index, array, table.changeParallax, table.other);
+    case Code.CHANGE_BATTLE_BACKGROUND:
+      return callHandler(command, index, array, table.changeBattleBackground, table.other);
 
     case Code.PLAY_MOVIE:
       return callHandler(command, index, array, table.playMovie, table.other);
