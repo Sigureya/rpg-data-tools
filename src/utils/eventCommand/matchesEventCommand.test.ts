@@ -14,25 +14,26 @@ const createMockAudioCommand = <Code extends RpgTypes.EventCode>(
   parameters: [mockAudio] as [RpgTypes.AudioFileParams],
   indent: 0,
 });
+const playBGM: RpgTypes.Command_PlayBGM = createMockAudioCommand(
+  RpgTypes.PLAY_BGM
+);
+const playBGS: RpgTypes.Command_PlayBGS = createMockAudioCommand(
+  RpgTypes.PLAY_BGS
+);
+const playME: RpgTypes.Command_PlayME = createMockAudioCommand(
+  RpgTypes.PLAY_ME
+);
+const playSE: RpgTypes.Command_PlaySE = createMockAudioCommand(
+  RpgTypes.PLAY_SE
+);
+const changeBattleBGM: RpgTypes.Command_ChangeBattleBGM =
+  createMockAudioCommand(RpgTypes.CHANGE_BATTLE_BGM);
+const changeVictoryME: RpgTypes.Command_ChangeVictoryME =
+  createMockAudioCommand(RpgTypes.CHANGE_VICTORY_ME);
+const changeDefeatME: RpgTypes.Command_ChangeDefeatME = createMockAudioCommand(
+  RpgTypes.CHANGE_DEFEAT_ME
+);
 describe("isAudioCommand", () => {
-  const playBGM: RpgTypes.Command_PlayBGM = createMockAudioCommand(
-    RpgTypes.PLAY_BGM
-  );
-  const playBGS: RpgTypes.Command_PlayBGS = createMockAudioCommand(
-    RpgTypes.PLAY_BGS
-  );
-  const playME: RpgTypes.Command_PlayME = createMockAudioCommand(
-    RpgTypes.PLAY_ME
-  );
-  const playSE: RpgTypes.Command_PlaySE = createMockAudioCommand(
-    RpgTypes.PLAY_SE
-  );
-  const changeBattleBGM: RpgTypes.Command_ChangeBattleBGM =
-    createMockAudioCommand(RpgTypes.CHANGE_BATTLE_BGM);
-  const changeVictoryME: RpgTypes.Command_ChangeVictoryME =
-    createMockAudioCommand(RpgTypes.CHANGE_VICTORY_ME);
-  const changeDefeatME: RpgTypes.Command_ChangeDefeatME =
-    createMockAudioCommand(RpgTypes.CHANGE_DEFEAT_ME);
   test("playBGM", () => {
     expect(isAudioCommand(playBGM)).toBe(true);
   });
