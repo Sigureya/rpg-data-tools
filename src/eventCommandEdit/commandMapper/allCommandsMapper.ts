@@ -92,7 +92,7 @@ export interface MappingObject<T> {
     T
   >;
   changeParallax: CallBackFunc<RpgTypes.Command_ChangeParallax, T>;
-  getLocationsInfo: CallBackFunc<RpgTypes.Command_GetLocationsInfo, T>;
+  getLocationsInfo: CallBackFunc<RpgTypes.Command_GetLocationInfo, T>;
 
   changeVehicleImage: CallBackFunc<RpgTypes.Command_ChangeVehicleImage, T>;
 
