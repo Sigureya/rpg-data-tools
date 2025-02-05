@@ -1,6 +1,8 @@
 import { describe, expect, test, vi } from "vitest";
 import type { MappingObject } from "./allCommandsMapper";
 import * as CMD from "@sigureya/rpgtypes";
+import * as RmmzMock from "@sigureya/rmmzmock";
+
 import { mappingCommand } from "./allMapping";
 import {
   createMessageGroup,
@@ -34,12 +36,6 @@ const testMapping = <Command extends CMD.EventCommand>(
 };
 
 describe("mappingCommand", () => {
-  const mockAudioFile: CMD.AudioFileParams = {
-    name: "name",
-    pan: 100,
-    pitch: 100,
-    volume: 100,
-  };
   const mockColor: CMD.ColorRGBA = [0, 0, 0, 0];
 
   testMapping<CMD.Command_Wait>("wait", {
@@ -52,16 +48,14 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: [1],
   });
-  testMapping<CMD.Command_ChangeBattleBGM>("changeBattleBGM", {
-    code: CMD.CHANGE_BATTLE_BGM,
-    indent: 0,
-    parameters: [mockAudioFile],
-  });
-  testMapping<CMD.Command_ChangeVictoryME>("changeVictoryME", {
-    code: CMD.CHANGE_VICTORY_ME,
-    indent: 0,
-    parameters: [mockAudioFile],
-  });
+  testMapping<CMD.Command_ChangeBattleBGM>(
+    "changeBattleBGM",
+    RmmzMock.MockChangeBattleBGM
+  );
+  testMapping<CMD.Command_ChangeVictoryME>(
+    "changeVictoryME",
+    RmmzMock.MockChangeVictoryME
+  );
   testMapping<CMD.Command_ChangeName>("changeName", {
     code: CMD.CHANGE_NAME,
     indent: 0,
@@ -87,11 +81,10 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: ["label"],
   });
-  testMapping<CMD.Command_ChangeActorImages>("changeActorImages", {
-    code: CMD.CHANGE_ACTOR_IMAGES,
-    indent: 0,
-    parameters: [0, "", 0, "", 0, ""],
-  });
+  testMapping<CMD.Command_ChangeActorImages>(
+    "changeActorImages",
+    RmmzMock.MockChangeActorImages
+  );
   testMapping<CMD.Command_ChangeWindowColor>("changeWindowColor", {
     code: CMD.CHANGE_WINDOW_COLOR,
     indent: 0,
@@ -128,106 +121,58 @@ describe("mappingCommand", () => {
     indent: 0,
     parameters: [],
   });
-  testMapping<CMD.Command_TintScreen>("tintScreen", {
-    code: CMD.TINT_SCREEN,
-    indent: 0,
-    parameters: [mockColor, 0, false],
-  });
-  testMapping<CMD.Command_FlashScreen>("flashScreen", {
-    code: CMD.FLASH_SCREEN,
-    indent: 0,
-    parameters: [mockColor, 0, false],
-  });
-  testMapping<CMD.Command_ShakeScreen>("shakeScreen", {
-    code: CMD.SHAKE_SCREEN,
-    indent: 0,
-    parameters: [0, 0, 0, false],
-  });
-  testMapping<CMD.Command_BattleProcessing>("battleProcessing", {
-    code: CMD.BATTLE_PROCESSING,
-    indent: 0,
-    parameters: [0, 0, false, false],
-  });
+  testMapping<CMD.Command_TintScreen>("tintScreen", RmmzMock.MockTintScreen);
+  testMapping<CMD.Command_FlashScreen>("flashScreen", RmmzMock.MockFlashScreen);
+  testMapping<CMD.Command_ShakeScreen>("shakeScreen", RmmzMock.MockShakeScreen);
+  testMapping<CMD.Command_BattleProcessing>(
+    "battleProcessing",
+    RmmzMock.MockBattleProcessing
+  );
   testMapping<CMD.Command_ChangeEncounter>("changeEncounter", {
     code: CMD.CHANGE_ENCOUNTER,
     indent: 0,
     parameters: [0],
   });
-  testMapping<CMD.Command_ChangeFormationAccess>("changeFormationAccess", {
-    code: CMD.CHANGE_FORMATION_ACCESS,
-    indent: 0,
-    parameters: [0],
-  });
-  testMapping<CMD.Command_ChangeMenuAccess>("changeMenuAccess", {
-    code: CMD.CHANGE_MENU_ACCESS,
-    indent: 0,
-    parameters: [0],
-  });
-  testMapping<CMD.Command_ChangeSaveAccess>("changeSaveAccess", {
-    code: CMD.CHANGE_SAVE_ACCESS,
-    indent: 0,
-    parameters: [0],
-  });
-  testMapping<CMD.Command_ChangeDefeatME>("changeDefeatME", {
-    code: CMD.CHANGE_DEFEAT_ME,
-    indent: 0,
-    parameters: [mockAudioFile],
-  });
-  testMapping<CMD.Command_ChangeVehicleImage>("changeVehicleImage", {
-    code: CMD.CHANGE_VEHICLE_IMAGE,
-    indent: 0,
-    parameters: [0, "name", 0],
-  });
-  testMapping<CMD.Command_ShowPicture>("showPicture", {
-    code: CMD.SHOW_PICTURE,
-    indent: 0,
-    parameters: [0, "pic", 0, 0, 0, 0, 0, 0, 0],
-  });
-  testMapping<CMD.Command_MovePicture>("movePicture", {
-    code: CMD.MOVE_PICTURE,
-    indent: 0,
-    parameters: [0, 0, 0, 0, 0, 0, 0, 0, false, 0],
-  });
-  testMapping<CMD.Command_RotatePicture>("rotatePicture", {
-    code: CMD.ROTATE_PICTURE,
-    indent: 0,
-    parameters: [0, 0],
-  });
-  testMapping<CMD.Command_TintPicture>("tintPicture", {
-    code: CMD.TINT_PICTURE,
-    indent: 0,
-    parameters: [0, mockColor, 0, true],
-  });
-  testMapping<CMD.Command_ErasePicture>("erasePicture", {
-    code: CMD.ERASE_PICTURE,
-    indent: 0,
-    parameters: [0],
-  });
+  testMapping<CMD.Command_ChangeFormationAccess>(
+    "changeFormationAccess",
+    RmmzMock.MockChangeFormationAccess
+  );
+  testMapping<CMD.Command_ChangeMenuAccess>(
+    "changeMenuAccess",
+    RmmzMock.MockChangeMenuAccess
+  );
+  testMapping<CMD.Command_ChangeSaveAccess>(
+    "changeSaveAccess",
+    RmmzMock.MockChangeSaveAccess
+  );
+  testMapping<CMD.Command_ChangeDefeatME>(
+    "changeDefeatME",
+    RmmzMock.MockChangeDefeatME
+  );
+  testMapping<CMD.Command_ChangeVehicleImage>(
+    "changeVehicleImage",
+    RmmzMock.MockChangeVehicleImage
+  );
+  testMapping<CMD.Command_ShowPicture>("showPicture", RmmzMock.MockShowPicture);
+  testMapping<CMD.Command_MovePicture>("movePicture", RmmzMock.MockMovePicture);
+  testMapping<CMD.Command_RotatePicture>(
+    "rotatePicture",
+    RmmzMock.MockRotatePicture
+  );
+  testMapping<CMD.Command_TintPicture>("tintPicture", RmmzMock.MockTintPicture);
+  testMapping<CMD.Command_ErasePicture>(
+    "erasePicture",
+    RmmzMock.MockErasePicture
+  );
   testMapping<CMD.Command_SetWeatherEffect>("setWeatherEffects", {
     code: CMD.SET_WEATHER_EFFECT,
     indent: 0,
     parameters: ["", 0, 0, false],
   });
-  testMapping<CMD.Command_PlayBGM>("playBGM", {
-    code: CMD.PLAY_BGM,
-    indent: 0,
-    parameters: [mockAudioFile],
-  });
-  testMapping<CMD.Command_FadeOutBGM>("fadeOutBGM", {
-    code: CMD.FADEOUT_BGM,
-    indent: 0,
-    parameters: [0],
-  });
-  testMapping<CMD.Command_PlaySE>("playSE", {
-    code: CMD.PLAY_SE,
-    indent: 0,
-    parameters: [mockAudioFile],
-  });
-  testMapping<CMD.Command_StopSE>("stopSE", {
-    code: CMD.STOP_SE,
-    indent: 0,
-    parameters: [],
-  });
+  testMapping<CMD.Command_PlayBGM>("playBGM", RmmzMock.MockPlayBGM);
+  testMapping<CMD.Command_FadeOutBGM>("fadeOutBGM", RmmzMock.MockFadeOutBGM);
+  testMapping<CMD.Command_PlaySE>("playSE", RmmzMock.MockPlaySE);
+  testMapping<CMD.Command_StopSE>("stopSE", RmmzMock.MockStopSE);
   testMapping<CMD.Command_PlayMovie>("playMovie", {
     code: CMD.PLAY_MOVIE,
     indent: 0,
