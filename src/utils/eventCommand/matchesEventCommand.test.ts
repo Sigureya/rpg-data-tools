@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isAudioCommand } from "./matchesEventCommand";
+import { isAudioCommand, isImageCommand } from "./matchesEventCommand";
 import * as RpgTypes from "@sigureya/rpgtypes";
 const mockAudio: RpgTypes.AudioFileParams = {
   name: "test",
@@ -33,6 +33,15 @@ const changeVictoryME: RpgTypes.Command_ChangeVictoryME =
 const changeDefeatME: RpgTypes.Command_ChangeDefeatME = createMockAudioCommand(
   RpgTypes.CHANGE_DEFEAT_ME
 );
+const audioCommands = [
+  playBGM,
+  playBGS,
+  playME,
+  playSE,
+  changeBattleBGM,
+  changeVictoryME,
+  changeDefeatME,
+];
 describe("isAudioCommand", () => {
   test("playBGM", () => {
     expect(isAudioCommand(playBGM)).toBe(true);
@@ -57,15 +66,12 @@ describe("isAudioCommand", () => {
   });
 
   test("filter", () => {
-    const list = [
-      playBGM,
-      playBGS,
-      playME,
-      playSE,
-      changeBattleBGM,
-      changeVictoryME,
-      changeDefeatME,
-    ];
-    expect(list.filter(isAudioCommand)).toEqual(list);
+    expect(audioCommands.filter(isAudioCommand)).toEqual(audioCommands);
+  });
+});
+
+describe("isImageCommand", () => {
+  test("audio commands are not image commands", () => {
+    expect(audioCommands.filter(isImageCommand)).toEqual([]);
   });
 });
