@@ -27,6 +27,7 @@ const AUDIO_CODE: ReadonlyArray<
   RpgTypes.CHANGE_BATTLE_BGM,
   RpgTypes.CHANGE_VICTORY_ME,
   RpgTypes.CHANGE_DEFEAT_ME,
+  RpgTypes.CHANGE_VEHICLE_BGM,
 ];
 export const isImageCommand = (command: EventCommand) =>
   matchesEventCommand(command, IMAGE_CODE);
