@@ -1,4 +1,4 @@
 export * from './constructData';
-export * from './eventCommandEdit';
+export * from './eventCommand';
 export * from './format';
 export * from './utils/';
