@@ -733,31 +733,58 @@ const Ee = "選択肢ヘルプ", pe = (e) => e.parameters[0] === Ee, Ce = (e, t 
 }), Oe = (e, t) => e.map((n) => B(n, t)), He = (e, t) => e.map((n) => L(n, t)), st = (e) => ve(e, (t) => A(t).flat()), rt = (e) => Oe(
   e,
   (t) => A(t).flat()
-), ct = (e) => He(e, (t) => A(t).flat()), D = (e, t) => `<${e}:${t}>`, h = () => /<([^<>:]+):([^>]*)>/g, at = (e, t) => P(e.note, (n, s) => t(n, s, e)), ot = (e) => P(e, (t, n) => [t, n]), P = (e, t) => {
+), ct = (e) => He(e, (t) => A(t).flat()), D = (e, t) => t.includes(e.code), at = (e) => D(e, Re), Re = [
+  r.PLAY_BGM,
+  r.PLAY_BGS,
+  r.PLAY_ME,
+  r.PLAY_SE,
+  r.CHANGE_BATTLE_BGM,
+  r.CHANGE_VICTORY_ME,
+  r.CHANGE_DEFEAT_ME,
+  r.CHANGE_VEHICLE_BGM
+], ot = (e) => D(e, Ge), Ge = [
+  r.SHOW_PICTURE,
+  r.CHANGE_ACTOR_IMAGES,
+  r.CHANGE_VEHICLE_IMAGE,
+  r.CHANGE_PARALLAX,
+  r.CHANGE_BATTLE_BACKGROUND
+], it = (e, t) => ({
+  code: e.code,
+  paramIndex: t,
+  value: e.parameters[t]
+}), mt = (e, t) => ({
+  code: e.code,
+  paramIndex: t,
+  value: e.parameters[t]
+}), ut = (e, t) => ({
+  code: e.code,
+  paramIndex: t,
+  value: e.parameters[t]
+}), P = (e, t) => `<${e}:${t}>`, h = () => /<([^<>:]+):([^>]*)>/g, ht = (e, t) => V(e.note, (n, s) => t(n, s, e)), dt = (e) => V(e, (t, n) => [t, n]), V = (e, t) => {
   const n = h(), s = [];
   let o;
   for (; (o = n.exec(e)) !== null; )
     s.push(t(o[1], o[2]));
   return s;
-}, it = (e, t) => e.replace(h(), (n, s, o) => {
+}, lt = (e, t) => e.replace(h(), (n, s, o) => {
   const i = t(s, o);
-  return D(s, i);
-}), mt = (e, t) => {
+  return P(s, i);
+}), Et = (e, t) => {
   const n = h();
   let s;
   for (; (s = n.exec(e)) !== null; )
     if (s[1] === t)
       return s[2];
-}, ut = (e, t, n) => {
+}, pt = (e, t, n) => {
   const s = h();
-  return e.replace(s, (o, i) => i === t ? D(i, n) : o);
-}, ht = (e) => `code:${e}`, Re = "N", Ge = "V", V = (e, t) => `\\${e}[${t}]`, we = (e) => V(Re, e.id), dt = (e) => e.map((t) => ({
-  controlChar: we(t),
+  return e.replace(s, (o, i) => i === t ? P(i, n) : o);
+}, Ct = (e) => `code:${e}`, we = "N", Be = "V", k = (e, t) => `\\${e}[${t}]`, Le = (e) => k(we, e.id), gt = (e) => e.map((t) => ({
+  controlChar: Le(t),
   text: t.name
-})), lt = (e) => e.variables.map((t, n) => ({
+})), At = (e) => e.variables.map((t, n) => ({
   text: t || "",
-  controlChar: V(Ge, n)
-})).filter((t) => t.text !== ""), Be = /* @__PURE__ */ new Set([
+  controlChar: k(Be, n)
+})).filter((t) => t.text !== ""), De = /* @__PURE__ */ new Set([
   "px",
   "py",
   "x",
@@ -769,7 +796,7 @@ const Ee = "選択肢ヘルプ", pe = (e) => e.parameters[0] === Ee, Ce = (e, t 
   "c",
   "i",
   "fs"
-]), Et = (e, t = Be) => {
+]), Tt = (e, t = De) => {
   const n = /\\([A-Za-z]+)\[(\d+)]/g, s = [];
   let o;
   for (; (o = n.exec(e)) !== null; ) {
@@ -777,34 +804,7 @@ const Ee = "選択肢ヘルプ", pe = (e) => e.parameters[0] === Ee, Ce = (e, t 
     t.has(i) && s.push({ char: o[1], id: W });
   }
   return s;
-}, Le = (e, t, n) => t.map((s) => n(s, e[s], e)), pt = (e, t, n) => Le(e, t, n), Ct = (e, t) => ({
-  code: e.code,
-  paramIndex: t,
-  value: e.parameters[t]
-}), gt = (e, t) => ({
-  code: e.code,
-  paramIndex: t,
-  value: e.parameters[t]
-}), At = (e, t) => ({
-  code: e.code,
-  paramIndex: t,
-  value: e.parameters[t]
-}), k = (e, t) => t.includes(e.code), Tt = (e) => k(e, De), De = [
-  r.PLAY_BGM,
-  r.PLAY_BGS,
-  r.PLAY_ME,
-  r.PLAY_SE,
-  r.CHANGE_BATTLE_BGM,
-  r.CHANGE_VICTORY_ME,
-  r.CHANGE_DEFEAT_ME,
-  r.CHANGE_VEHICLE_BGM
-], St = (e) => k(e, Pe), Pe = [
-  r.SHOW_PICTURE,
-  r.CHANGE_ACTOR_IMAGES,
-  r.CHANGE_VEHICLE_IMAGE,
-  r.CHANGE_PARALLAX,
-  r.CHANGE_BATTLE_BACKGROUND
-];
+}, Pe = (e, t, n) => t.map((s) => n(s, e[s], e)), St = (e, t, n) => Pe(e, t, n);
 export {
   I as BaseEventCommandGroup,
   Ee as CHOICE_HELP_TEXT,
@@ -815,7 +815,7 @@ export {
   ue as ERROR_MESSAGE,
   g as SimpleEventCommandGroup,
   c as callHandler,
-  ht as codeInfoText,
+  Ct as codeInfoText,
   p as codeTest,
   be as collectMapEvents,
   ke as constructActor,
@@ -836,7 +836,7 @@ export {
   b as createCommandsArray,
   Ae as createCommentGroup,
   j as createCondtion,
-  V as createControlCharFormat,
+  k as createControlCharFormat,
   Qe as createEventContext,
   y as createEventPage,
   xe as createMap,
@@ -844,7 +844,7 @@ export {
   $ as createMapEventImage,
   Ce as createMessageGroup,
   ee as createMessages,
-  D as createNoteEntity,
+  P as createNoteEntity,
   Q as createParamNamesArray,
   Te as createScriptGroup,
   ge as createScrlloingTextGroup,
@@ -852,59 +852,59 @@ export {
   ne as createSystemSoundsArray,
   J as createTerms,
   d as createVehicle,
-  we as fromActor,
-  dt as fromActors,
-  lt as fromSystem,
+  Le as fromActor,
+  gt as fromActors,
+  At as fromSystem,
   nt as gatherEventCommandContext,
-  Et as getControlChars,
-  mt as getNoteValue,
+  Tt as getControlChars,
+  Et as getNoteValue,
   H as handleGroupComment,
   v as handleGroupMessage,
   R as handleGroupScript,
   O as handleGroupScrollingText,
   Se as handlerDispatch,
-  Tt as isAudioCommand,
+  at as isAudioCommand,
   C as isBodyParams,
   pe as isChoiceHelp,
   Je as isHeadCommand,
-  St as isImageCommand,
+  ot as isImageCommand,
   ie as isMessageHeader,
   le as joinCommandBodies,
   h as makeRegex,
   Ze as mapTextCommand,
   _e as mappingCommand,
   fe as mappingCommandList,
-  k as matchesEventCommand,
+  D as matchesEventCommand,
   A as normalizedCommands,
   rt as normalizedCommonEvents,
   st as normalizedMapData,
   ct as normalizedTroops,
-  At as pickCommandParamAudio,
-  gt as pickCommandParamNumber,
-  Ct as pickCommandParamString,
+  ut as pickCommandParamAudio,
+  mt as pickCommandParamNumber,
+  it as pickCommandParamString,
   u as pickCommands,
   ce as pickComments,
   N as pickHead,
   oe as pickMessageHeader,
   me as pickMessageWithHead,
-  Le as pickPropertys,
+  Pe as pickPropertys,
   ae as pickScripts,
   de as pickScrollText,
   he as pickScrollTextHeader,
-  pt as pickString,
+  St as pickString,
   tt as processCommonEvents,
   G as processEventPages,
   w as processMapEvents,
   et as processTroopEvents,
-  ot as readNote,
-  P as readNoteEx,
-  at as readNoteObject,
+  dt as readNote,
+  V as readNoteEx,
+  ht as readNoteObject,
   Oe as replaceCommonEvents,
   B as replaceEventCommands,
   ve as replaceMapEvents,
-  it as replaceNote,
+  lt as replaceNote,
   L as replacePages,
   He as replaceTroops,
-  ut as setNoteValue
+  pt as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
