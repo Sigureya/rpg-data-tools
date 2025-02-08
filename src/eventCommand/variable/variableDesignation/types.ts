@@ -1,6 +1,6 @@
 import type RpgTypes from "@sigureya/rpgtypes";
 
-export interface VDReulut {
+export interface VariableReference {
   code: number;
   index: number;
   variableId: number;
@@ -13,7 +13,10 @@ export type VariableDesignation<
 
 export type VariableDesignationCommands =
   | VariableDesignation_ChangeEnemyHP
-  | VariableDesignation_ChangeEnemyMP;
+  | VariableDesignation_ChangeEnemyMP
+  | VariableDesignation_TransferPlayer
+  | VariableDesignation_SetVehicleLocation
+  | VariableDesignation_GetLocationInfo;
 
 export type VariableDesignation_ChangeEnemyHP = VariableDesignation<
   RpgTypes.Command_ChangeEnemyHP,
@@ -22,5 +25,19 @@ export type VariableDesignation_ChangeEnemyHP = VariableDesignation<
 
 export type VariableDesignation_ChangeEnemyMP = VariableDesignation<
   RpgTypes.Command_ChangeEnemyMP,
+  2
+>;
+
+export type VariableDesignation_TransferPlayer = VariableDesignation<
+  RpgTypes.Command_TransferPlayer,
+  0
+>;
+export type VariableDesignation_SetVehicleLocation = VariableDesignation<
+  RpgTypes.Command_SetVehicleLocation,
+  1
+>;
+
+export type VariableDesignation_GetLocationInfo = VariableDesignation<
+  RpgTypes.Command_GetLocationInfo,
   2
 >;
