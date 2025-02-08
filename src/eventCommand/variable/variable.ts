@@ -1,9 +1,5 @@
 import type { EventCommand, IndexOfCommandParameter } from "@sigureya/rpgtypes";
-import {
-  CHANGE_ENEMY_HP,
-  Command_ChangeEnemyMP,
-  Param_ChangeEnemyParameters,
-} from "@sigureya/rpgtypes";
+import { CHANGE_ENEMY_HP } from "@sigureya/rpgtypes";
 
 import { range } from "./detail/detail";
 
@@ -32,6 +28,7 @@ export const isVariableDesignated = <
 ): command is typeof command & { parameters: { [K in Index]: 1 } } => {
   return command.parameters[index] === 1;
 };
+
 export const isControlVariableOperandVariable = (
   command: RpgTypes.Command_ControlVariables
 ): command is RpgTypes.Command_ControlVariables<RpgTypes.Operand_Variable> => {
