@@ -25,7 +25,7 @@ export const variableReference = (
   return indexList.map<VariableReference>((index) => ({
     code: command.code,
     index: index,
-    variableId: command.parameters[index],
+    variableId: command.parameters[index] as number,
   }));
 };
 
