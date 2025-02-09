@@ -1,5 +1,5 @@
 export interface VariableReference {
-  code: number;
+  eventCode: number;
   index: number;
   variableId: number;
 }
