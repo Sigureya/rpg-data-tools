@@ -15,7 +15,8 @@ export type VariableDesignationCommands =
   | VariableDesignation_ChangeEnemyMP
   | VariableDesignation_TransferPlayer
   | VariableDesignation_SetVehicleLocation
-  | VariableDesignation_GetLocationInfo;
+  | VariableDesignation_GetLocationInfo
+  | VariableDesignation_BattleProcessing;
 
 export type VariableDesignation_ChangeEnemyHP = VariableDesignation<
   RpgTypes.Command_ChangeEnemyHP,

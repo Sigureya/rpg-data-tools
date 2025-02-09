@@ -18,4 +18,5 @@ export const VARIABLEID_INDEX_TABLE = {
   [RpgTypes.TRANSFER_PLAYER]: [1, 2, 3],
   [RpgTypes.SET_VEHICLE_LOCATION]: [2, 3, 4],
   [RpgTypes.GET_LOCATION_INFO]: [0],
+  [RpgTypes.BATTLE_PROCESSING]: [1],
 } as const;
