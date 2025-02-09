@@ -21,10 +21,17 @@ const testVariableDesignationCommand = (
     test("should identify command as a variable designation", () => {
       expect(isVariableDesignationCommand(command)).toBe(true);
     });
+    const reuslt: VariableReference[] = variableReference(command);
     test("should extract correct variable reference", () => {
-      const reuslt: VariableReference[] = variableReference(command);
       expect(reuslt).not.toEqual([]);
       expect(reuslt).toMatchObject(expected);
+    });
+    const variableIdList = reuslt.map((v) => typeof v.variableId);
+
+    test("should have all variableIds as numbers", () => {
+      variableIdList.forEach((id) => {
+        expect(id).toBe("number");
+      });
     });
   });
 };
@@ -168,10 +175,6 @@ describe("Variable Designation Command:Invalid cases", () => {
     RpgMock.MockPlayME,
     RpgMock.MockPlaySE,
   ];
-
-  test("should return false for non-variable designation commands", () => {
-    expect(list.filter(isVariableDesignationCommand)).toEqual([]);
-  });
 
   test.each(list)(`code: $code - should return false`, (command) => {
     expect(isVariableDesignationCommand(command)).toBe(false);
