@@ -1,11 +1,5 @@
 import type RpgTypes from "@sigureya/rpgtypes";
 
-export interface VariableReference {
-  code: number;
-  index: number;
-  variableId: number;
-}
-
 type VariableDesignationBase<
   T extends { code: number; indent: number; parameters: unknown[] },
   Index extends RpgTypes.IndexOfCommandParameter<T, number>
