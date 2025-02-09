@@ -1,30 +1,29 @@
 import { describe, expect, test } from "vitest";
 import {
   isVariableDesignationCommand,
-  variableReference as vdResult,
+  variableReference,
 } from "./variableDesignation";
 import * as RpgTypes from "@sigureya/rpgtypes";
 import * as RpgMock from "@sigureya/rmmzmock";
 import type { EventCommand } from "@sigureya/rpgtypes";
-import type {
-  VariableReference,
-  VariableDesignation_ChangeEnemyHP,
-  VariableDesignationCommands,
-} from "./types";
 
-type ExpectedReference = Pick<VariableReference, "code" | "variableId">;
+import type * as VDTypes from "./types";
+
+type ExpectedReference = Pick<VDTypes.VariableReference, "code" | "variableId">;
 
 const testVariableDesignationCommand = (
   testName: string,
-  command: VariableDesignationCommands,
-  expected: ExpectedReference
+  command: VDTypes.VariableDesignationCommands,
+  expected: ExpectedReference[]
 ) => {
   describe(`${testName} (code: ${command.code})`, () => {
     test("should identify command as a variable designation", () => {
       expect(isVariableDesignationCommand(command)).toBe(true);
     });
     test("should extract correct variable reference", () => {
-      expect(vdResult(command)).toMatchObject(expected);
+      const reuslt = variableReference(command);
+      expect(reuslt).not.toEqual([]);
+      expect(reuslt).toMatchObject(expected);
     });
   });
 };
@@ -41,15 +40,115 @@ describe("Variable Designation Command Tests", () => {
         expect(isVariableDesignationCommand(direct)).toBe(false);
       });
 
-      const variable: VariableDesignation_ChangeEnemyHP = {
+      const variable: VDTypes.VariableDesignation_ChangeEnemyHP = {
         code: RpgTypes.CHANGE_ENEMY_HP,
         parameters: [0, 0, 1, 0, 233],
         indent: 0,
       };
-      testVariableDesignationCommand("ChangeEnemyHP - variable", variable, {
-        code: RpgTypes.CHANGE_ENEMY_HP,
-        variableId: 233,
+      testVariableDesignationCommand("ChangeEnemyHP - variable", variable, [
+        {
+          code: RpgTypes.CHANGE_ENEMY_HP,
+          variableId: 233,
+        },
+      ]);
+    });
+    describe("Change Enemy MP", () => {
+      test("should return false for direct value assignment", () => {
+        const direct: RpgTypes.Command_ChangeEnemyMP = {
+          code: RpgTypes.CHANGE_ENEMY_MP,
+          parameters: [0, 0, 0, 0, 0],
+          indent: 0,
+        };
+        expect(isVariableDesignationCommand(direct)).toBe(false);
       });
+      const variable: VDTypes.VariableDesignation_ChangeEnemyMP = {
+        code: RpgTypes.CHANGE_ENEMY_MP,
+        parameters: [0, 0, 1, 0, 235],
+        indent: 0,
+      };
+      testVariableDesignationCommand("ChangeEnemyMP - variable", variable, [
+        {
+          code: RpgTypes.CHANGE_ENEMY_MP,
+          variableId: 235,
+        },
+      ]);
+    });
+    describe("Transfer Player", () => {
+      test("should return false for direct value assignment", () => {
+        const direct: RpgTypes.Command_TransferPlayer = {
+          code: RpgTypes.TRANSFER_PLAYER,
+          parameters: [0, 0, 0, 0, 4, 0],
+          indent: 0,
+        };
+        expect(isVariableDesignationCommand(direct)).toBe(false);
+      });
+
+      const variable: VDTypes.VariableDesignation_TransferPlayer = {
+        code: RpgTypes.TRANSFER_PLAYER,
+        parameters: [1, 485, 681, 653, 6, 0],
+        indent: 0,
+      };
+      testVariableDesignationCommand("TransferPlayer - variable", variable, [
+        {
+          code: RpgTypes.TRANSFER_PLAYER,
+          variableId: 485,
+        },
+        {
+          code: RpgTypes.TRANSFER_PLAYER,
+          variableId: 681,
+        },
+        {
+          code: RpgTypes.TRANSFER_PLAYER,
+          variableId: 653,
+        },
+      ]);
+    });
+    describe("Set Vehicle Location", () => {
+      test("should return false for direct value assignment", () => {
+        const direct: RpgTypes.Command_SetVehicleLocation = {
+          code: RpgTypes.SET_VEHICLE_LOCATION,
+          parameters: [0, 0, 0, 0, 0],
+          indent: 0,
+        };
+        expect(isVariableDesignationCommand(direct)).toBe(false);
+      });
+
+      const variable: VDTypes.VariableDesignation_SetVehicleLocation = {
+        code: RpgTypes.SET_VEHICLE_LOCATION,
+        parameters: [2, 1, 485, 681, 653],
+        indent: 0,
+      };
+      testVariableDesignationCommand(
+        "SetVehicleLocation - variable",
+        variable,
+        [
+          {
+            code: RpgTypes.SET_VEHICLE_LOCATION,
+            variableId: 485,
+          },
+          {
+            code: RpgTypes.SET_VEHICLE_LOCATION,
+            variableId: 681,
+          },
+          {
+            code: RpgTypes.SET_VEHICLE_LOCATION,
+            variableId: 653,
+          },
+        ]
+      );
+    });
+    describe("Get Location Info", () => {
+      const variable: VDTypes.VariableDesignation_GetLocationInfo = {
+        code: RpgTypes.GET_LOCATION_INFO,
+        parameters: [381, 1, 1, 200, 201],
+        indent: 0,
+      };
+      testVariableDesignationCommand("GetLocationInfo - variable", variable, [
+        {
+          code: RpgTypes.GET_LOCATION_INFO,
+          variableId: 381,
+        },
+      ]);
     });
   });
 
@@ -68,7 +167,9 @@ describe("Variable Designation Command Tests", () => {
     test.each(list)(`code: $code - should return false`, (command) => {
       expect(isVariableDesignationCommand(command)).toBe(false);
       // 万が一、不正なデータが混入した際に例外を投げることができるか？
-      expect(() => vdResult(command as VariableDesignationCommands)).toThrow();
+      expect(() =>
+        variableReference(command as VDTypes.VariableDesignationCommands)
+      ).toThrow();
     });
   });
 });

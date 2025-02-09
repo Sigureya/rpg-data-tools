@@ -13,10 +13,9 @@ export const DESIGNATION_INDEX_TABLE: Table_IndexOfDesignation = {
 } as const;
 
 export const VARIABLEID_INDEX_TABLE = {
-  [RpgTypes.CHANGE_ENEMY_HP]: 4,
-  [RpgTypes.CHANGE_ENEMY_MP]: 2,
-  [RpgTypes.TRANSFER_PLAYER]: 1,
-  [RpgTypes.SET_VEHICLE_LOCATION]: 2,
-  [RpgTypes.GET_LOCATION_INFO]: 3,
-  [RpgTypes.BATTLE_PROCESSING]: 1,
+  [RpgTypes.CHANGE_ENEMY_HP]: [4],
+  [RpgTypes.CHANGE_ENEMY_MP]: [4],
+  [RpgTypes.TRANSFER_PLAYER]: [1, 2, 3],
+  [RpgTypes.SET_VEHICLE_LOCATION]: [2, 3, 4],
+  [RpgTypes.GET_LOCATION_INFO]: [0],
 } as const;
