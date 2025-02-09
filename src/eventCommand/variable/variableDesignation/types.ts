@@ -6,6 +6,11 @@ export interface VariableReference {
   variableId: number;
 }
 
+type VariableDesignationBase<
+  T extends { code: number; indent: number; parameters: unknown[] },
+  Index extends RpgTypes.IndexOfCommandParameter<T, number>
+> = T & { parameters: { [K in Index]: 1 } };
+
 export type VariableDesignation<
   T extends { code: number; indent: number; parameters: unknown[] },
   Index extends RpgTypes.IndexOfCommandParameter<T, 0 | 1>
@@ -40,4 +45,9 @@ export type VariableDesignation_SetVehicleLocation = VariableDesignation<
 export type VariableDesignation_GetLocationInfo = VariableDesignation<
   RpgTypes.Command_GetLocationInfo,
   2
+>;
+
+export type VariableDesignation_BattleProcessing = VariableDesignationBase<
+  RpgTypes.Command_BattleProcessing,
+  0
 >;
