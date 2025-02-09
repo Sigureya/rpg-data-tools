@@ -22,155 +22,162 @@ const testVariableDesignationCommand = (
       expect(isVariableDesignationCommand(command)).toBe(true);
     });
     test("should extract correct variable reference", () => {
-      const reuslt = variableReference(command);
+      const reuslt: VariableReference[] = variableReference(command);
       expect(reuslt).not.toEqual([]);
       expect(reuslt).toMatchObject(expected);
     });
   });
 };
 
-describe("Variable Designation Command Tests", () => {
-  describe("Valid cases", () => {
-    describe("Change Enemy HP", () => {
-      test("should return false for direct value assignment", () => {
-        const direct: RpgTypes.Command_ChangeEnemyHP = {
-          code: RpgTypes.CHANGE_ENEMY_HP,
-          parameters: [0, 0, 0, 0, 0],
-          indent: 0,
-        };
-        expect(isVariableDesignationCommand(direct)).toBe(false);
-      });
-
-      const variable: VDTypes.VariableDesignation_ChangeEnemyHP = {
+describe("Variable Designation Command Tests:Valid cases", () => {
+  // variableIdに対応する3桁の数字は適当に選んでいる。ただのダミーデータ。
+  describe("Change Enemy HP", () => {
+    test("should return false for direct value assignment", () => {
+      const direct: RpgTypes.Command_ChangeEnemyHP = {
         code: RpgTypes.CHANGE_ENEMY_HP,
-        parameters: [0, 0, 1, 0, 233],
+        parameters: [0, 0, 0, 0, 0],
         indent: 0,
       };
-      testVariableDesignationCommand("ChangeEnemyHP - variable", variable, [
-        {
-          code: RpgTypes.CHANGE_ENEMY_HP,
-          variableId: 233,
-        },
-      ]);
+      expect(isVariableDesignationCommand(direct)).toBe(false);
     });
-    describe("Change Enemy MP", () => {
-      test("should return false for direct value assignment", () => {
-        const direct: RpgTypes.Command_ChangeEnemyMP = {
-          code: RpgTypes.CHANGE_ENEMY_MP,
-          parameters: [0, 0, 0, 0, 0],
-          indent: 0,
-        };
-        expect(isVariableDesignationCommand(direct)).toBe(false);
-      });
-      const variable: VDTypes.VariableDesignation_ChangeEnemyMP = {
+
+    const variable: VDTypes.VariableDesignation_ChangeEnemyHP = {
+      code: RpgTypes.CHANGE_ENEMY_HP,
+      parameters: [0, 0, 1, 0, 233],
+      indent: 0,
+    };
+    testVariableDesignationCommand("ChangeEnemyHP - variable", variable, [
+      {
+        code: RpgTypes.CHANGE_ENEMY_HP,
+        variableId: 233,
+      },
+    ]);
+  });
+  describe("Change Enemy MP", () => {
+    test("should return false for direct value assignment", () => {
+      const direct: RpgTypes.Command_ChangeEnemyMP = {
         code: RpgTypes.CHANGE_ENEMY_MP,
-        parameters: [0, 0, 1, 0, 235],
+        parameters: [0, 0, 0, 0, 0],
         indent: 0,
       };
-      testVariableDesignationCommand("ChangeEnemyMP - variable", variable, [
-        {
-          code: RpgTypes.CHANGE_ENEMY_MP,
-          variableId: 235,
-        },
-      ]);
+      expect(isVariableDesignationCommand(direct)).toBe(false);
     });
-    describe("Transfer Player", () => {
-      test("should return false for direct value assignment", () => {
-        const direct: RpgTypes.Command_TransferPlayer = {
-          code: RpgTypes.TRANSFER_PLAYER,
-          parameters: [0, 0, 0, 0, 4, 0],
-          indent: 0,
-        };
-        expect(isVariableDesignationCommand(direct)).toBe(false);
-      });
-
-      const variable: VDTypes.VariableDesignation_TransferPlayer = {
+    const variable: VDTypes.VariableDesignation_ChangeEnemyMP = {
+      code: RpgTypes.CHANGE_ENEMY_MP,
+      parameters: [0, 0, 1, 0, 235],
+      indent: 0,
+    };
+    testVariableDesignationCommand("ChangeEnemyMP - variable", variable, [
+      {
+        code: RpgTypes.CHANGE_ENEMY_MP,
+        variableId: 235,
+      },
+    ]);
+  });
+  describe("Transfer Player", () => {
+    test("should return false for direct value assignment", () => {
+      const direct: RpgTypes.Command_TransferPlayer = {
         code: RpgTypes.TRANSFER_PLAYER,
-        parameters: [1, 485, 681, 653, 6, 0],
+        parameters: [0, 0, 0, 0, 4, 0],
         indent: 0,
       };
-      testVariableDesignationCommand("TransferPlayer - variable", variable, [
-        {
-          code: RpgTypes.TRANSFER_PLAYER,
-          variableId: 485,
-        },
-        {
-          code: RpgTypes.TRANSFER_PLAYER,
-          variableId: 681,
-        },
-        {
-          code: RpgTypes.TRANSFER_PLAYER,
-          variableId: 653,
-        },
-      ]);
+      expect(isVariableDesignationCommand(direct)).toBe(false);
     });
-    describe("Set Vehicle Location", () => {
-      test("should return false for direct value assignment", () => {
-        const direct: RpgTypes.Command_SetVehicleLocation = {
-          code: RpgTypes.SET_VEHICLE_LOCATION,
-          parameters: [0, 0, 0, 0, 0],
-          indent: 0,
-        };
-        expect(isVariableDesignationCommand(direct)).toBe(false);
-      });
 
-      const variable: VDTypes.VariableDesignation_SetVehicleLocation = {
+    const variable: VDTypes.VariableDesignation_TransferPlayer = {
+      code: RpgTypes.TRANSFER_PLAYER,
+      parameters: [1, 485, 681, 653, 6, 0],
+      indent: 0,
+    };
+    testVariableDesignationCommand("TransferPlayer - variable", variable, [
+      {
+        code: RpgTypes.TRANSFER_PLAYER,
+        variableId: 485,
+      },
+      {
+        code: RpgTypes.TRANSFER_PLAYER,
+        variableId: 681,
+      },
+      {
+        code: RpgTypes.TRANSFER_PLAYER,
+        variableId: 653,
+      },
+    ]);
+  });
+  describe("Set Vehicle Location", () => {
+    test("should return false for direct value assignment", () => {
+      const direct: RpgTypes.Command_SetVehicleLocation = {
         code: RpgTypes.SET_VEHICLE_LOCATION,
-        parameters: [2, 1, 485, 681, 653],
+        parameters: [0, 0, 0, 0, 0],
         indent: 0,
       };
-      testVariableDesignationCommand(
-        "SetVehicleLocation - variable",
-        variable,
-        [
-          {
-            code: RpgTypes.SET_VEHICLE_LOCATION,
-            variableId: 485,
-          },
-          {
-            code: RpgTypes.SET_VEHICLE_LOCATION,
-            variableId: 681,
-          },
-          {
-            code: RpgTypes.SET_VEHICLE_LOCATION,
-            variableId: 653,
-          },
-        ]
-      );
+      expect(isVariableDesignationCommand(direct)).toBe(false);
     });
-    describe("Get Location Info", () => {
-      const variable: VDTypes.VariableDesignation_GetLocationInfo = {
+
+    const variable: VDTypes.VariableDesignation_SetVehicleLocation = {
+      code: RpgTypes.SET_VEHICLE_LOCATION,
+      parameters: [2, 1, 485, 681, 653],
+      indent: 0,
+    };
+    testVariableDesignationCommand("SetVehicleLocation - variable", variable, [
+      {
+        code: RpgTypes.SET_VEHICLE_LOCATION,
+        variableId: 485,
+      },
+      {
+        code: RpgTypes.SET_VEHICLE_LOCATION,
+        variableId: 681,
+      },
+      {
+        code: RpgTypes.SET_VEHICLE_LOCATION,
+        variableId: 653,
+      },
+    ]);
+  });
+  describe("Get Location Info", () => {
+    const variable: VDTypes.VariableDesignation_GetLocationInfo = {
+      code: RpgTypes.GET_LOCATION_INFO,
+      parameters: [381, 1, 1, 200, 201],
+      indent: 0,
+    };
+    testVariableDesignationCommand("GetLocationInfo - variable", variable, [
+      {
         code: RpgTypes.GET_LOCATION_INFO,
-        parameters: [381, 1, 1, 200, 201],
-        indent: 0,
-      };
-      testVariableDesignationCommand("GetLocationInfo - variable", variable, [
-        {
-          code: RpgTypes.GET_LOCATION_INFO,
-          variableId: 381,
-        },
-      ]);
-    });
+        variableId: 381,
+      },
+    ]);
+  });
+  describe("Battle Processing", () => {
+    const variable: VDTypes.VariableDesignation_BattleProcessing = {
+      code: RpgTypes.BATTLE_PROCESSING,
+      parameters: [1, 251, false, false],
+      indent: 0,
+    };
+    testVariableDesignationCommand("BattleProcessing - variable", variable, [
+      {
+        code: RpgTypes.BATTLE_PROCESSING,
+        variableId: 251,
+      },
+    ]);
+  });
+});
+describe("Variable Designation Command:Invalid cases", () => {
+  const list: (EventCommand & { code: number })[] = [
+    RpgMock.MockPlayBGM,
+    RpgMock.MockPlayBGS,
+    RpgMock.MockPlayME,
+    RpgMock.MockPlaySE,
+  ];
+
+  test("should return false for non-variable designation commands", () => {
+    expect(list.filter(isVariableDesignationCommand)).toEqual([]);
   });
 
-  describe("Invalid cases", () => {
-    const list: EventCommand[] = [
-      RpgMock.MockPlayBGM,
-      RpgMock.MockPlayBGS,
-      RpgMock.MockPlayME,
-      RpgMock.MockPlaySE,
-    ];
-
-    test("should return false for non-variable designation commands", () => {
-      expect(list.filter(isVariableDesignationCommand)).toEqual([]);
-    });
-
-    test.each(list)(`code: $code - should return false`, (command) => {
-      expect(isVariableDesignationCommand(command)).toBe(false);
-      // 万が一、不正なデータが混入した際に例外を投げることができるか？
-      expect(() =>
-        variableReference(command as VDTypes.VariableDesignationCommands)
-      ).toThrow();
-    });
+  test.each(list)(`code: $code - should return false`, (command) => {
+    expect(isVariableDesignationCommand(command)).toBe(false);
+    // 万が一、不正なデータが混入した際に例外を投げることができるか？
+    expect(() =>
+      variableReference(command as VDTypes.VariableDesignationCommands)
+    ).toThrow();
   });
 });
