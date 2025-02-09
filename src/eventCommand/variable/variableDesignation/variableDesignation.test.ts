@@ -7,9 +7,10 @@ import * as RpgTypes from "@sigureya/rpgtypes";
 import * as RpgMock from "@sigureya/rmmzmock";
 import type { EventCommand } from "@sigureya/rpgtypes";
 
-import type * as VDTypes from "./types";
+import type * as VDTypes from "./types/";
+import type { VariableReference } from "./types/";
 
-type ExpectedReference = Pick<VDTypes.VariableReference, "code" | "variableId">;
+type ExpectedReference = Pick<VariableReference, "code" | "variableId">;
 
 const testVariableDesignationCommand = (
   testName: string,
