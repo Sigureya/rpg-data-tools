@@ -23,7 +23,7 @@ export const variableReference = (
     throw new Error(`code${command.code} is not supported`);
   }
   return indexList.map<VariableReference>((index) => ({
-    code: command.code,
+    eventCode: command.code,
     index: index,
     variableId: command.parameters[index] as number,
   }));

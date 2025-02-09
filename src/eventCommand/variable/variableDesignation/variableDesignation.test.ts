@@ -10,7 +10,7 @@ import type { EventCommand } from "@sigureya/rpgtypes";
 import type * as VDTypes from "./types/";
 import type { VariableReference } from "./types/";
 
-type ExpectedReference = Pick<VariableReference, "code" | "variableId">;
+type ExpectedReference = Omit<VariableReference, "index">;
 
 const testVariableDesignationCommand = (
   testName: string,
@@ -55,7 +55,7 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("ChangeEnemyHP - variable", variable, [
       {
-        code: RpgTypes.CHANGE_ENEMY_HP,
+        eventCode: RpgTypes.CHANGE_ENEMY_HP,
         variableId: 233,
       },
     ]);
@@ -76,7 +76,7 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("ChangeEnemyMP - variable", variable, [
       {
-        code: RpgTypes.CHANGE_ENEMY_MP,
+        eventCode: RpgTypes.CHANGE_ENEMY_MP,
         variableId: 235,
       },
     ]);
@@ -98,15 +98,15 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("TransferPlayer - variable", variable, [
       {
-        code: RpgTypes.TRANSFER_PLAYER,
+        eventCode: RpgTypes.TRANSFER_PLAYER,
         variableId: 485,
       },
       {
-        code: RpgTypes.TRANSFER_PLAYER,
+        eventCode: RpgTypes.TRANSFER_PLAYER,
         variableId: 681,
       },
       {
-        code: RpgTypes.TRANSFER_PLAYER,
+        eventCode: RpgTypes.TRANSFER_PLAYER,
         variableId: 653,
       },
     ]);
@@ -128,15 +128,15 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("SetVehicleLocation - variable", variable, [
       {
-        code: RpgTypes.SET_VEHICLE_LOCATION,
+        eventCode: RpgTypes.SET_VEHICLE_LOCATION,
         variableId: 485,
       },
       {
-        code: RpgTypes.SET_VEHICLE_LOCATION,
+        eventCode: RpgTypes.SET_VEHICLE_LOCATION,
         variableId: 681,
       },
       {
-        code: RpgTypes.SET_VEHICLE_LOCATION,
+        eventCode: RpgTypes.SET_VEHICLE_LOCATION,
         variableId: 653,
       },
     ]);
@@ -149,7 +149,7 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("GetLocationInfo - variable", variable, [
       {
-        code: RpgTypes.GET_LOCATION_INFO,
+        eventCode: RpgTypes.GET_LOCATION_INFO,
         variableId: 381,
       },
     ]);
@@ -162,7 +162,7 @@ describe("Variable Designation Command Tests:Valid cases", () => {
     };
     testVariableDesignationCommand("BattleProcessing - variable", variable, [
       {
-        code: RpgTypes.BATTLE_PROCESSING,
+        eventCode: RpgTypes.BATTLE_PROCESSING,
         variableId: 251,
       },
     ]);
