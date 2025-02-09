@@ -1,4 +1,4 @@
-import type { VariableDesignationCommands, VariableReference } from "./types";
+import type { VariableDesignationCommands, VariableReference } from "./types/";
 import type { EventCommand } from "@sigureya/rpgtypes";
 
 import {
@@ -28,6 +28,7 @@ export const variableReference = (
     variableId: command.parameters[index],
   }));
 };
+
 export const isVariableDesignationCommand = (
   command: EventCommand
 ): command is VariableDesignationCommands => {
