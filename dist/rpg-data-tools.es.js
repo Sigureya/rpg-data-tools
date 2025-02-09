@@ -715,7 +715,7 @@ const Ee = "選択肢ヘルプ", pe = (e) => e.parameters[0] === Ee, Ce = (e, t 
   pageIndex: t
 })), G = (e, t) => e.pages.map(
   (n, s) => t(n, s, e)
-), w = (e, t) => e.events.filter(Ie).map((n) => G(n, t)), be = (e, t) => w(e, t).flat(2), et = (e, t) => e.map((n) => G(n, t)), tt = (e, t) => e.map((n, s) => t(n, s, n)), nt = (e) => w(
+), w = (e, t) => e.events.filter(Ie).map((n) => G(n, t)), be = (e, t) => w(e, t).flat(2), et = (e, t) => e.map((n) => G(n, t)), tt = (e, t) => e.map((n) => t(n, 0, n)), nt = (e) => w(
   e,
   Me
 ).flat(2), B = (e, t) => {

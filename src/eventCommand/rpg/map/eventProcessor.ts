@@ -140,7 +140,7 @@ export const processCommonEvents = <T>(
     common2: Readonly<Data_CommonEvent>
   ) => T
 ): T[] => {
-  return events.map((common, index) => func(common, index, common));
+  return events.map((common) => func(common, 0, common));
 };
 
 /**
