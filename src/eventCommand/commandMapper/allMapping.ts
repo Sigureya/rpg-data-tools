@@ -26,6 +26,13 @@ export const mappingCommandList = <T>(
   return array.map<T>((command, index) => mappingCommand(array, index, table));
 };
 
+export const flatMappingCommandList = <T>(
+  array: ReadonlyArray<EventCommand>,
+  table: PartialMappingObject<T[]>
+): T[] => {
+  return array.flatMap((command, index) => mappingCommand(array, index, table));
+};
+
 export const mappingCommand = <T>(
   array: ReadonlyArray<EventCommand>,
   index: number,
