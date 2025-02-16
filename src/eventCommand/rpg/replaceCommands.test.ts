@@ -30,11 +30,11 @@ const mockTransform = (commands: ReadonlyArray<EventCommand>): EventCommand[] =>
 
 describe("replaceEventCommands", () => {
   test("should replace commands using the provided function", () => {
-    const event = { list: [createMockCommand(211), createMockCommand(217)] };
+    const event = { list: [createMockCommand(221), createMockCommand(217)] };
     const result = replaceEventCommands(event, mockTransform);
 
     expect(result.list).toEqual([
-      { code: 211, indent: 8, parameters: [] },
+      { code: 221, indent: 8, parameters: [] },
       { code: 217, indent: 8, parameters: [] },
     ]);
   });
@@ -98,7 +98,7 @@ describe("replaceMapEvents", () => {
 describe("replaceCommonEvents", () => {
   test("should replace commands in common events", () => {
     const events: Data_CommonEvent[] = [
-      { id: 1, list: [createMockCommand(211)], name: "to-kai", trigger: 0 },
+      { id: 1, list: [createMockCommand(221)], name: "to-kai", trigger: 0 },
       { id: 2, list: [createMockCommand(217)], name: "yokosuka", trigger: 0 },
     ];
     const result = replaceCommonEvents(events, mockTransform);
@@ -106,7 +106,7 @@ describe("replaceCommonEvents", () => {
     expect(result).toEqual([
       {
         id: 1,
-        list: [{ code: 211, indent: 8, parameters: [] }],
+        list: [{ code: 221, indent: 8, parameters: [] }],
         name: "to-kai",
         trigger: 0,
       } as Data_CommonEvent,
