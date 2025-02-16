@@ -4,11 +4,14 @@ import type {
   EventCommandLike,
 } from "@sigureya/rpgtypes";
 
-export const createEventCommand = <Code extends EventCode>(
+export const createEventCommand = <
+  Code extends EventCode,
+  Param extends CommandParamaterType<Code>
+>(
   code: Code,
-  param: CommandParamaterType<Code>,
+  param: Param,
   indent: number = 0
-): EventCommandLike<Code, CommandParamaterType<Code>> => {
+): EventCommandLike<Code, Param> => {
   return {
     code,
     indent,
