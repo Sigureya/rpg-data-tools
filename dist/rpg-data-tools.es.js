@@ -760,28 +760,32 @@ const pe = "選択肢ヘルプ", Ce = (e) => e.parameters[0] === pe, ge = (e, t 
   code: e.code,
   paramIndex: t,
   value: e.parameters[t]
-}), V = (e, t) => `<${e}:${t}>`, h = () => /<([^<>:]+):([^>]*)>/g, dt = (e, t) => k(e.note, (n, s) => t(n, s, e)), lt = (e) => k(e, (t, n) => [t, n]), k = (e, t) => {
+}), dt = (e, t, n = 0) => ({
+  code: e,
+  indent: n,
+  parameters: t
+}), V = (e, t) => `<${e}:${t}>`, h = () => /<([^<>:]+):([^>]*)>/g, lt = (e, t) => k(e.note, (n, s) => t(n, s, e)), Et = (e) => k(e, (t, n) => [t, n]), k = (e, t) => {
   const n = h(), s = [];
   let o;
   for (; (o = n.exec(e)) !== null; )
     s.push(t(o[1], o[2]));
   return s;
-}, Et = (e, t) => e.replace(h(), (n, s, o) => {
+}, pt = (e, t) => e.replace(h(), (n, s, o) => {
   const i = t(s, o);
   return V(s, i);
-}), pt = (e, t) => {
+}), Ct = (e, t) => {
   const n = h();
   let s;
   for (; (s = n.exec(e)) !== null; )
     if (s[1] === t)
       return s[2];
-}, Ct = (e, t, n) => {
+}, gt = (e, t, n) => {
   const s = h();
   return e.replace(s, (o, i) => i === t ? V(i, n) : o);
-}, gt = (e) => `code:${e}`, we = "N", Be = "V", W = (e, t) => `\\${e}[${t}]`, Le = (e) => W(we, e.id), At = (e) => e.map((t) => ({
+}, At = (e) => `code:${e}`, we = "N", Be = "V", W = (e, t) => `\\${e}[${t}]`, Le = (e) => W(we, e.id), Tt = (e) => e.map((t) => ({
   controlChar: Le(t),
   text: t.name
-})), Tt = (e) => e.variables.map((t, n) => ({
+})), St = (e) => e.variables.map((t, n) => ({
   text: t || "",
   controlChar: W(Be, n)
 })).filter((t) => t.text !== ""), De = /* @__PURE__ */ new Set([
@@ -796,7 +800,7 @@ const pe = "選択肢ヘルプ", Ce = (e) => e.parameters[0] === pe, ge = (e, t 
   "c",
   "i",
   "fs"
-]), St = (e, t = De) => {
+]), ft = (e, t = De) => {
   const n = /\\([A-Za-z]+)\[(\d+)]/g, s = [];
   let o;
   for (; (o = n.exec(e)) !== null; ) {
@@ -804,7 +808,7 @@ const pe = "選択肢ヘルプ", Ce = (e) => e.parameters[0] === pe, ge = (e, t 
     t.has(i) && s.push({ char: o[1], id: F });
   }
   return s;
-}, Pe = (e, t, n) => t.map((s) => n(s, e[s], e)), ft = (e, t, n) => Pe(e, t, n);
+}, Pe = (e, t, n) => t.map((s) => n(s, e[s], e)), _t = (e, t, n) => Pe(e, t, n);
 export {
   I as BaseEventCommandGroup,
   pe as CHOICE_HELP_TEXT,
@@ -815,7 +819,7 @@ export {
   he as ERROR_MESSAGE,
   g as SimpleEventCommandGroup,
   c as callHandler,
-  gt as codeInfoText,
+  At as codeInfoText,
   p as codeTest,
   et as collectMapEvents,
   ke as constructActor,
@@ -837,6 +841,7 @@ export {
   Te as createCommentGroup,
   $ as createCondtion,
   W as createControlCharFormat,
+  dt as createEventCommand,
   be as createEventContext,
   y as createEventPage,
   xe as createMap,
@@ -854,11 +859,11 @@ export {
   d as createVehicle,
   Qe as flatMappingCommandList,
   Le as fromActor,
-  At as fromActors,
-  Tt as fromSystem,
+  Tt as fromActors,
+  St as fromSystem,
   st as gatherEventCommandContext,
-  St as getControlChars,
-  pt as getNoteValue,
+  ft as getControlChars,
+  Ct as getNoteValue,
   H as handleGroupComment,
   v as handleGroupMessage,
   R as handleGroupScript,
@@ -892,20 +897,20 @@ export {
   oe as pickScripts,
   le as pickScrollText,
   de as pickScrollTextHeader,
-  ft as pickString,
+  _t as pickString,
   nt as processCommonEvents,
   w as processEventPages,
   B as processMapEvents,
   tt as processTroopEvents,
-  lt as readNote,
+  Et as readNote,
   k as readNoteEx,
-  dt as readNoteObject,
+  lt as readNoteObject,
   Oe as replaceCommonEvents,
   L as replaceEventCommands,
   ve as replaceMapEvents,
-  Et as replaceNote,
+  pt as replaceNote,
   D as replacePages,
   He as replaceTroops,
-  Ct as setNoteValue
+  gt as setNoteValue
 };
 //# sourceMappingURL=rpg-data-tools.es.js.map
