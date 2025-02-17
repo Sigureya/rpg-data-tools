@@ -1,24 +1,25 @@
 import { describe, expect, test, vi } from "vitest";
-import type { MappingObject } from "./allCommandsMapper";
+import type { BasicMappingObject } from "./commandMapper2/basicCommandsMapper";
 import * as CMD from "@sigureya/rpgtypes";
 import * as RmmzMock from "@sigureya/rmmzmock";
 
 import { mappingCommand } from "./allMapping";
+import type { GroopMapper } from "./commandGroup";
 import {
   createMessageGroup,
   type EventCommandGroup_Message,
 } from "./commandGroup";
 
-const createMockMapper = <Key extends string & keyof MappingObject<void>>(
+const createMockMapper = <Key extends string & keyof BasicMappingObject<void>>(
   targetKey: Key
 ) => {
   return {
-    [targetKey]: vi.fn<MappingObject<void>[Key]>(),
+    [targetKey]: vi.fn<BasicMappingObject<void>[Key]>(),
     other: vi.fn(),
   };
 };
 const testMapping = <Command extends CMD.EventCommand>(
-  key: keyof MappingObject<void>,
+  key: keyof BasicMappingObject<void>,
   command: Command
 ) => {
   test(`${key} should be called with correct arguments`, () => {
@@ -109,7 +110,7 @@ describe("mappingCommand", () => {
   testMapping<CMD.Command_SetVehicleLocation>("setVehicleLocation", {
     code: CMD.SET_VEHICLE_LOCATION,
     indent: 0,
-    parameters: [0, 0, 0, 0],
+    parameters: [0, 0, 0, 0, 0],
   });
   testMapping<CMD.Command_SetEventLocation>("setEventLocation", {
     code: CMD.SET_EVENT_LOCATION,
@@ -194,7 +195,10 @@ describe("mappingCommand(groop)", () => {
       parameters: ["aaa", 0, 0, 0, ""],
     };
 
-    const mapper = createMockMapper("showMessage");
+    const mapper = {
+      showMessage: vi.fn(),
+      other: vi.fn(),
+    };
     mappingCommand([command], 0, mapper);
     expect(mapper.showMessage).toHaveBeenCalledTimes(1);
     expect(mapper.showMessage).toHaveBeenCalledWith<
