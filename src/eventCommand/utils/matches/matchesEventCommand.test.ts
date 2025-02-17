@@ -50,6 +50,9 @@ describe("isAudioCommand", () => {
 });
 
 describe("isImageCommand", () => {
+  test("showMessage", () => {
+    expect(isImageCommand(RmmzMock.MockShowMessage)).toBe(true);
+  });
   test("showPicture", () => {
     expect(isImageCommand(RmmzMock.MockShowPicture)).toBe(true);
   });
