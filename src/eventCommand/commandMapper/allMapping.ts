@@ -1,14 +1,15 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
 
+import type { EventCommandGroup } from "./commandGroup";
 import {
   handleGroupMessage,
   handleGroupScrollingText,
   handleGroupComment,
   handleGroupScript,
 } from "./commandGroup";
-import type { CallBackFunc } from "./types";
-import type { PartialMappingObject } from "./allCommandsMapper";
+import type { CallBackFunc } from "./commandMapper2";
+import type { PartialMappingObject } from "./mapperType2";
 
 export const callHandler = <T, Command extends EventCommand>(
   command: Command,
@@ -19,6 +20,25 @@ export const callHandler = <T, Command extends EventCommand>(
 ): T => {
   return handler ? handler(command, index, array) : fallback(command, index, array);
 };
+
+const callXXX = <
+  Result,
+  Head extends EventCommand,
+  Body extends Code.ExtractCommandByParam<[string]>
+>(
+  command: Head,
+  index: number,
+  array: ReadonlyArray<EventCommand>,
+  singleHandler: CallBackFunc<Head, Result> | undefined,
+  groopHandler: ((groop: EventCommandGroup<Head, Body>) => Result) | undefined,
+  fallback: CallBackFunc<EventCommand, Result>
+) => {
+  // if (groopHandler) {
+  // }
+
+  return fallback(command, index, array);
+};
+
 export const mappingCommandList = <T>(
   array: ReadonlyArray<EventCommand>,
   table: PartialMappingObject<T>

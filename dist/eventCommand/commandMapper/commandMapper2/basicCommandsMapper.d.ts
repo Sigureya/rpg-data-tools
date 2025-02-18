@@ -1,16 +1,21 @@
 import { EventCommand } from '@sigureya/rpgtypes/';
-import { EventCommandGroup_Message, EventCommandGroup_ScrollingText, EventCommandGroup_Comment, EventCommandGroup_Script } from './commandGroup';
-import { CallBackFunc } from './types';
 import type * as RpgTypes from "@sigureya/rpgtypes";
-export interface MappingObject<T> {
-    showMessage(groop: EventCommandGroup_Message): T;
-    showMessageBody(groop: RpgTypes.Command_ShowMessageBody): T;
-    showScrollingText(groop: EventCommandGroup_ScrollingText): T;
-    showScrollingTextBody(groop: RpgTypes.Command_ShowScrollingTextBody): T;
-    comment(groop: EventCommandGroup_Comment): T;
+export type CallBackFunc<Command extends {
+    code: number;
+    parameters: readonly unknown[];
+    indent: number;
+}, Reulst = void> = (command: Readonly<Command>, index: number, list: ReadonlyArray<Readonly<EventCommand>>) => Reulst;
+export interface FallbackMapper<T> {
+    other: CallBackFunc<EventCommand, T>;
+}
+export interface BasicMappingObject<T> extends FallbackMapper<T> {
+    showMessageHeader: CallBackFunc<RpgTypes.Command_ShowMessage, T>;
+    showMessageBody: CallBackFunc<RpgTypes.Command_ShowMessageBody, T>;
+    showScrollingTextBody: CallBackFunc<RpgTypes.Command_ShowScrollingTextBody, T>;
+    commentHedder: CallBackFunc<RpgTypes.Command_Comment, T>;
     commentBody: CallBackFunc<RpgTypes.Command_CommentBody, T>;
-    script(groop: EventCommandGroup_Script): T;
-    scriptBody(groop: RpgTypes.Command_ScriptBody): T;
+    scriptHedder: CallBackFunc<RpgTypes.Command_ScriptHeader, T>;
+    scriptBody: CallBackFunc<RpgTypes.Command_ScriptBody, T>;
     controlSwitch: CallBackFunc<RpgTypes.Command_ControlSwitches, T>;
     controlVariable: CallBackFunc<RpgTypes.Command_ControlVariables, T>;
     controlSelfSwitch: CallBackFunc<RpgTypes.Command_ControlSelfSwitch, T>;
@@ -75,8 +80,4 @@ export interface MappingObject<T> {
     tintScreen: CallBackFunc<RpgTypes.Command_TintScreen, T>;
     flashScreen: CallBackFunc<RpgTypes.Command_FlashScreen, T>;
     shakeScreen: CallBackFunc<RpgTypes.Command_ShakeScreen, T>;
-    other: CallBackFunc<EventCommand, T>;
-}
-export interface PartialMappingObject<T> extends Partial<MappingObject<T>> {
-    other: CallBackFunc<EventCommand, T>;
 }

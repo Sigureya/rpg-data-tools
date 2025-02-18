@@ -33,6 +33,7 @@ export const isImageCommand = (command: EventCommand) =>
   matchesEventCommand(command, IMAGE_CODE);
 
 const IMAGE_CODE = [
+  RpgTypes.SHOW_MESSAGE,
   RpgTypes.SHOW_PICTURE,
   RpgTypes.CHANGE_ACTOR_IMAGES,
   RpgTypes.CHANGE_VEHICLE_IMAGE,
