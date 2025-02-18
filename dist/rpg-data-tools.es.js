@@ -743,6 +743,7 @@ const pe = "選択肢ヘルプ", Ce = (e) => e.parameters[0] === pe, ge = (e, t 
   r.CHANGE_DEFEAT_ME,
   r.CHANGE_VEHICLE_BGM
 ], it = (e) => P(e, Ge), Ge = [
+  r.SHOW_MESSAGE,
   r.SHOW_PICTURE,
   r.CHANGE_ACTOR_IMAGES,
   r.CHANGE_VEHICLE_IMAGE,

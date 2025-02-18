@@ -5,6 +5,10 @@ export declare const matchesEventCommand: <Code extends EventCode>(command: Even
 }>;
 export declare const isAudioCommand: (command: EventCommand) => command is ExtractCommandByParam<[AudioFileParams]>;
 export declare const isImageCommand: (command: EventCommand) => command is {
+    parameters: [facename: string, faceIndex: number, background: number, positionType: number, speakerName: string];
+    code: 101;
+    indent: number;
+} | {
     parameters: [battleBack1Name: string, battleBack2name: string];
     code: 283;
     indent: number;
