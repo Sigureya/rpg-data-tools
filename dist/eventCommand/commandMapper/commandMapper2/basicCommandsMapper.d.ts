@@ -1,7 +1,14 @@
 import { EventCommand } from '@sigureya/rpgtypes/';
-import { CallBackFunc } from './types';
 import type * as RpgTypes from "@sigureya/rpgtypes";
-export interface BasicMappingObject<T> {
+export type CallBackFunc<Command extends {
+    code: number;
+    parameters: readonly unknown[];
+    indent: number;
+}, Reulst = void> = (command: Readonly<Command>, index: number, list: ReadonlyArray<Readonly<EventCommand>>) => Reulst;
+export interface FallbackMapper<T> {
+    other: CallBackFunc<EventCommand, T>;
+}
+export interface BasicMappingObject<T> extends FallbackMapper<T> {
     showMessageHeader: CallBackFunc<RpgTypes.Command_ShowMessage, T>;
     showMessageBody: CallBackFunc<RpgTypes.Command_ShowMessageBody, T>;
     showScrollingTextBody: CallBackFunc<RpgTypes.Command_ShowScrollingTextBody, T>;
@@ -73,5 +80,4 @@ export interface BasicMappingObject<T> {
     tintScreen: CallBackFunc<RpgTypes.Command_TintScreen, T>;
     flashScreen: CallBackFunc<RpgTypes.Command_FlashScreen, T>;
     shakeScreen: CallBackFunc<RpgTypes.Command_ShakeScreen, T>;
-    other: CallBackFunc<EventCommand, T>;
 }
