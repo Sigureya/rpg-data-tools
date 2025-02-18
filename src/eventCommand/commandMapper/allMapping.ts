@@ -1,6 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
 
+import type { EventCommandGroup } from "./commandGroup";
 import {
   handleGroupMessage,
   handleGroupScrollingText,
@@ -19,6 +20,25 @@ export const callHandler = <T, Command extends EventCommand>(
 ): T => {
   return handler ? handler(command, index, array) : fallback(command, index, array);
 };
+
+const callXXX = <
+  Result,
+  Head extends EventCommand,
+  Body extends Code.ExtractCommandByParam<[string]>
+>(
+  command: Head,
+  index: number,
+  array: ReadonlyArray<EventCommand>,
+  singleHandler: CallBackFunc<Head, Result> | undefined,
+  groopHandler: ((groop: EventCommandGroup<Head, Body>) => Result) | undefined,
+  fallback: CallBackFunc<EventCommand, Result>
+) => {
+  // if (groopHandler) {
+  // }
+
+  return fallback(command, index, array);
+};
+
 export const mappingCommandList = <T>(
   array: ReadonlyArray<EventCommand>,
   table: PartialMappingObject<T>
