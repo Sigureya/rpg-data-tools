@@ -4,8 +4,6 @@ import type {
   EventCommand,
   ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
-
-import type * as RpgTypes from "@sigureya/rpgtypes";
 import { codeTest } from "./commandCheck";
 import { ERROR_INVALID_HEAD } from "./errors/";
 
@@ -33,16 +31,8 @@ export const pickCommands = <Code extends EventCode>(
   code: Code,
   arrya: ReadonlyArray<EventCommand>,
   start: number
-): Array<{
-  code: Code;
-  indent: number;
-  parameters: [string];
-}> => {
-  const result: {
-    code: Code;
-    indent: number;
-    parameters: [string];
-  }[] = [];
+): Array<EventCommandLike<Code, [string]>> => {
+  const result: EventCommandLike<Code, [string]>[] = [];
   for (let i = start; i < arrya.length; i++) {
     const command = arrya[i];
     if (codeTest(code, command) && isBodyParams(command.parameters)) {
@@ -62,11 +52,7 @@ export const pickHead = <Code extends ExtractCommandByParam<[string]>["code"]>(
   commands: ReadonlyArray<EventCommand>,
   index: number,
   code: Code
-): {
-  code: Code;
-  indent: number;
-  parameters: [string];
-} => {
+): EventCommandLike<Code, [string]> => {
   const head = commands[index];
   if (head) {
     if (codeTest(code, head) && isBodyParams(head.parameters)) {
