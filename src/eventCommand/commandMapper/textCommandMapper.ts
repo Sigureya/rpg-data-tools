@@ -13,7 +13,7 @@ import type {
   EventCommandGroup_Comment,
   EventCommandGroup_Script,
 } from "./commandGroup/";
-import type { CallBackFunc } from "./commandMapper2";
+import type { CallBackFunc } from "./types/";
 
 export interface TextCommandMapper<T> {
   showMessage(groop: EventCommandGroup_Message): T;
