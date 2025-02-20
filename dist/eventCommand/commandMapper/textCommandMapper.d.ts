@@ -1,6 +1,6 @@
 import { Command_ShowChoices, Command_ChoiceWhen, Command_ChangeName, Command_ChangeProfile, Command_ChangeNickName, Command_CommentBody, EventCommand } from '@sigureya/rpgtypes';
 import { EventCommandGroup_Message, EventCommandGroup_ScrollingText, EventCommandGroup_Comment, EventCommandGroup_Script } from './commandGroup/';
-import { CallBackFunc } from './commandMapper2';
+import { CallBackFunc } from './types/';
 export interface TextCommandMapper<T> {
     showMessage(groop: EventCommandGroup_Message): T;
     showScrollingText(groop: EventCommandGroup_ScrollingText): T;
