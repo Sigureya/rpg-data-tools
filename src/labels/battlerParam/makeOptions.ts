@@ -118,7 +118,7 @@ export const foldRegularParam = (
   ];
 };
 
-export const foldXParam = (xparam: ExtraParamLabels): Data_NamedItem[] => {
+export const foldExtraParam = (xparam: ExtraParamLabels): Data_NamedItem[] => {
   return [
     {
       id: EXTRA_PARAM_HIT,

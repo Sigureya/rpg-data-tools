@@ -53,7 +53,7 @@ import {
   foldCollapsOptions,
   foldPartyAbilityOptions,
   foldSpecialParams,
-  foldXParam,
+  foldExtraParam,
   foldRegularParam,
 } from "./makeOptions";
 
@@ -156,7 +156,7 @@ describe("foldXParam", () => {
     tpRegenerationRate: "TP Regeneration Rate",
   };
 
-  const result = foldXParam(xparam);
+  const result = foldExtraParam(xparam);
   test("should return correct extra parameter options", () => {
     const expected: Data_NamedItem[] = [
       { id: EXTRA_PARAM_HIT, name: "Hit Rate" },
