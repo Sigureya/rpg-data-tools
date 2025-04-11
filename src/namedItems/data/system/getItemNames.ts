@@ -58,7 +58,7 @@ export const getArmorTypes = (
   }));
 };
 
-export const getParamNames = (system: System_ParamNames) => {
+export const getParamNames = (system: System_ParamNames): Data_NamedItem[] => {
   return system.terms.params.map((param, index) => ({
     id: index,
     name: param,
