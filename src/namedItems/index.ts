@@ -1,2 +1,2 @@
 export * from "./data";
-export * from "./labels";
+export * from "./traits";

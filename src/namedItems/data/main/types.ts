@@ -8,15 +8,12 @@ import type {
   Data_NamedItem,
   Data_Skill,
   Data_State,
-  Data_System,
   Data_Troop,
   Data_Weapon,
   NamedItem,
-  System_DataNames,
 } from "@sigureya/rpgtypes";
 
 export interface GlobalGameData {
-  system: Data_System;
   actors: Data_Actor[];
   classes: Data_Class[];
   skills: Data_Skill[];
@@ -35,4 +32,4 @@ export type GlobalGameDataNamedItems = {
   >
     ? NamedItem<T>[]
     : never;
-} & { system: System_DataNames };
+};
