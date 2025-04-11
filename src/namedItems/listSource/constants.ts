@@ -6,12 +6,13 @@ export const INDEX_SOURCE_PARAMS_EXTRA = "xparams" as const;
 export const INDEX_SOURCE_PARAMS_SPECIAL = "sparams" as const;
 export const INDEX_SOURCE_TRAIT_COLLAPS = "collaps" as const;
 export const INDEX_SOURCE_TRAIT_PARTY_ABILITY = "partyAbiility" as const;
+export const INDEX_SOURCE_TRAIT_SPECIAL_FLAG = "sflag";
 
-export const INDEX_SOURCE_ACTOR = "actors" as const;
-export const INDEX_SOURCE_VARIABLE = "variables" as const;
+export const INDEX_SOURCE_DATA_ACTOR = "actors" as const;
+export const INDEX_SOURCE_DATA_VARIABLE = "variables" as const;
 export const INDEX_SOURCE_MAP = "map" as const;
-export const INDEX_SOURCE_ENEMY = "enemy" as const;
-export const INDEX_SOURCE_STATE = "state" as const;
+export const INDEX_SOURCE_DATA_ENEMY = "enemy" as const;
+export const INDEX_SOURCE_DATA_STATE = "state" as const;
 export const INDEX_SOURCE_SKILL = "skill" as const;
 export const INDEX_SOURCE_ITEMS = "items" as const;
 export const INDEX_SOURCE_WEAPON = "weapon" as const;
