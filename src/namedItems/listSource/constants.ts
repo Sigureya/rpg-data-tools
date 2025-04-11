@@ -3,6 +3,9 @@
 
 export const INDEX_SOURCE_PARAMS = "params" as const;
 export const INDEX_SOURCE_PARAMS_EXTRA = "xparams" as const;
+export const INDEX_SOURCE_PARAMS_SPECIAL = "sparams" as const;
+export const INDEX_SOURCE_TRAIT_COLLAPS = "collaps" as const;
+export const INDEX_SOURCE_TRAIT_PARTY_ABILITY = "partyAbiility" as const;
 
 export const INDEX_SOURCE_ACTOR = "actors" as const;
 export const INDEX_SOURCE_VARIABLE = "variables" as const;
