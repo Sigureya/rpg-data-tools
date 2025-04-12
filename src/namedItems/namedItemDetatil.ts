@@ -105,42 +105,6 @@ export const systemData = (
 const makeNamedItem = (itemList: Data_NamedItem[]): Data_NamedItem[] =>
   itemList.map<Data_NamedItem>((item) => ({ id: item.id, name: item.name }));
 
-// export const mapEntries = <
-//   T extends Record<PropertyKey, Data_NamedItem[]>,
-//   V extends {} | string
-// >(
-//   record: T,
-//   code: Record<keyof T, string>,
-//   label: Record<keyof T, V>,
-//   fn: (v: V) => string
-// ): NamedItemSource[] => {
-//   return Object.entries<V>(label).map<NamedItemSource>(([key, data]) => ({
-//     items: makeNamedItem(data),
-//     label: fn(label[key]),
-//     sourceKey: code[key],
-//   }));
-// };
-
-const xxRR: Record<keyof GlobalGameDataNamedItems, string> = {
-  actors: SRC_DATA_ACTOR,
-  armors: SRC_DATA_ARMOR,
-  classes: SRC_DATA_CLASS,
-  commonEvents: SRC_COMMON_EVNET,
-  enemies: SRC_DATA_ENEMY,
-  items: SRC_DATA_ITEMS,
-  skills: SRC_DATA_SKILL,
-  states: SRC_DATA_STATE,
-  troops: SRC_TROOP,
-  weapons: SRC_DATA_WEAPON,
-};
-
-// export const mainData2 = (
-//   gameData: GlobalGameDataNamedItems,
-//   domains: MainDataDomains
-// ): NamedItemSource[] => {
-//   return mapEntries(gameData, xxRR, domains, (v: DataDomain) => v.domainName);
-// };
-
 export const mainData = (
   gameData: GlobalGameDataNamedItems,
   domains: MainDataDomains
