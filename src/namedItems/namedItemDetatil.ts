@@ -1,6 +1,5 @@
 import type {
   Data_NamedItem,
-  EditorLabels,
   GlobalLabel,
   System_DataNames,
   TraitLabels,
@@ -30,6 +29,7 @@ import {
   SRC_TRAIT_SPECIAL_FLAG,
   SRC_DATA_WEAPON,
 } from "./listSource";
+import type { GlobalGameDataNamedItems, MainDataDomains } from "./transformers";
 import {
   getArmorTypes,
   getElements,
@@ -37,16 +37,12 @@ import {
   getSkillTypes,
   getVariableNames,
   getWeaponTypes,
-} from "./data";
-import type { GlobalGameDataNamedItems } from "./data/main/types";
-import type { DataDomain, MainDataDomains } from "./data/main/domains";
-import {
-  foldCollapsOptions,
-  foldExtraParam,
-  foldPartyAbilityOptions,
   foldRegularParam,
+  foldExtraParam,
   foldSpecialParams,
-} from "./traits";
+  foldCollapsOptions,
+  foldPartyAbilityOptions,
+} from "./transformers";
 
 interface NamedItems_System {
   armorTypes: NamedItemSource;

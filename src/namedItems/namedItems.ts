@@ -2,7 +2,7 @@ import type { EditorLabels, System_DataNames } from "@sigureya/rpgtypes";
 import type { NamedItemSource } from "./listSource";
 import type { SystemLables } from "./namedItemDetatil";
 import { mainData, systemData, trait } from "./namedItemDetatil";
-import type { GlobalGameDataNamedItems, MainDataDomains } from "./data/";
+import type { MainDataDomains, GlobalGameDataNamedItems } from "./transformers";
 
 export const namedItems = (
   labels: EditorLabels & { system: SystemLables; domains: MainDataDomains },
