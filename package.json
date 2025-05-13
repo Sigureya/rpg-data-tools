@@ -15,6 +15,7 @@
     "build": "vite build",
     "test": "vitest",
     "test:watch": "vitest --watch",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx"
   },
   "files": [
