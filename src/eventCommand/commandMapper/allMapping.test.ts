@@ -3,7 +3,6 @@ import * as CMD from "@sigureya/rpgtypes";
 import * as RmmzMock from "@sigureya/rmmzmock";
 
 import { mappingCommand } from "./allMapping";
-import type { GroopMapper } from "./commandGroup";
 import {
   createMessageGroup,
   type EventCommandGroup_Message,
