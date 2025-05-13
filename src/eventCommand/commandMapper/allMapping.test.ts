@@ -1,5 +1,4 @@
 import { describe, expect, test, vi } from "vitest";
-import type { BasicMappingObject } from "./commandMapper2/basicCommandsMapper";
 import * as CMD from "@sigureya/rpgtypes";
 import * as RmmzMock from "@sigureya/rmmzmock";
 
@@ -9,6 +8,7 @@ import {
   createMessageGroup,
   type EventCommandGroup_Message,
 } from "./commandGroup";
+import type { BasicMappingObject } from "./types";
 
 const createMockMapper = <Key extends string & keyof BasicMappingObject<void>>(
   targetKey: Key

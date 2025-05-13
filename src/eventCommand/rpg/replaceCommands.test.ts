@@ -98,8 +98,20 @@ describe("replaceMapEvents", () => {
 describe("replaceCommonEvents", () => {
   test("should replace commands in common events", () => {
     const events: Data_CommonEvent[] = [
-      { id: 1, list: [createMockCommand(221)], name: "to-kai", trigger: 0 },
-      { id: 2, list: [createMockCommand(217)], name: "yokosuka", trigger: 0 },
+      {
+        id: 1,
+        list: [createMockCommand(221)],
+        name: "to-kai",
+        trigger: 0,
+        switchId: 0,
+      },
+      {
+        id: 2,
+        list: [createMockCommand(217)],
+        name: "yokosuka",
+        trigger: 0,
+        switchId: 0,
+      },
     ];
     const result = replaceCommonEvents(events, mockTransform);
 
@@ -109,7 +121,8 @@ describe("replaceCommonEvents", () => {
         list: [{ code: 221, indent: 8, parameters: [] }],
         name: "to-kai",
         trigger: 0,
-      } as Data_CommonEvent,
+        switchId: 0,
+      } satisfies Data_CommonEvent,
       {
         id: 2,
         list: [
@@ -121,7 +134,8 @@ describe("replaceCommonEvents", () => {
         ],
         name: "yokosuka",
         trigger: 0,
-      } as Data_CommonEvent,
+        switchId: 0,
+      } satisfies Data_CommonEvent,
     ]);
   });
 });
