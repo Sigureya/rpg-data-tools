@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { isAudioCommand, isImageCommand } from "./matchesEventCommand";
 import * as RmmzMock from "@sigureya/rmmzmock";
+import type { Command_PlayBGM } from "@sigureya/rpgtypes";
+import { makeAudioFileParams } from "@sigureya/rpgtypes";
 const audioCommands = [
   RmmzMock.MockPlayBGM,
   RmmzMock.MockPlayBGS,
@@ -20,7 +22,12 @@ const imageCommands = [
 
 describe("isAudioCommand", () => {
   test("playBGM", () => {
-    expect(isAudioCommand(RmmzMock.MockPlayBGM)).toBe(true);
+    const command: Command_PlayBGM = {
+      code: 241,
+      indent: 0,
+      parameters: [makeAudioFileParams()],
+    };
+    expect(isAudioCommand(command)).toBe(true);
   });
   test("playBGS", () => {
     expect(isAudioCommand(RmmzMock.MockPlayBGS)).toBe(true);
