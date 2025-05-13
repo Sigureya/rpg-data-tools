@@ -121,7 +121,8 @@ describe("replaceCommonEvents", () => {
         list: [{ code: 221, indent: 8, parameters: [] }],
         name: "to-kai",
         trigger: 0,
-      } as Data_CommonEvent,
+        switchId: 0,
+      } satisfies Data_CommonEvent,
       {
         id: 2,
         list: [
@@ -133,7 +134,8 @@ describe("replaceCommonEvents", () => {
         ],
         name: "yokosuka",
         trigger: 0,
-      } as Data_CommonEvent,
+        switchId: 0,
+      } satisfies Data_CommonEvent,
     ]);
   });
 });
