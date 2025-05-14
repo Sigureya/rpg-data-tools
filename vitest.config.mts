@@ -1,4 +1,6 @@
 import { defineConfig } from "vitest/config";
+import path from "path";
+declare const __dirname: string;
 
 export default defineConfig({
   test: {
@@ -9,5 +11,8 @@ export default defineConfig({
       //      provider: "c8", // カバレッジ計測を有効化
       reporter: ["text", "html"], // レポート形式
     },
+  },
+  resolve: {
+    alias: { src: path.resolve(__dirname, "./src") },
   },
 });

@@ -12,10 +12,10 @@ import type {
 } from "@sigureya/rpgtypes";
 
 export interface EventCommandPair<
-  Headder extends EventCommandLike,
+  Header extends EventCommandLike,
   Body extends ExtractCommandByParam<[string]>
 > {
-  head: Headder;
+  head: Header;
   bodys: Body[];
 }
 
