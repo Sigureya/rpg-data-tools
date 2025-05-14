@@ -10,27 +10,49 @@ import {
   createEventCommand,
   makeCommandShowMessage,
   SHOW_MESSAGE_BODY,
+  SHOW_SCROLLING_TEXT,
+  SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
 import { createMessageGroup } from "../createGroup";
 import type { EventCommandGroup_ScrollingText } from "./groopTypes";
+
 const createScrlloingTextMock = (indent = 0) => {
   return new SimpleEventCommandGroup<
     Command_ShowScrollingText,
     Command_ShowScrollingTextBody
   >(
-    405,
+    SHOW_SCROLLING_TEXT_BODY,
     {
-      code: 105,
+      code: SHOW_SCROLLING_TEXT,
       indent: indent,
       parameters: [0, false],
     },
     ["aaa", "bbb"].map<Command_ShowScrollingTextBody>((text) => ({
-      code: 405,
+      code: SHOW_SCROLLING_TEXT_BODY,
       indent: indent,
       parameters: [text],
     }))
   );
 };
+
+describe("ShowScrollingText", () => {
+  const scrollingText: EventCommandGroup_ScrollingText =
+    createScrlloingTextMock(2);
+  test("normalizedCommands", () => {
+    const result = scrollingText.normalizedCommands();
+    expect(result.length).toBe(2);
+    expect(result[0]).toMatchObject({
+      code: SHOW_SCROLLING_TEXT,
+      indent: 2,
+      parameters: [0, false],
+    });
+    expect(result[1]).toMatchObject<Command_ShowScrollingTextBody>({
+      code: SHOW_SCROLLING_TEXT_BODY,
+      indent: 2,
+      parameters: ["aaa\nbbb"],
+    });
+  });
+});
 
 describe("message", () => {
   describe("Single message group", () => {
@@ -70,25 +92,6 @@ describe("message", () => {
         createEventCommand(SHOW_MESSAGE_BODY, [expectedText]),
       ];
       expect(group.normalizedCommands()).toEqual(expected);
-    });
-  });
-});
-
-describe("ShowScrollingText", () => {
-  const scrollingText: EventCommandGroup_ScrollingText =
-    createScrlloingTextMock(2);
-  test("normalizedCommands", () => {
-    const result = scrollingText.normalizedCommands();
-    expect(result.length).toBe(2);
-    expect(result[0]).toMatchObject({
-      code: 105,
-      indent: 2,
-      parameters: [0, false],
-    });
-    expect(result[1]).toMatchObject<Command_ShowScrollingTextBody>({
-      code: 405,
-      indent: 2,
-      parameters: ["aaa\nbbb"],
     });
   });
 });
