@@ -1,8 +1,4 @@
-import type {
-  CommandParameter,
-  EventCommandGroup_Script,
-  TextCommandMapper,
-} from "src";
+import type { CommandParameter, TextCommandMapper } from "src";
 import {
   mappingCommandList,
   normalizedCommands,
@@ -10,8 +6,8 @@ import {
   processEventPages,
 } from "src";
 import type { EventCommand } from "@sigureya/rpgtypes";
-import { SCRIPT_EVAL, type Command_ShowChoices } from "@sigureya/rpgtypes";
-import { literalsFromScript } from "./scriptEx";
+import type { Command_ShowChoices } from "@sigureya/rpgtypes";
+import { readScript } from "./scriptEx";
 
 type CommandParam = CommandParameter<string>;
 export const extractTextFromEventCommands = (
@@ -57,16 +53,6 @@ export const extractTextMapper: TextCommandMapper<CommandParam[]> = {
 
   other: () => [],
   commentBody: () => [],
-};
-
-export const readScript = (
-  script: EventCommandGroup_Script
-): CommandParam[] => {
-  return literalsFromScript(script.getBodyText()).map((msg, index) => ({
-    code: SCRIPT_EVAL,
-    paramIndex: index,
-    value: msg,
-  }));
 };
 
 export const commandChoice = (command: Command_ShowChoices): CommandParam[] => {
