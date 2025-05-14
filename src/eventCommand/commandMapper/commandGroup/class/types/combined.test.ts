@@ -1,50 +1,57 @@
 import { describe, test, expect } from "vitest";
 import { CombinedEventCommandGroup } from "./combined";
-import type {
-  Command_ScriptBody,
-  Command_ScriptHeader,
-} from "@sigureya/rpgtypes";
 import {
   createEventCommand,
   SCRIPT_EVAL,
   SCRIPT_EVAL_BODY,
 } from "@sigureya/rpgtypes";
+import type {
+  Command_ScriptHeader,
+  Command_ScriptBody,
+} from "@sigureya/rpgtypes";
 
-describe("CombinedEventCommandGroup", () => {
-  const header = {
-    code: SCRIPT_EVAL,
-    parameters: ["aaa"],
-    indent: 0,
-  } satisfies Command_ScriptHeader;
-  const bodies = [
-    { code: SCRIPT_EVAL_BODY, parameters: ["bbb"], indent: 0 },
-    { code: SCRIPT_EVAL_BODY, parameters: ["ccc"], indent: 0 },
-  ] satisfies Command_ScriptBody[];
-  const group = new CombinedEventCommandGroup(header, bodies);
-  test("getBodyText", () => {
-    expect(group.getBodyText()).toBe("aaa\nbbb\nccc");
+describe("CombinedEventCommandGroup - Edge Cases", () => {
+  test("Empty bodies array", () => {
+    const header: Command_ScriptHeader = createEventCommand(SCRIPT_EVAL, [
+      "Header",
+    ]);
+    const group = new CombinedEventCommandGroup(header, []);
+    expect(group.getBodyText()).toBe("Header"); // ボディが空の場合、ヘッダーのテキストのみを返す
+    expect(group.normalizedCommands()).toEqual([
+      createEventCommand(SCRIPT_EVAL, ["Header"]),
+    ]);
   });
 
-  test("mergedBody", () => {
-    const mergedBody: Command_ScriptHeader = group.mergedBody();
-    expect(mergedBody).toEqual({
+  test("Single body with special characters", () => {
+    const header: Command_ScriptHeader = createEventCommand(SCRIPT_EVAL, [
+      "Header",
+    ]);
+    const body: Command_ScriptBody = createEventCommand(SCRIPT_EVAL_BODY, [
+      "Body\nText",
+    ]);
+    const group = new CombinedEventCommandGroup(header, [body]);
+    expect(group.getBodyText()).toBe("Header\nBody\nText"); // ヘッダーとボディが正しく結合される
+    expect(group.mergedBody()).toEqual({
       code: SCRIPT_EVAL,
-      parameters: ["aaa\nbbb\nccc"],
       indent: 0,
-    } satisfies Command_ScriptHeader);
+      parameters: ["Header\nBody\nText"],
+    });
   });
-});
 
-describe("Single command group", () => {
-  const group = new CombinedEventCommandGroup(
-    createEventCommand(SCRIPT_EVAL, ["abc"]),
-    []
-  );
-  test("should be an instance of CombinedEventCommandGroup", () => {
-    expect(group.getBodyText()).toBe("abc");
-  });
-  test("should normalize commands correctly", () => {
-    const expected = [createEventCommand(SCRIPT_EVAL, ["abc"])];
-    expect(group.normalizedCommands()).toEqual(expected);
+  test("Multiple bodies with special characters", () => {
+    const header: Command_ScriptHeader = createEventCommand(SCRIPT_EVAL, [
+      "Header",
+    ]);
+    const bodies: Command_ScriptBody[] = [
+      createEventCommand(SCRIPT_EVAL_BODY, ["Body1"]),
+      createEventCommand(SCRIPT_EVAL_BODY, ["Body2"]),
+    ];
+    const group = new CombinedEventCommandGroup(header, bodies);
+    expect(group.getBodyText()).toBe("Header\nBody1\nBody2"); // ヘッダーと複数のボディが正しく結合される
+    expect(group.mergedBody()).toEqual({
+      code: SCRIPT_EVAL,
+      indent: 0,
+      parameters: ["Header\nBody1\nBody2"],
+    });
   });
 });
