@@ -62,7 +62,7 @@ export const extractTextMapper: TextCommandMapper<CommandParam[]> = {
 export const readScript = (
   script: EventCommandGroup_Script
 ): CommandParam[] => {
-  return literalsFromScript(script.getBodyText("\n")).map((msg, index) => ({
+  return literalsFromScript(script.getBodyText()).map((msg, index) => ({
     code: SCRIPT_EVAL,
     paramIndex: index,
     value: msg,

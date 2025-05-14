@@ -1,8 +1,4 @@
 import { describe, expect, test } from "vitest";
-import {
-  CombinedEventCommandGroup,
-  SimpleEventCommandGroup,
-} from "./commandGroop";
 
 import type {
   Command_ShowMessage,
@@ -14,7 +10,8 @@ import type {
   EventCommandGroup_Comment,
   EventCommandGroup_Message,
   EventCommandGroup_ScrollingText,
-} from "./groopTypes";
+} from "./types/groopTypes";
+import { SimpleEventCommandGroup, CombinedEventCommandGroup } from "./types";
 const createMessageMock = () => {
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
