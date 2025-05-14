@@ -1,42 +1,43 @@
-import { describe, expect, test } from "vitest";
+import type {
+  Command_ScriptHeader,
+  Command_ShowMessage,
+  Command_ShowMessageBody,
+  Command_Comment,
+  Command_CommentBody,
+} from "@sigureya/rpgtypes";
+import {
+  createEventCommand,
+  SCRIPT_EVAL,
+  SCRIPT_EVAL_BODY,
+  makeCommandShowMessage,
+  SHOW_MESSAGE_BODY,
+} from "@sigureya/rpgtypes";
+import { describe, test, expect } from "vitest";
+import { CHOICE_HELP_TEXT } from "./commentUtils";
 import {
   createScriptGroup,
   createMessageGroup,
   createCommentGroup,
 } from "./createGroup";
-import type {
-  Command_Comment,
-  Command_CommentBody,
-  Command_ScriptHeader,
-  Command_ShowMessage,
-  Command_ShowMessageBody,
-} from "@sigureya/rpgtypes";
-import { makeCommandShowMessage, SHOW_MESSAGE_BODY } from "@sigureya/rpgtypes";
-import {
-  createEventCommand,
-  SCRIPT_EVAL,
-  SCRIPT_EVAL_BODY,
-} from "@sigureya/rpgtypes";
-import type { EventCommandGroup_Script } from "./types/groopTypes";
 import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./types";
-import { CHOICE_HELP_TEXT } from "./commentUtils";
+import type { EventCommandGroup_Script } from "./types/groopTypes";
 
 describe("script", () => {
-  describe("", () => {
+  describe("Single command group", () => {
     const group: EventCommandGroup_Script = createScriptGroup(
       createEventCommand(355, ["abc"]),
       []
     );
-    test("", () => {
+    test("should be an instance of CombinedEventCommandGroup", () => {
       expect(group).instanceOf(CombinedEventCommandGroup);
       expect(group.getBodyText("\n")).toBe("abc");
     });
-    test("", () => {
+    test("should normalize commands correctly", () => {
       const expected = [createEventCommand(355, ["abc"])];
       expect(group.normalizedCommands()).toEqual(expected);
     });
   });
-  describe("", () => {
+  describe("Multiple command group", () => {
     const group: EventCommandGroup_Script = createScriptGroup(
       createEventCommand(SCRIPT_EVAL, ["aaa"]),
       [
@@ -45,11 +46,11 @@ describe("script", () => {
         createEventCommand(655, ["ddd"]),
       ]
     );
-    test("", () => {
+    test("should be an instance of CombinedEventCommandGroup", () => {
       expect(group).instanceOf(CombinedEventCommandGroup);
       expect(group.getBodyText(",")).toBe("aaa,bbb,ccc,ddd");
     });
-    test("", () => {
+    test("should normalize commands with combined body text", () => {
       const expected: Command_ScriptHeader[] = [
         createEventCommand(SCRIPT_EVAL, ["aaa\nbbb\nccc\nddd"]),
       ];
@@ -59,7 +60,7 @@ describe("script", () => {
 });
 
 describe("message", () => {
-  describe("", () => {
+  describe("Single message group", () => {
     const head: Command_ShowMessage = makeCommandShowMessage({
       speakerName: "bob",
     });
@@ -68,12 +69,15 @@ describe("message", () => {
       ["Dark Confidant"]
     );
     const group = createMessageGroup(head, [body]);
-    test("", () => expect(group).instanceOf(SimpleEventCommandGroup));
-    test("", () => expect(group.getBodyText(",")).toBe("Dark Confidant"));
-    test("", () => expect(group.normalizedCommands()).toEqual([head, body]));
+    test("should be an instance of SimpleEventCommandGroup", () =>
+      expect(group).instanceOf(SimpleEventCommandGroup));
+    test("should return correct body text", () =>
+      expect(group.getBodyText(",")).toBe("Dark Confidant"));
+    test("should normalize commands correctly", () =>
+      expect(group.normalizedCommands()).toEqual([head, body]));
   });
 
-  describe("", () => {
+  describe("Multiple message group", () => {
     const head: Command_ShowMessage = makeCommandShowMessage({
       speakerName: "bob",
     });
@@ -83,9 +87,11 @@ describe("message", () => {
     ];
     const group = createMessageGroup(head, body);
     const expectedText = "Dark Confidant\n闇の腹心";
-    test("", () => expect(group).instanceOf(SimpleEventCommandGroup));
-    test("", () => expect(group.getBodyText("\n")).toBe(expectedText));
-    test("", () => {
+    test("should be an instance of SimpleEventCommandGroup", () =>
+      expect(group).instanceOf(SimpleEventCommandGroup));
+    test("should return correct combined body text", () =>
+      expect(group.getBodyText("\n")).toBe(expectedText));
+    test("should normalize commands with combined body text", () => {
       const expected: [Command_ShowMessage, Command_ShowMessageBody] = [
         head,
         createEventCommand(SHOW_MESSAGE_BODY, [expectedText]),
@@ -96,13 +102,15 @@ describe("message", () => {
 });
 
 describe("comment", () => {
-  describe("", () => {
+  describe("Single comment group", () => {
     const head: Command_Comment = createEventCommand(108, ["aaa"]);
     const body: Command_CommentBody = createEventCommand(408, ["bbb"]);
     const group = createCommentGroup(head, [body]);
-    test("", () => expect(group).instanceOf(CombinedEventCommandGroup));
-    test("", () => expect(group.getBodyText(",")).toBe("aaa,bbb"));
-    test("", () => {
+    test("should be an instance of CombinedEventCommandGroup", () =>
+      expect(group).instanceOf(CombinedEventCommandGroup));
+    test("should return correct body text", () =>
+      expect(group.getBodyText(",")).toBe("aaa,bbb"));
+    test("should normalize commands with combined body text", () => {
       expect(group.normalizedCommands()).toEqual([
         createEventCommand(108, ["aaa\nbbb"]),
       ]);
@@ -111,16 +119,18 @@ describe("comment", () => {
 });
 
 describe("comment ex", () => {
-  describe("", () => {
+  describe("Multiple comment group", () => {
     const head: Command_Comment = createEventCommand(108, [CHOICE_HELP_TEXT]);
     const body: Command_CommentBody[] = [
       createEventCommand(408, ["bbb"]),
       createEventCommand(408, ["ccc"]),
     ];
     const group = createCommentGroup(head, body);
-    test("", () => expect(group).instanceOf(SimpleEventCommandGroup));
-    test("", () => expect(group.getBodyText(",")).toBe("bbb,ccc"));
-    test("", () => {
+    test("should be an instance of SimpleEventCommandGroup", () =>
+      expect(group).instanceOf(SimpleEventCommandGroup));
+    test("should return correct combined body text", () =>
+      expect(group.getBodyText(",")).toBe("bbb,ccc"));
+    test("should normalize commands with combined body text", () => {
       expect(group.normalizedCommands()).toEqual([
         head,
         createEventCommand(408, ["bbb\nccc"]),
