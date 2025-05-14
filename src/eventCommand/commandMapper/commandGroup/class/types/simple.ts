@@ -14,16 +14,16 @@ export class SimpleEventCommandGroup<
     public readonly bodies: Body[]
   ) {}
   normalizedCommands(): [Header, Body] | [Header] {
-    const headder: Header = {
+    const header: Header = {
       ...this.header,
       code: this.header.code,
       indent: this.header.indent,
       parameters: [...this.header.parameters],
     };
     if (this.bodies.length === 0) {
-      return [headder];
+      return [header];
     }
-    return [headder, this.mergedBody()];
+    return [header, this.mergedBody()];
   }
 
   getBodyText(separator?: string): string {
