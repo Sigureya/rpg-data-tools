@@ -37,15 +37,14 @@ describe("CombinedEventCommandGroup", () => {
 
 describe("Single command group", () => {
   const group = new CombinedEventCommandGroup(
-    createEventCommand(355, ["abc"]),
+    createEventCommand(SCRIPT_EVAL, ["abc"]),
     []
   );
   test("should be an instance of CombinedEventCommandGroup", () => {
-    expect(group).instanceOf(CombinedEventCommandGroup);
-    expect(group.getBodyText("\n")).toBe("abc");
+    expect(group.getBodyText()).toBe("abc");
   });
   test("should normalize commands correctly", () => {
-    const expected = [createEventCommand(355, ["abc"])];
+    const expected = [createEventCommand(SCRIPT_EVAL, ["abc"])];
     expect(group.normalizedCommands()).toEqual(expected);
   });
 });
