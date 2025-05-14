@@ -6,7 +6,7 @@ import type * as RpgTypes from "@sigureya/rpgtypes";
 export const CHOICE_HELP_TEXT = "選択肢ヘルプ" as const;
 
 export interface CommandEX_ChoiceHelp extends RpgTypes.EventCommandLike<108> {
-  paramerters: [typeof CHOICE_HELP_TEXT];
+  parameters: [typeof CHOICE_HELP_TEXT];
 }
 
 export const isChoiceHelp = (
