@@ -4,6 +4,8 @@ import type {
   Command_ShowMessageBody,
   Command_Comment,
   Command_CommentBody,
+  Command_ShowScrollingText,
+  Command_ShowScrollingTextBody,
 } from "@sigureya/rpgtypes";
 import {
   createEventCommand,
@@ -11,6 +13,8 @@ import {
   SCRIPT_EVAL_BODY,
   makeCommandShowMessage,
   SHOW_MESSAGE_BODY,
+  SHOW_SCROLLING_TEXT,
+  SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
 import { describe, test, expect } from "vitest";
 import { CHOICE_HELP_TEXT } from "./commentUtils";
@@ -18,6 +22,7 @@ import {
   createScriptGroup,
   createMessageGroup,
   createCommentGroup,
+  createScrlloingTextGroup,
 } from "./createGroup";
 import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./types";
 import type { EventCommandGroup_Script } from "./types/groopTypes";
@@ -134,6 +139,51 @@ describe("comment ex", () => {
       expect(group.normalizedCommands()).toEqual([
         head,
         createEventCommand(408, ["bbb\nccc"]),
+      ]);
+    });
+  });
+});
+
+describe("scrolling text", () => {
+  describe("Single scrolling text group", () => {
+    const head: Command_ShowScrollingText = createEventCommand(
+      SHOW_SCROLLING_TEXT,
+      [10, false]
+    );
+    const body: Command_ShowScrollingTextBody = createEventCommand(
+      SHOW_SCROLLING_TEXT_BODY,
+      ["bbb"]
+    );
+    const group = createScrlloingTextGroup(head, [body]);
+    test("should be an instance of SimpleEventCommandGroup", () =>
+      expect(group).instanceOf(SimpleEventCommandGroup));
+    test("should return correct body text", () =>
+      expect(group.getBodyText(",")).toBe("bbb"));
+    test("should normalize commands with combined body text", () => {
+      expect(group.normalizedCommands()).toEqual([
+        head,
+        createEventCommand(SHOW_SCROLLING_TEXT_BODY, ["bbb"]),
+      ]);
+    });
+  });
+  describe("Multiple scrolling text group", () => {
+    const head: Command_ShowScrollingText = createEventCommand(
+      SHOW_SCROLLING_TEXT,
+      [10, false]
+    );
+    const body: Command_ShowScrollingTextBody[] = [
+      createEventCommand(SHOW_SCROLLING_TEXT_BODY, ["bbb"]),
+      createEventCommand(SHOW_SCROLLING_TEXT_BODY, ["ccc"]),
+    ];
+    const group = createScrlloingTextGroup(head, body);
+    test("should be an instance of SimpleEventCommandGroup", () =>
+      expect(group).instanceOf(SimpleEventCommandGroup));
+    test("should return correct combined body text", () =>
+      expect(group.getBodyText(",")).toBe("bbb,ccc"));
+    test("should normalize commands with combined body text", () => {
+      expect(group.normalizedCommands()).toEqual([
+        head,
+        createEventCommand(SHOW_SCROLLING_TEXT_BODY, ["bbb\nccc"]),
       ]);
     });
   });
