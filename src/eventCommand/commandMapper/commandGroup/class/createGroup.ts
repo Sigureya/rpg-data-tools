@@ -15,48 +15,48 @@ import {
 import { isChoiceHelp } from "./commentUtils";
 
 export const createMessageGroup = (
-  hedder: Command_ShowMessage,
+  header: Command_ShowMessage,
   bodies: Command_ShowMessageBody[] = []
 ) => {
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
     Command_ShowMessageBody
-  >(401, hedder, bodies);
+  >(401, header, bodies);
 };
 
 export const createScrlloingTextGroup = (
-  hedder: Command_ShowScrollingText,
+  header: Command_ShowScrollingText,
   bodies: Command_ShowScrollingTextBody[] = []
 ) => {
   return new SimpleEventCommandGroup<
     Command_ShowScrollingText,
     Command_ShowScrollingTextBody
-  >(405, hedder, bodies);
+  >(405, header, bodies);
 };
 
 export const createCommentGroup = (
-  hedder: Command_Comment,
+  header: Command_Comment,
   bodies: Command_CommentBody[] = []
 ) => {
-  if (isChoiceHelp(hedder)) {
+  if (isChoiceHelp(header)) {
     return new SimpleEventCommandGroup<Command_Comment, Command_CommentBody>(
       408,
-      hedder,
+      header,
       bodies
     );
   }
   return new CombinedEventCommandGroup<Command_Comment, Command_CommentBody>(
-    hedder,
+    header,
     bodies
   );
 };
 
 export const createScriptGroup = (
-  hedder: Command_ScriptHeader,
+  header: Command_ScriptHeader,
   bodies: Command_ScriptBody[] = []
 ) => {
   return new CombinedEventCommandGroup<
     Command_ScriptHeader,
     Command_ScriptBody
-  >(hedder, bodies);
+  >(header, bodies);
 };
