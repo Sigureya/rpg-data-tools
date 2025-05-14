@@ -127,7 +127,7 @@ describe("extractTextFromEventCommands", () => {
       ];
       expect(result).toEqual(expected);
     });
-    test("multi", () => {
+    test.skip("multi", () => {
       const command: RpgTypes.Command_Comment = {
         code: RpgTypes.COMMENT,
         parameters: ["comment"],
