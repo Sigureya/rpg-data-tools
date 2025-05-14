@@ -3,6 +3,8 @@ import { SimpleEventCommandGroup } from "./simple";
 import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
+  Command_ShowScrollingText,
+  Command_ShowScrollingTextBody,
 } from "@sigureya/rpgtypes";
 import {
   createEventCommand,
@@ -10,6 +12,26 @@ import {
   SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
 import { createMessageGroup } from "../createGroup";
+import type { EventCommandGroup_ScrollingText } from "./groopTypes";
+const createScrlloingTextMock = (indent = 0) => {
+  return new SimpleEventCommandGroup<
+    Command_ShowScrollingText,
+    Command_ShowScrollingTextBody
+  >(
+    405,
+    {
+      code: 105,
+      indent: indent,
+      parameters: [0, false],
+    },
+    ["aaa", "bbb"].map<Command_ShowScrollingTextBody>((text) => ({
+      code: 405,
+      indent: indent,
+      parameters: [text],
+    }))
+  );
+};
+
 describe("message", () => {
   describe("Single message group", () => {
     const head: Command_ShowMessage = makeCommandShowMessage({
@@ -48,6 +70,25 @@ describe("message", () => {
         createEventCommand(SHOW_MESSAGE_BODY, [expectedText]),
       ];
       expect(group.normalizedCommands()).toEqual(expected);
+    });
+  });
+});
+
+describe("ShowScrollingText", () => {
+  const scrollingText: EventCommandGroup_ScrollingText =
+    createScrlloingTextMock(2);
+  test("normalizedCommands", () => {
+    const result = scrollingText.normalizedCommands();
+    expect(result.length).toBe(2);
+    expect(result[0]).toMatchObject({
+      code: 105,
+      indent: 2,
+      parameters: [0, false],
+    });
+    expect(result[1]).toMatchObject<Command_ShowScrollingTextBody>({
+      code: 405,
+      indent: 2,
+      parameters: ["aaa\nbbb"],
     });
   });
 });
