@@ -1,5 +1,4 @@
 import type { EventCommandGroup } from "./groopTypes";
-import { joinHeaderAndBody } from "./join";
 import type { TextCommandBody } from "./textCommandBody";
 
 // 注釈やコメントなどの先頭とbodyが同じパラメータ型のパターン
@@ -23,7 +22,7 @@ export class CombinedEventCommandGroup<
     } as Header;
   }
   joinCommandBodies(): [Header, ...Body[]] {
-    return joinHeaderAndBody(this);
+    return [this.header, ...this.bodies];
   }
 
   normalizedCommands(): [Header] {
