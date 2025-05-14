@@ -1,17 +1,18 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import type { TextCommandBody } from "./textCommandBody";
-import { BaseEventCommandGroup } from "./base";
+import type { EventCommandGroup } from "./groopTypes";
 
+//　メッセージとかscrollテキスト。ヘッダとbodyが異なるパターン
 export class SimpleEventCommandGroup<
   Header extends EventCommand,
   Body extends TextCommandBody
-> extends BaseEventCommandGroup<Header, Body> {
-  constructor(public bodyCode: Body["code"], header: Header, bodies: Body[]) {
-    super(header, bodies);
-  }
-  protected getExpandedBodies(): Body[] {
-    return this.bodies;
-  }
+> implements EventCommandGroup<Header, Body>
+{
+  constructor(
+    public readonly bodyCode: Body["code"],
+    public readonly header: Header,
+    public readonly bodies: Body[]
+  ) {}
   normalizedCommands(): [Header, Body] | [Header] {
     const headder: Header = {
       ...this.header,
@@ -23,6 +24,15 @@ export class SimpleEventCommandGroup<
       return [headder];
     }
     return [headder, this.mergedBody()];
+  }
+
+  getBodyText(separator?: string): string {
+    return this.bodies
+      .map<string>((body) => body.parameters[0])
+      .join(separator ?? "\n");
+  }
+  joinCommandBodies(): Body[] {
+    return this.bodies;
   }
   mergedBody(): Body {
     return {
