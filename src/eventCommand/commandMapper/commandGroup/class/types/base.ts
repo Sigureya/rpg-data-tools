@@ -1,5 +1,5 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
-import { joinCommandBodies } from "../join";
+import { joinCommandBodies } from "./join";
 import type { EventCommandGroup } from "./groopTypes";
 import type { TextCommandBody } from "./textCommandBody";
 
