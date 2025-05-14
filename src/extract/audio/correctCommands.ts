@@ -43,7 +43,7 @@ export const extractAudioCommandsInfo = (
   return list.filter(isAudioCommand).map(audioCommandInfo);
 };
 
-export const extractAudioCFromCommonEvents = (
+export const extractAudioFromCommonEvents = (
   events: ReadonlyArray<Data_CommonEvent>
 ): AudioCommandInfoWithLocation[] => {
   return processCommonEvents(events, collectAudioCommands).flat(2);
