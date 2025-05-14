@@ -1,7 +1,5 @@
 import type {
   Command_ScriptHeader,
-  Command_ShowMessage,
-  Command_ShowMessageBody,
   Command_Comment,
   Command_CommentBody,
   Command_ShowScrollingText,
@@ -11,8 +9,6 @@ import {
   createEventCommand,
   SCRIPT_EVAL,
   SCRIPT_EVAL_BODY,
-  makeCommandShowMessage,
-  SHOW_MESSAGE_BODY,
   SHOW_SCROLLING_TEXT,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
@@ -20,7 +16,6 @@ import { describe, test, expect } from "vitest";
 import { CHOICE_HELP_TEXT } from "./commentUtils";
 import {
   createScriptGroup,
-  createMessageGroup,
   createCommentGroup,
   createScrlloingTextGroup,
 } from "./createGroup";
@@ -58,48 +53,6 @@ describe("script", () => {
     test("should normalize commands with combined body text", () => {
       const expected: Command_ScriptHeader[] = [
         createEventCommand(SCRIPT_EVAL, ["aaa\nbbb\nccc\nddd"]),
-      ];
-      expect(group.normalizedCommands()).toEqual(expected);
-    });
-  });
-});
-
-describe("message", () => {
-  describe("Single message group", () => {
-    const head: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "bob",
-    });
-    const body: Command_ShowMessageBody = createEventCommand(
-      SHOW_MESSAGE_BODY,
-      ["Dark Confidant"]
-    );
-    const group = createMessageGroup(head, [body]);
-    test("should be an instance of SimpleEventCommandGroup", () =>
-      expect(group).instanceOf(SimpleEventCommandGroup));
-    test("should return correct body text", () =>
-      expect(group.getBodyText(",")).toBe("Dark Confidant"));
-    test("should normalize commands correctly", () =>
-      expect(group.normalizedCommands()).toEqual([head, body]));
-  });
-
-  describe("Multiple message group", () => {
-    const head: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "bob",
-    });
-    const body: Command_ShowMessageBody[] = [
-      createEventCommand(SHOW_MESSAGE_BODY, ["Dark Confidant"]),
-      createEventCommand(SHOW_MESSAGE_BODY, ["闇の腹心"]),
-    ];
-    const group = createMessageGroup(head, body);
-    const expectedText = "Dark Confidant\n闇の腹心";
-    test("should be an instance of SimpleEventCommandGroup", () =>
-      expect(group).instanceOf(SimpleEventCommandGroup));
-    test("should return correct combined body text", () =>
-      expect(group.getBodyText("\n")).toBe(expectedText));
-    test("should normalize commands with combined body text", () => {
-      const expected: [Command_ShowMessage, Command_ShowMessageBody] = [
-        head,
-        createEventCommand(SHOW_MESSAGE_BODY, [expectedText]),
       ];
       expect(group.normalizedCommands()).toEqual(expected);
     });
