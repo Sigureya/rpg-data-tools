@@ -66,7 +66,7 @@ describe("comment ex", () => {
     test("should be an instance of SimpleEventCommandGroup", () =>
       expect(group).instanceOf(SimpleEventCommandGroup));
     test("should return correct combined body text", () =>
-      expect(group.getBodyText(",")).toBe("bbb,ccc"));
+      expect(group.getBodyText()).toBe("bbb\nccc"));
     test("should normalize commands with combined body text", () => {
       expect(group.normalizedCommands()).toEqual([
         head,
