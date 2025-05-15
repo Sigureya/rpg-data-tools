@@ -97,6 +97,7 @@ describe("pickCommands  - Normal Cases", () => {
       makeCommandShowMessageBody("bbb"),
       makeCommandShowMessageBody("ccc"),
       makeCommand2_CommonEvent({ eventId: 5 }),
+      makeCommand2_CommonEvent({ eventId: 100 }),
     ];
     testPickCommands(
       "should pick a valid head with multiple bodies",
