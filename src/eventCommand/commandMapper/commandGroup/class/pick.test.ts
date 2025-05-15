@@ -140,7 +140,60 @@ describe("pickCommands  - Normal Cases", () => {
     });
   });
 });
+describe("pickCommands - Complex Cases", () => {
+  const commands: EventCommand[] = [
+    makeCommandShowMessage({ speakerName: "alice" }),
+    makeCommandShowMessageBody("bbb"),
+    makeCommand2_CommonEvent({ eventId: 5 }),
+    makeCommandShowMessage({ speakerName: "bob" }),
+    makeCommandShowMessageBody("xxx"),
+    makeCommandShowMessageBody("yyy"),
+  ];
 
+  describe("Valid case with a single body", () => {
+    const mockFn = makeMockFunctions();
+    testPickCommands(
+      "should pick a valid head with a single body",
+      mockFn,
+      commands,
+      0,
+      {
+        head: makeCommandShowMessage({ speakerName: "alice" }),
+        bodys: [makeCommandShowMessageBody("bbb")],
+      }
+    );
+  });
+
+  describe("Valid case with multiple bodies", () => {
+    const mockFn = makeMockFunctions();
+    testPickCommands(
+      "should pick a valid head with multiple bodies",
+      mockFn,
+      commands,
+      3,
+      {
+        head: makeCommandShowMessage({ speakerName: "bob" }),
+        bodys: [
+          makeCommandShowMessageBody("xxx"),
+          makeCommandShowMessageBody("yyy"),
+        ],
+      }
+    );
+
+    describe("Function call validation for multiple bodies", () => {
+      test("should call head function once with the correct command", () => {
+        expect(mockFn.head).toHaveBeenCalledTimes(1);
+        expect(mockFn.head).toBeCalledWith(commands[3]);
+      });
+
+      test("should call body function twice with the correct commands", () => {
+        expect(mockFn.body).toHaveBeenCalledTimes(2);
+        expect(mockFn.body).toBeCalledWith(commands[4]);
+        expect(mockFn.body).toBeCalledWith(commands[5]);
+      });
+    });
+  });
+});
 describe("pickCommands - Edge cases", () => {
   describe("Empty array handling", () => {
     const mockFn = makeMockFunctions();
