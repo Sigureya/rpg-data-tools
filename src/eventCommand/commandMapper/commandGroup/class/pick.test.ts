@@ -1,7 +1,7 @@
 import type { MockedFunction } from "vitest";
 import { describe, test, expect, vi } from "vitest";
-import type { ResultOfPickCommands } from "./pick2";
-import { pickCommands } from "./pick2";
+import type { ResultOfPickCommands } from "./pick";
+import { pickCommands } from "./pick";
 import type {
   Command_CommonEvent,
   Command_ShowMessageBody,
