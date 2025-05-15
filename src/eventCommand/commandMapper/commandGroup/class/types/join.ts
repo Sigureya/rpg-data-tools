@@ -1,10 +1,7 @@
-import type { EventCode, EventCommandLike } from "@sigureya/rpgtypes";
+import type { TextCommandBody } from "./textCommandBody";
 
-export const joinCommandBodies = <
-  Command extends EventCommandLike<EventCode, [string]>
->(
-  array: ReadonlyArray<Command>,
-  sepadrator = "\n"
+export const textFromJoinedBodies = (
+  list: ReadonlyArray<Pick<TextCommandBody, "parameters">>
 ): string => {
-  return array.map((v) => v.parameters[0]).join(sepadrator);
+  return list.map((body) => body.parameters[0].trimEnd()).join("\n");
 };
