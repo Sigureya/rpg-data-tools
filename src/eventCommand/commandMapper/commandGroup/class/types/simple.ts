@@ -1,6 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import type { TextCommandBody } from "./textCommandBody";
 import type { EventCommandGroup } from "./groopTypes";
+import { textFromJoinedBodies } from "./join";
 
 //　メッセージとかscrollテキスト。ヘッダとbodyが異なるパターン
 export class SimpleEventCommandGroup<
@@ -26,10 +27,8 @@ export class SimpleEventCommandGroup<
     return [header, this.mergedBody()];
   }
 
-  getBodyText(separator?: string): string {
-    return this.bodies
-      .map<string>((body) => body.parameters[0])
-      .join(separator ?? "\n");
+  getBodyText(): string {
+    return textFromJoinedBodies(this.bodies);
   }
   joinCommandBodies(): Body[] {
     return this.bodies;
