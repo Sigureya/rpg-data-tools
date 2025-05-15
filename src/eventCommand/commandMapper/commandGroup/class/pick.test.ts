@@ -58,7 +58,7 @@ const testPickCommands = (
   });
 };
 
-describe("pickCommands  - Normal Cases", () => {
+describe("pickCommands  - should handle a single head and a single body", () => {
   const commands: EventCommand[] = [
     makeCommandShowMessage({}),
     makeCommandShowMessageBody("bbb"),
