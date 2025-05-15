@@ -103,6 +103,7 @@ describe("pickCommands  - Normal Cases", () => {
       makeCommandShowMessageBody("bbb"),
       makeCommandShowMessageBody("ccc"),
       makeCommand2_CommonEvent({ eventId: 5 }),
+      makeCommandShowMessageBody("ddd"),
       makeCommand2_CommonEvent({ eventId: 100 }),
     ];
     testPickCommands(
