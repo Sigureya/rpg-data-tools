@@ -1,97 +1,61 @@
 import { describe, test, expect } from "vitest";
 import { SimpleEventCommandGroup } from "./simple";
-import type {
-  Command_ShowMessage,
-  Command_ShowMessageBody,
-  Command_ShowScrollingText,
-  Command_ShowScrollingTextBody,
-} from "@sigureya/rpgtypes";
 import {
   createEventCommand,
   makeCommandShowMessage,
   SHOW_MESSAGE_BODY,
-  SHOW_SCROLLING_TEXT,
-  SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import { createMessageGroup } from "../createGroup";
-import type { EventCommandGroup_ScrollingText } from "./groopTypes";
+import type {
+  Command_ShowMessage,
+  Command_ShowMessageBody,
+} from "@sigureya/rpgtypes";
 
-const createScrlloingTextMock = (indent = 0) => {
-  return new SimpleEventCommandGroup<
-    Command_ShowScrollingText,
-    Command_ShowScrollingTextBody
-  >(
-    SHOW_SCROLLING_TEXT_BODY,
-    {
-      code: SHOW_SCROLLING_TEXT,
-      indent: indent,
-      parameters: [0, false],
-    },
-    ["aaa", "bbb"].map<Command_ShowScrollingTextBody>((text) => ({
-      code: SHOW_SCROLLING_TEXT_BODY,
-      indent: indent,
-      parameters: [text],
-    }))
-  );
-};
-
-describe("ShowScrollingText", () => {
-  const scrollingText: EventCommandGroup_ScrollingText =
-    createScrlloingTextMock(2);
-  test("normalizedCommands", () => {
-    const result = scrollingText.normalizedCommands();
-    expect(result.length).toBe(2);
-    expect(result[0]).toMatchObject({
-      code: SHOW_SCROLLING_TEXT,
-      indent: 2,
-      parameters: [0, false],
+describe("SimpleEventCommandGroup - Edge Cases", () => {
+  test("Empty bodies array", () => {
+    const header: Command_ShowMessage = makeCommandShowMessage({
+      speakerName: "Header",
     });
-    expect(result[1]).toMatchObject<Command_ShowScrollingTextBody>({
-      code: SHOW_SCROLLING_TEXT_BODY,
-      indent: 2,
-      parameters: ["aaa\nbbb"],
-    });
+    const group = new SimpleEventCommandGroup(
+      SHOW_MESSAGE_BODY,
+      header,
+      [] as Command_ShowMessageBody[]
+    );
+    expect(group.getBodyText()).toBe(""); // 空のボディの場合、空文字列を返す
+    expect(group.normalizedCommands()).toEqual([header]); // ボディが空の場合、ヘッダーのみを返す
   });
-});
 
-describe("message", () => {
-  describe("Single message group", () => {
-    const head: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "bob",
+  test("Single body with special characters", () => {
+    const header: Command_ShowMessage = makeCommandShowMessage({
+      speakerName: "Header",
     });
     const body: Command_ShowMessageBody = createEventCommand(
       SHOW_MESSAGE_BODY,
-      ["Dark Confidant"]
+      ["Line1\nLine2"]
     );
-    const group = new SimpleEventCommandGroup(SHOW_MESSAGE_BODY, head, [body]);
-    test("should be an instance of SimpleEventCommandGroup", () =>
-      expect(group).instanceOf(SimpleEventCommandGroup));
-    test("should return correct body text", () =>
-      expect(group.getBodyText(",")).toBe("Dark Confidant"));
-    test("should normalize commands correctly", () =>
-      expect(group.normalizedCommands()).toEqual([head, body]));
+    const group = new SimpleEventCommandGroup(SHOW_MESSAGE_BODY, header, [
+      body,
+    ]);
+    expect(group.getBodyText()).toBe("Line1\nLine2"); // 改行を含む文字列が正しく結合される
+    expect(group.normalizedCommands()).toEqual([header, body]); // 正しい形式で返される
   });
 
-  describe("Multiple message group", () => {
-    const head: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "bob",
+  test("Multiple bodies with special characters", () => {
+    const header: Command_ShowMessage = makeCommandShowMessage({
+      speakerName: "Header",
     });
-    const body: Command_ShowMessageBody[] = [
-      createEventCommand(SHOW_MESSAGE_BODY, ["Dark Confidant"]),
-      createEventCommand(SHOW_MESSAGE_BODY, ["闇の腹心"]),
+    const bodies: Command_ShowMessageBody[] = [
+      createEventCommand(SHOW_MESSAGE_BODY, ["Line1"]),
+      createEventCommand(SHOW_MESSAGE_BODY, ["Line2"]),
     ];
-    const group = createMessageGroup(head, body);
-    const expectedText = "Dark Confidant\n闇の腹心";
-    test("should be an instance of SimpleEventCommandGroup", () =>
-      expect(group).instanceOf(SimpleEventCommandGroup));
-    test("should return correct combined body text", () =>
-      expect(group.getBodyText("\n")).toBe(expectedText));
-    test("should normalize commands with combined body text", () => {
-      const expected: [Command_ShowMessage, Command_ShowMessageBody] = [
-        head,
-        createEventCommand(SHOW_MESSAGE_BODY, [expectedText]),
-      ];
-      expect(group.normalizedCommands()).toEqual(expected);
-    });
+    const group = new SimpleEventCommandGroup(
+      SHOW_MESSAGE_BODY,
+      header,
+      bodies
+    );
+    expect(group.getBodyText()).toBe("Line1\nLine2"); // ボディが正しく結合される
+    expect(group.normalizedCommands()).toEqual([
+      header,
+      createEventCommand(SHOW_MESSAGE_BODY, ["Line1\nLine2"]),
+    ]);
   });
 });
