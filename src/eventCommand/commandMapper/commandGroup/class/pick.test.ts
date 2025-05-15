@@ -67,6 +67,12 @@ describe("pickCommands  - Normal Cases", () => {
     test("should throw an error when the head is invalid", () => {
       expect(() => pickEx(commands, 1)).toThrow();
     });
+    test("should throw an error when index is negative", () => {
+      expect(() => pickEx(commands, -1)).toThrow();
+    });
+    test("should throw an error when index is out of bounds", () => {
+      expect(() => pickEx(commands, commands.length)).toThrow();
+    });
   });
   describe("Valid cases", () => {
     const mockFn = makeMockFunctions();
@@ -135,22 +141,26 @@ describe("pickCommands  - Normal Cases", () => {
 });
 
 describe("pickCommands - Edge cases", () => {
-  const mockFn = makeMockFunctions();
-  test("should throw an error when the array is empty", () =>
-    expect(() =>
-      pickCommands<Command_ShowMessageHeader, Command_ShowMessageBody>(
-        [],
-        0,
-        mockFn.head as unknown as typeof isCommandShowMessage,
-        mockFn.body as unknown as typeof isCommandShowMessageBody
-      )
-    ).toThrow());
-  test("should not call body function when the array is empty", () =>
-    expect(mockFn.body).toHaveBeenCalledTimes(0));
-  test("should call head function once when the array is empty", () =>
-    expect(mockFn.head).toHaveBeenCalledTimes(1));
+  describe("Empty array handling", () => {
+    const mockFn = makeMockFunctions();
+    test("should throw an error when the array is empty", () => {
+      expect(() =>
+        pickCommands(
+          [],
+          0,
+          mockFn.head as unknown as typeof isCommandShowMessage,
+          mockFn.body as unknown as typeof isCommandShowMessageBody
+        )
+      ).toThrow();
+    });
+    test("should not call body function when the array is empty", () => {
+      expect(mockFn.body).toHaveBeenCalledTimes(0);
+    });
+    test("should call head function once when the array is empty", () => {
+      expect(mockFn.head).toHaveBeenCalledTimes(1);
+    });
+  });
 });
-
 describe("isCommand** functions", () => {
   test("isCommandShowMessage should correctly identify valid and invalid heads", () => {
     const command: Command_ShowMessageHeader = makeCommandShowMessage({});
