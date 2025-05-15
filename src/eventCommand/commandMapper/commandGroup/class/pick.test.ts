@@ -27,9 +27,18 @@ const pickEx = (
     isCommandShowMessageBody
   );
 };
+interface MockFunctions {
+  head: MockedFunction<typeof isCommandShowMessage>;
+  body: MockedFunction<typeof isCommandShowMessageBody>;
+}
+const makeMockFunctions = (): MockFunctions => ({
+  head: vi.fn(isCommandShowMessage),
+  body: vi.fn(isCommandShowMessageBody),
+});
 
 const testPickCommands = (
   description: string,
+  mockFn: MockFunctions,
   commands: EventCommand[],
   index: number,
   expected: ResultOfPickCommands<
@@ -41,8 +50,8 @@ const testPickCommands = (
     const result = pickCommands(
       commands,
       index,
-      isCommandShowMessage,
-      isCommandShowMessageBody
+      mockFn.head as unknown as typeof isCommandShowMessage,
+      mockFn.body as unknown as typeof isCommandShowMessageBody
     );
     expect(result.head).toEqual(expected.head);
     expect(result.bodys).toEqual(expected.bodys);
@@ -51,24 +60,34 @@ const testPickCommands = (
 
 describe("pickCommands", () => {
   describe("", () => {
+    const mockFn = makeMockFunctions();
     const commands: EventCommand[] = [
       makeCommandShowMessage({}),
       makeCommandShowMessageBody("bbb"),
     ];
-    testPickCommands("valid head with single body", commands, 0, {
+    testPickCommands("valid head with single body", mockFn, commands, 0, {
       head: makeCommandShowMessage({}),
       bodys: [makeCommandShowMessageBody("bbb")],
     });
     test("", () => expect(() => pickEx(commands, 1)).toThrow());
+    test("", () => {
+      expect(mockFn.head).toHaveBeenCalledTimes(1);
+      expect(mockFn.head).toBeCalledWith(commands[0]);
+    });
+    test("", () => {
+      expect(mockFn.body).toHaveBeenCalledTimes(1);
+      expect(mockFn.body).toBeCalledWith(commands[1]);
+    });
   });
   describe("", () => {
+    const mockFn = makeMockFunctions();
     const commands: EventCommand[] = [
       makeCommandShowMessage({}),
       makeCommandShowMessageBody("bbb"),
       makeCommandShowMessageBody("ccc"),
       makeCommand2_CommonEvent({ eventId: 5 }),
     ];
-    testPickCommands("valid head with multiple bodies", commands, 0, {
+    testPickCommands("valid head with multiple bodies", mockFn, commands, 0, {
       head: makeCommandShowMessage({}),
       bodys: [
         makeCommandShowMessageBody("bbb"),
@@ -80,26 +99,19 @@ describe("pickCommands", () => {
     test("", () => expect(() => pickEx(commands, 3)).toThrow());
   });
 });
-const makeMockFunctions = () => ({
-  head: vi.fn(isCommandShowMessage),
-  body: vi.fn(isCommandShowMessageBody),
-});
-
-const xxxx = (
-  array: EventCommand[],
-  index: number,
-  mock: {
-    head: MockedFunction<typeof isCommandShowMessage>;
-    body: MockedFunction<typeof isCommandShowMessageBody>;
-  }
-) => {
-  return pickCommands(array, index, mock.head as any, mock.body as any);
-};
 
 describe("", () => {
   describe("", () => {
     const mockFn = makeMockFunctions();
-    test("", () => expect(() => xxxx([], 0, mockFn)).toThrow());
+    test("", () =>
+      expect(() =>
+        pickCommands<Command_ShowMessageHeader, Command_ShowMessageBody>(
+          [],
+          0,
+          mockFn.head as unknown as typeof isCommandShowMessage,
+          mockFn.body as unknown as typeof isCommandShowMessageBody
+        )
+      ).toThrow());
     test("", () => expect(mockFn.body).toHaveBeenCalledTimes(0));
     test("", () => expect(mockFn.head).toHaveBeenCalledTimes(1));
   });
