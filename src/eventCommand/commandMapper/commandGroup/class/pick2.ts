@@ -1,18 +1,11 @@
-import type {
-  Command_ShowMessage,
-  Command_ShowMessageBody,
-} from "@sigureya/rpgtypes";
-import {
-  isCommandShowMessage,
-  isCommandShowMessageBody,
-  SHOW_MESSAGE_BODY,
-  type EventCommand,
-  type ExtractCommandByParam,
-} from "@sigureya/rpgtypes";
-import type { EventCommandGroup_Message } from "./types";
-import { SimpleEventCommandGroup } from "./types";
+import type { EventCommand, ExtractCommandByParam } from "@sigureya/rpgtypes";
 
-export const pickCommands3 = <
+export interface ResultOfPickCommands<Head, Body> {
+  head: Head;
+  bodys: Body[];
+}
+
+export const pickCommands = <
   Head extends EventCommand,
   Body extends ExtractCommandByParam<[string]>
 >(
@@ -20,13 +13,10 @@ export const pickCommands3 = <
   index: number,
   headFn: (data: unknown) => data is Head,
   bodyFn: (data: unknown) => data is Body
-): {
-  head: Head;
-  bodys: Body[];
-} => {
+): ResultOfPickCommands<Head, Body> => {
   const head = array[index];
   if (!headFn(head)) {
-    throw new Error("Invalid head", { cause: head });
+    throw new Error(`Invalid head at index ${index}: ${JSON.stringify(head)}`);
   }
   const bodys: Body[] = [];
   for (let i = index + 1; i < array.length; i++) {
