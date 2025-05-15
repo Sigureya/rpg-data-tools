@@ -161,6 +161,23 @@ describe("pickCommands - Edge cases", () => {
       expect(mockFn.head).toHaveBeenCalledTimes(1);
     });
   });
+  describe("Empty body handling", () => {
+    const mockFn = makeMockFunctions();
+    const commands: EventCommand[] = [
+      makeCommandShowMessage({}),
+      makeCommand2_CommonEvent({ eventId: 5 }),
+    ];
+    testPickCommands(
+      "should pick a valid head with no bodies",
+      mockFn,
+      commands,
+      0,
+      {
+        head: makeCommandShowMessage({}),
+        bodys: [],
+      }
+    );
+  });
 });
 describe("isCommand** functions", () => {
   test("isCommandShowMessage should correctly identify valid and invalid heads", () => {
