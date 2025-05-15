@@ -8,19 +8,26 @@ import {
   isCommandShowMessageBody,
   SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
-import { pickCommands3 } from "./pick2";
+import { pickCommands } from "./pick2";
 import { SimpleEventCommandGroup } from "./types";
 
-export const createMessageGroup = (
+export const extractMessageGroup = (
   list: ReadonlyArray<EventCommand>,
   index: number
 ) => {
-  const { bodys, head } = pickCommands3(
+  return pickCommands(
     list,
     index,
     isCommandShowMessage,
     isCommandShowMessageBody
   );
+};
+
+export const createMessageGroup2 = (
+  list: ReadonlyArray<EventCommand>,
+  index: number
+) => {
+  const { bodys, head } = extractMessageGroup(list, index);
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
     Command_ShowMessageBody
