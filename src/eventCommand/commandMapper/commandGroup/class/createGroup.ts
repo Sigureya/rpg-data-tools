@@ -13,11 +13,8 @@ import {
   SHOW_MESSAGE_BODY,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import {
-  CombinedEventCommandGroup,
-  SimpleEventCommandGroup,
-} from "./commandGroop";
 import { isChoiceHelp } from "./commentUtils";
+import { SimpleEventCommandGroup, CombinedEventCommandGroup } from "./types";
 
 // 下記の関数群は用途を限定するために型を固定しており
 // 意図してテンプレート無しの実装にしている
