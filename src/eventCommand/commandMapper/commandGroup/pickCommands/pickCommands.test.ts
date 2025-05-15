@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { isBodyParams, isHeadCommand, pickHead } from "./pickCommands";
 import { codeTest } from "./commandCheck";
-import { COMMENT } from "@sigureya/rpgtypes";
+import { COMMENT_HEAD as COMMENT } from "@sigureya/rpgtypes";
 
 describe("codeTest", () => {
   test("true", () => {

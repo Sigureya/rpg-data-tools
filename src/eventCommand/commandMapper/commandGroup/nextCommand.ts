@@ -1,7 +1,7 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import {
-  COMMENT,
   COMMENT_BODY,
+  COMMENT_HEAD,
   SCRIPT_EVAL,
   SCRIPT_EVAL_BODY,
   SHOW_MESSAGE,
@@ -12,7 +12,7 @@ import {
 
 const TABLE = {
   [SHOW_MESSAGE]: SHOW_MESSAGE_BODY,
-  [COMMENT]: COMMENT_BODY,
+  [COMMENT_HEAD]: COMMENT_BODY,
   [SCRIPT_EVAL]: SCRIPT_EVAL_BODY,
   [SHOW_SCROLLING_TEXT]: SHOW_SCROLLING_TEXT_BODY,
 };

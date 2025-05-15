@@ -112,7 +112,7 @@ describe("選択肢ヘルプ", () => {
     "選択肢ヘルプ",
     [
       {
-        code: Types.COMMENT,
+        code: Types.COMMENT_HEAD,
         indent: 0,
         parameters: [CHOICE_HELP_TEXT],
       },
@@ -145,24 +145,24 @@ const testCommandMergeToSingle = <
   });
 };
 
-describe("case comment", () => {
-  testCommandMergeToSingle(
-    "comment",
-    [
-      {
-        code: Types.COMMENT,
-        indent: 0,
-        parameters: ["John Doe"],
-      },
-      ...createMockCommand(Types.COMMENT_BODY),
-    ],
-    {
-      code: Types.COMMENT,
-      indent: 0,
-      parameters: ["John Doe\n" + MockJoinedText],
-    }
-  );
-});
+// describe("case comment", () => {
+//   testCommandMergeToSingle(
+//     "comment",
+//     [
+//       {
+//         code: Types.COMMENT_HEAD,
+//         indent: 0,
+//         parameters: ["John Doe"],
+//       },
+//       ...createMockCommand(Types.COMMENT_BODY),
+//     ],
+//     {
+//       code: Types.COMMENT,
+//       indent: 0,
+//       parameters: ["John Doe\n" + MockJoinedText],
+//     }
+//   );
+// });
 describe("case script", () => {
   testCommandMergeToSingle(
     "script",

@@ -79,7 +79,7 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.choiceWhen, table.other);
 
     // コメント・スクリプト関連
-    case Code.COMMENT:
+    case Code.COMMENT_HEAD:
       return table.comment
         ? handleGroupComment(array, index, table.comment)
         : table.other(command, index, array);

@@ -1,11 +1,4 @@
-import type {
-  Operand_Constatant,
-  Operand_Variable,
-  Operand_ItemData,
-  Operand_LastData,
-  Operand_Script,
-  Operand_Random,
-} from "@sigureya/rpgtypes";
+import type {} from "@sigureya/rpgtypes";
 
 interface XXX {
   code: number;
@@ -18,6 +11,6 @@ const TABLE = {
   2: " operandItemData",
 };
 
-const operandConstant = (ope: Operand_Constatant) => {};
+// const operandConstant = (ope: Operand_Constatant) => {};
 
 // const operandVariable;
