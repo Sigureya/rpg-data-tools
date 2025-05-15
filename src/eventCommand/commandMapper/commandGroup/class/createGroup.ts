@@ -1,12 +1,17 @@
 import type {
+  Command_Comment,
+  Command_CommentBody,
+  Command_ScriptBody,
+  Command_ScriptHeader,
   Command_ShowMessage,
   Command_ShowMessageBody,
   Command_ShowScrollingText,
   Command_ShowScrollingTextBody,
-  Command_Comment,
-  Command_CommentBody,
-  Command_ScriptHeader,
-  Command_ScriptBody,
+} from "@sigureya/rpgtypes";
+import {
+  COMMENT_BODY,
+  SHOW_MESSAGE_BODY,
+  SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
 import {
   CombinedEventCommandGroup,
@@ -14,6 +19,14 @@ import {
 } from "./commandGroop";
 import { isChoiceHelp } from "./commentUtils";
 
+// 下記の関数群は用途を限定するために型を固定しており
+// 意図してテンプレート無しの実装にしている
+/**
+ * Creates a group for message commands.
+ * @param header - The header command for the message group.
+ * @param bodies - The body commands for the message group.
+ * @returns A SimpleEventCommandGroup instance for message commands.
+ */
 export const createMessageGroup = (
   header: Command_ShowMessage,
   bodies: Command_ShowMessageBody[] = []
@@ -21,7 +34,7 @@ export const createMessageGroup = (
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
     Command_ShowMessageBody
-  >(401, header, bodies);
+  >(SHOW_MESSAGE_BODY, header, bodies);
 };
 
 export const createScrlloingTextGroup = (
@@ -31,7 +44,7 @@ export const createScrlloingTextGroup = (
   return new SimpleEventCommandGroup<
     Command_ShowScrollingText,
     Command_ShowScrollingTextBody
-  >(405, header, bodies);
+  >(SHOW_SCROLLING_TEXT_BODY, header, bodies);
 };
 
 export const createCommentGroup = (
@@ -40,7 +53,7 @@ export const createCommentGroup = (
 ) => {
   if (isChoiceHelp(header)) {
     return new SimpleEventCommandGroup<Command_Comment, Command_CommentBody>(
-      408,
+      COMMENT_BODY,
       header,
       bodies
     );
