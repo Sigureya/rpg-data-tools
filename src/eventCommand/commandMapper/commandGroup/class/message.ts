@@ -8,7 +8,7 @@ import {
   isCommandShowMessageBody,
   SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
-import { pickCommands } from "./pick2";
+import { pickCommands } from "./pick";
 import { SimpleEventCommandGroup } from "./types";
 
 export const extractMessageGroup = (
@@ -23,7 +23,7 @@ export const extractMessageGroup = (
   );
 };
 
-export const createMessageGroup2 = (
+export const createMessageGroup = (
   list: ReadonlyArray<EventCommand>,
   index: number
 ) => {
