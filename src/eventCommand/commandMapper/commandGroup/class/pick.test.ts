@@ -58,28 +58,39 @@ const testPickCommands = (
   });
 };
 
-describe("pickCommands", () => {
-  describe("", () => {
-    const mockFn = makeMockFunctions();
-    const commands: EventCommand[] = [
-      makeCommandShowMessage({}),
-      makeCommandShowMessageBody("bbb"),
-    ];
-    testPickCommands("valid head with single body", mockFn, commands, 0, {
-      head: makeCommandShowMessage({}),
-      bodys: [makeCommandShowMessageBody("bbb")],
+describe("pickCommands  - Normal Cases", () => {
+  const commands: EventCommand[] = [
+    makeCommandShowMessage({}),
+    makeCommandShowMessageBody("bbb"),
+  ];
+  describe("Invalid cases", () => {
+    test("should throw an error when the head is invalid", () => {
+      expect(() => pickEx(commands, 1)).toThrow();
     });
-    test("", () => expect(() => pickEx(commands, 1)).toThrow());
-    test("", () => {
+  });
+  describe("Valid cases", () => {
+    const mockFn = makeMockFunctions();
+    testPickCommands(
+      "should pick a valid head with a single body",
+      mockFn,
+      commands,
+      0,
+      {
+        head: makeCommandShowMessage({}),
+        bodys: [makeCommandShowMessageBody("bbb")],
+      }
+    );
+    test("should call head function once with the first command", () => {
       expect(mockFn.head).toHaveBeenCalledTimes(1);
       expect(mockFn.head).toBeCalledWith(commands[0]);
     });
-    test("", () => {
+    test("should call body function once with the second command", () => {
       expect(mockFn.body).toHaveBeenCalledTimes(1);
       expect(mockFn.body).toBeCalledWith(commands[1]);
     });
   });
-  describe("", () => {
+
+  describe("Valid cases with multiple bodies", () => {
     const mockFn = makeMockFunctions();
     const commands: EventCommand[] = [
       makeCommandShowMessage({}),
@@ -87,50 +98,74 @@ describe("pickCommands", () => {
       makeCommandShowMessageBody("ccc"),
       makeCommand2_CommonEvent({ eventId: 5 }),
     ];
-    testPickCommands("valid head with multiple bodies", mockFn, commands, 0, {
-      head: makeCommandShowMessage({}),
-      bodys: [
-        makeCommandShowMessageBody("bbb"),
-        makeCommandShowMessageBody("ccc"),
-      ],
+    testPickCommands(
+      "should pick a valid head with multiple bodies",
+      mockFn,
+      commands,
+      0,
+      {
+        head: makeCommandShowMessage({}),
+        bodys: [
+          makeCommandShowMessageBody("bbb"),
+          makeCommandShowMessageBody("ccc"),
+        ],
+      }
+    );
+    describe("Function call validation", () => {
+      test("should call head function once with the first command", () => {
+        expect(mockFn.head).toHaveBeenCalledTimes(1);
+        expect(mockFn.head).toBeCalledWith(commands[0]);
+      });
+
+      test("should call body function three times with the correct commands", () => {
+        expect(mockFn.body).toHaveBeenCalledTimes(3);
+        expect(mockFn.body).toBeCalledWith(commands[1]);
+        expect(mockFn.body).toBeCalledWith(commands[2]);
+        expect(mockFn.body).toBeCalledWith(commands[3]);
+      });
     });
-    test("", () => expect(() => pickEx(commands, 1)).toThrow());
-    test("", () => expect(() => pickEx(commands, 2)).toThrow());
-    test("", () => expect(() => pickEx(commands, 3)).toThrow());
+
+    describe("should throw an error when starting index is not a valid head", () => {
+      test("index 1", () => expect(() => pickEx(commands, 1)).toThrow());
+      test("index 2", () => expect(() => pickEx(commands, 2)).toThrow());
+      test("index 3", () => expect(() => pickEx(commands, 3)).toThrow());
+    });
   });
 });
 
-describe("", () => {
-  describe("", () => {
-    const mockFn = makeMockFunctions();
-    test("", () =>
-      expect(() =>
-        pickCommands<Command_ShowMessageHeader, Command_ShowMessageBody>(
-          [],
-          0,
-          mockFn.head as unknown as typeof isCommandShowMessage,
-          mockFn.body as unknown as typeof isCommandShowMessageBody
-        )
-      ).toThrow());
-    test("", () => expect(mockFn.body).toHaveBeenCalledTimes(0));
-    test("", () => expect(mockFn.head).toHaveBeenCalledTimes(1));
-  });
+describe("pickCommands - Edge cases", () => {
+  const mockFn = makeMockFunctions();
+  test("should throw an error when the array is empty", () =>
+    expect(() =>
+      pickCommands<Command_ShowMessageHeader, Command_ShowMessageBody>(
+        [],
+        0,
+        mockFn.head as unknown as typeof isCommandShowMessage,
+        mockFn.body as unknown as typeof isCommandShowMessageBody
+      )
+    ).toThrow());
+  test("should not call body function when the array is empty", () =>
+    expect(mockFn.body).toHaveBeenCalledTimes(0));
+  test("should call head function once when the array is empty", () =>
+    expect(mockFn.head).toHaveBeenCalledTimes(1));
 });
 
-describe("", () => {
-  test("", () => {
+describe("isCommand** functions", () => {
+  test("isCommandShowMessage should correctly identify valid and invalid heads", () => {
     const command: Command_ShowMessageHeader = makeCommandShowMessage({});
     expect(isCommandShowMessage(command)).toBe(true);
     expect(isCommandShowMessage(null)).toBe(false);
     expect(isCommandShowMessage(undefined)).toBe(false);
   });
-  test("", () => {
+
+  test("isCommandShowMessageBody should correctly identify valid and invalid bodies", () => {
     const command: Command_ShowMessageBody = makeCommandShowMessageBody("aaa");
     expect(isCommandShowMessageBody(command)).toBe(true);
     expect(isCommandShowMessageBody(null)).toBe(false);
     expect(isCommandShowMessageBody(undefined)).toBe(false);
   });
-  test("", () => {
+
+  test("isCommandShowMessage and isCommandShowMessageBody should reject unrelated commands", () => {
     const command: Command_CommonEvent = makeCommand2_CommonEvent({
       eventId: 5,
     });
