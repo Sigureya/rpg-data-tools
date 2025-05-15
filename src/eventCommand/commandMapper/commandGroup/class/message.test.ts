@@ -5,6 +5,7 @@ import type {
   ParamArray_ShowMessage,
 } from "@sigureya/rpgtypes";
 import {
+  makeCommand2_CommonEvent,
   makeCommandShowMessage,
   SHOW_MESSAGE,
   SHOW_MESSAGE_BODY,
@@ -26,6 +27,7 @@ describe("makeCommmand", () => {
 describe("createMessageGroup", () => {
   describe("", () => {
     const mockCommands: EventCommand[] = [
+      makeCommand2_CommonEvent({ eventId: 6 }),
       makeCommandShowMessage({
         facename: "face",
         speakerName: "speaker",
@@ -33,8 +35,9 @@ describe("createMessageGroup", () => {
       { code: SHOW_MESSAGE_BODY, parameters: ["aaa"], indent: 0 },
       { code: 401, parameters: ["bbb"], indent: 0 },
       { code: 401, parameters: ["ccc"], indent: 0 },
+      makeCommand2_CommonEvent({ eventId: 10 }),
     ];
-    const group = createMessageGroup(mockCommands, 0);
+    const group = createMessageGroup(mockCommands, 1);
     test("group", () => {
       expect(group).instanceOf(SimpleEventCommandGroup);
       expect(group.header.code).toBe(SHOW_MESSAGE);
@@ -71,6 +74,19 @@ describe("createMessageGroup", () => {
         }),
         { code: SHOW_MESSAGE_BODY, parameters: ["aaa\nbbb\nccc"], indent: 0 },
       ]);
+    });
+    test("", () => {
+      expect(mockCommands[1].code).toBe(SHOW_MESSAGE);
+      expect(() => createMessageGroup(mockCommands, 1)).not.toThrowError();
+    });
+    test("", () => {
+      expect(mockCommands.length).toBe(6);
+      expect(() => createMessageGroup(mockCommands, 0)).toThrowError();
+      expect(() => createMessageGroup(mockCommands, 2)).toThrowError();
+      expect(() => createMessageGroup(mockCommands, 3)).toThrowError();
+      expect(() => createMessageGroup(mockCommands, 4)).toThrowError();
+      expect(() => createMessageGroup(mockCommands, 5)).toThrowError();
+      expect(() => createMessageGroup(mockCommands, 6)).toThrowError();
     });
   });
 });
