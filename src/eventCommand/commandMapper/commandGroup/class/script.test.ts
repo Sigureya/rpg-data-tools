@@ -65,6 +65,7 @@ describe("createScriptGroup - CombinedEventCommandGroup Creation", () => {
         indent: 0,
         parameters: [expectedScript],
       } satisfies Command_ScriptHeader);
+      expect(mergedBody).not.toBe(result.header);
     });
 
     test("should return normalized commands", () => {
@@ -77,7 +78,7 @@ describe("createScriptGroup - CombinedEventCommandGroup Creation", () => {
         } satisfies Command_ScriptHeader,
       ];
       expect(newCommands).toEqual(expectedCommands);
-      expect(newCommands).not.toBe(result.header);
+      expect(newCommands[0]).not.toBe(result.header);
     });
   });
 });
