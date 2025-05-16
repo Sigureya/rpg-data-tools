@@ -1,7 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { createMessageGroup, extractMessageGroup } from "./message";
 import type {
-  Command_ShowMessage,
   Command_ShowMessageBody,
   Command_ShowMessageHeader,
   EventCommand,
@@ -102,8 +101,8 @@ describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
 
 describe("makeCommands", () => {
   test("should create a valid Command_ShowMessage instance", () => {
-    const command: Command_ShowMessage = makeCommandShowMessage({});
-    const expected: Command_ShowMessage = {
+    const command: Command_ShowMessageHeader = makeCommandShowMessage({});
+    const expected: Command_ShowMessageHeader = {
       code: SHOW_MESSAGE,
       parameters: ["", 0, 0, 2, ""],
       indent: 0,
