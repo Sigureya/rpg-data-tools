@@ -1,2 +1,2 @@
 export * from "./getTextFromCommand";
-export * from "./types";
+export * from "./fitures/types";
