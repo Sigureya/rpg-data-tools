@@ -1,5 +1,5 @@
 import type { EventCommandGroup_Message } from "src/eventCommand";
-import { pickSpeakerName } from "../speaker";
+import { pickSpeakerName } from "./speaker";
 import type { TextCommandParameter } from "./types";
 
 export const extractTextParamFromMessage = (
