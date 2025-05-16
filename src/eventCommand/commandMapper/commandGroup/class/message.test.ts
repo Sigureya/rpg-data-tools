@@ -4,13 +4,14 @@ import type {
   Command_ShowMessage,
   Command_ShowMessageBody,
   Command_ShowMessageHeader,
+  EventCommand,
 } from "@sigureya/rpgtypes";
 import {
   makeCommand2_CommonEvent,
   makeCommandShowMessage,
+  makeCommandShowMessageBody,
   SHOW_MESSAGE,
   SHOW_MESSAGE_BODY,
-  type EventCommand,
 } from "@sigureya/rpgtypes";
 import type { EventCommandGroupBase } from "./types";
 import { SimpleEventCommandGroup } from "./types";
@@ -38,7 +39,7 @@ describe("extractMessageGroup - Validation Tests", () => {
     }),
     bodies: [
       { code: SHOW_MESSAGE_BODY, parameters: ["aaa"], indent: 0 },
-      { code: 401, parameters: ["bbb"], indent: 0 },
+      makeCommandShowMessageBody("bbb"),
       { code: 401, parameters: ["ccc"], indent: 0 },
     ] satisfies Command_ShowMessageBody[],
   };
@@ -60,6 +61,7 @@ describe("extractMessageGroup - Validation Tests", () => {
 
 describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
   const result = createMessageGroup(mockCommands, 1);
+  const expectedBodyText = "aaa\nbbb\nccc" as const;
 
   describe("SimpleEventCommandGroup instance validation", () => {
     test("should create an instance of SimpleEventCommandGroup", () => {
@@ -67,15 +69,16 @@ describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
     });
 
     test("should return correct body text", () => {
-      expect(result.getBodyText()).toBe("aaa\nbbb\nccc");
+      expect(result.getBodyText()).toBe(expectedBodyText);
     });
 
     test("should return correct merged body", () => {
-      expect(result.mergedBody()).toEqual({
+      const mergedBody: Command_ShowMessageBody = result.mergedBody();
+      expect(mergedBody).toEqual({
         code: SHOW_MESSAGE_BODY,
         indent: 0,
-        parameters: ["aaa\nbbb\nccc"],
-      });
+        parameters: [expectedBodyText],
+      } satisfies Command_ShowMessageBody);
     });
 
     test("should return normalized commands", () => {
@@ -85,14 +88,14 @@ describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
           facename: "face",
           speakerName: "speaker",
         }),
-        { code: SHOW_MESSAGE_BODY, parameters: ["aaa\nbbb\nccc"], indent: 0 },
+        makeCommandShowMessageBody(expectedBodyText),
       ];
       expect(newCommands).toEqual(expectedCommands);
     });
   });
 });
 
-describe("createMessageGroup", () => {
+describe("makeCommands", () => {
   test("should create a valid Command_ShowMessage instance", () => {
     const command: Command_ShowMessage = makeCommandShowMessage({});
     const expected: Command_ShowMessage = {
