@@ -3,7 +3,6 @@ import { SimpleEventCommandGroup } from "./simple";
 import {
   createEventCommand,
   makeCommandShowMessage,
-  makeCommandShowMessageBody,
   SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
 import type {
@@ -12,57 +11,83 @@ import type {
   EventCommand,
 } from "@sigureya/rpgtypes";
 
-const testXXX = (
-  header: Command_ShowMessage,
-  xxxx: string[],
-  expectedText: string
+const testSimpleEventCommandGroup = (
+  bodyTexts: [string, ...string[]],
+  expectedText: string,
+  header: Command_ShowMessage = makeCommandShowMessage({})
 ) => {
   const group = new SimpleEventCommandGroup(
     SHOW_MESSAGE_BODY,
     header,
-    xxxx.map((text) => createEventCommand(SHOW_MESSAGE_BODY, [text]))
+    bodyTexts.map((text) => createEventCommand(SHOW_MESSAGE_BODY, [text]))
   );
-  describe("", () => {
+
+  describe("SimpleEventCommandGroup - Body Text and Merged Body Validation", () => {
     test("should return the correct body text", () => {
       expect(group.getBodyText()).toEqual(expectedText);
     });
-    const body: Command_ShowMessageBody = group.mergedBody();
 
-    test("", () => {
+    const body: Command_ShowMessageBody = group.mergedBody();
+    test("should create a merged body", () => {
+      expect(body).toBeTruthy();
+    });
+
+    test("should create a merged body with the correct parameters", () => {
       expect(body).toEqual({
         code: SHOW_MESSAGE_BODY,
         parameters: [expectedText],
         indent: 0,
       } satisfies Command_ShowMessageBody);
     });
-    test("", () => {
+
+    test("should not include the merged body in the original bodies array", () => {
       expect(group.bodies).not.toContain(body);
     });
   });
-  describe("", () => {
+
+  describe("SimpleEventCommandGroup - Normalized Commands Validation", () => {
     const result: EventCommand[] = group.normalizedCommands();
     test("", () => {
+      expect(result).toHaveLength(2);
+      expect(result.length).toBe(2);
+    });
+
+    test("should include a copy of the header in the normalized commands", () => {
       expect(result[0]).toEqual(header);
     });
-    test("", () => {
+
+    test("should not include the original header object in the normalized commands", () => {
       expect(result[0]).not.toBe(header);
     });
   });
 };
 
+describe("SimpleEventCommandGroup - General Cases", () => {
+  testSimpleEventCommandGroup(["xxx  "], "xxx");
+  testSimpleEventCommandGroup(["aaa", "bbb", "ccc"], "aaa\nbbb\nccc");
+  testSimpleEventCommandGroup([" aaa", "bbb\n", "ccc  "], " aaa\nbbb\nccc");
+});
 describe("", () => {
-  testXXX(makeCommandShowMessage({}), [], "");
-  testXXX(makeCommandShowMessage({}), ["xxx  "], "xxx");
-  testXXX(makeCommandShowMessage({}), ["aaa", "bbb", "ccc"], "aaa\nbbb\nccc");
-  testXXX(
-    makeCommandShowMessage({}),
-    [" aaa", "bbb\n", "ccc  "],
-    " aaa\nbbb\nccc"
-  );
+  describe("", () => {
+    testSimpleEventCommandGroup(["   "], "");
+    testSimpleEventCommandGroup(["\n"], "");
+  });
+
+  describe("", () => {
+    testSimpleEventCommandGroup(["xxx  "], "xxx");
+    testSimpleEventCommandGroup(["aaa\nbbb"], "aaa\nbbb");
+  });
+
+  describe("", () => {
+    testSimpleEventCommandGroup(["aaa", "bbb", "ccc"], "aaa\nbbb\nccc");
+
+    testSimpleEventCommandGroup([" aaa", "bbb\n", "ccc  "], " aaa\nbbb\nccc");
+    testSimpleEventCommandGroup([" aaa\nbbb\n", "ccc  "], " aaa\nbbb\nccc");
+  });
 });
 
 describe("SimpleEventCommandGroup - Edge Cases", () => {
-  test("Empty bodies array", () => {
+  describe("Empty bodies array", () => {
     const header: Command_ShowMessage = makeCommandShowMessage({
       speakerName: "Header",
     });
@@ -71,69 +96,25 @@ describe("SimpleEventCommandGroup - Edge Cases", () => {
       header,
       [] as Command_ShowMessageBody[]
     );
-    expect(group.getBodyText()).toBe(""); // 空のボディの場合、空文字列を返す
-    expect(group.normalizedCommands()).toEqual([header]); // ボディが空の場合、ヘッダーのみを返す
-  });
-
-  test("Single body with special characters", () => {
-    const header: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "Header",
+    test("", () => {
+      //　戻り値は常にobject型なので、この場合はやむを得ず空文字列のbodyを作成する
+      const body: Command_ShowMessageBody = group.mergedBody();
+      expect(body).not.toBeUndefined();
+      expect(body).toEqual({
+        code: SHOW_MESSAGE_BODY,
+        parameters: [""],
+        indent: 0,
+      } satisfies Command_ShowMessageBody);
     });
-    const body: Command_ShowMessageBody = createEventCommand(
-      SHOW_MESSAGE_BODY,
-      ["Line1\nLine2"]
-    );
-    const group = new SimpleEventCommandGroup(SHOW_MESSAGE_BODY, header, [
-      body,
-    ]);
-    expect(group.getBodyText()).toBe("Line1\nLine2"); // 改行を含む文字列が正しく結合される
-    expect(group.normalizedCommands()).toEqual([header, body]); // 正しい形式で返される
-  });
-
-  test("Multiple bodies with special characters", () => {
-    const header: Command_ShowMessage = makeCommandShowMessage({
-      speakerName: "Header",
+    test("", () => {
+      expect(group.getBodyText()).toBe(""); // 空のボディの場合、空文字列を返す
     });
-    const bodies: Command_ShowMessageBody[] = [
-      createEventCommand(SHOW_MESSAGE_BODY, ["aaa"]),
-      createEventCommand(SHOW_MESSAGE_BODY, ["bbb"]),
-    ];
-    const group = new SimpleEventCommandGroup(
-      SHOW_MESSAGE_BODY,
-      header,
-      bodies
-    );
-    expect(group.getBodyText()).toBe("aaa\nbbb"); // ボディが正しく結合される
-    expect(group.normalizedCommands()).toEqual([
-      header,
-      createEventCommand(SHOW_MESSAGE_BODY, ["aaa\nbbb"]),
-    ]);
-  });
-});
-describe("getBodyText", () => {
-  test("", () => {
-    const group = new SimpleEventCommandGroup(
-      SHOW_MESSAGE_BODY,
-      makeCommandShowMessage({}),
-      [] as Command_ShowMessageBody[]
-    );
-    expect(group.getBodyText()).toBe("");
-  });
-
-  test("", () => {
-    const group = new SimpleEventCommandGroup(
-      SHOW_MESSAGE_BODY,
-      makeCommandShowMessage({}),
-      [makeCommandShowMessageBody("aaa   ")]
-    );
-    expect(group.getBodyText()).toBe("aaa");
-  });
-  test("should return the correct body text", () => {
-    const group = new SimpleEventCommandGroup(
-      SHOW_MESSAGE_BODY,
-      makeCommandShowMessage({}),
-      [makeCommandShowMessageBody("aaa"), makeCommandShowMessageBody("bbb")]
-    );
-    expect(group.getBodyText()).toBe("aaa\nbbb");
+    const normalizedCommands: EventCommand[] = group.normalizedCommands();
+    test("", () => {
+      expect(normalizedCommands).toEqual([header]); // ボディが空の場合、ヘッダーのみを返す
+    });
+    test("", () => {
+      expect(normalizedCommands).not.toContain(group.header);
+    });
   });
 });
