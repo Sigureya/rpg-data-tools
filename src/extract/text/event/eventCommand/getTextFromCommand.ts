@@ -5,12 +5,12 @@ import {
   pickCommandParamString,
   processEventPages,
 } from "src";
-import type { EventCommand, ExtractCommandByParam } from "@sigureya/rpgtypes";
+import type { EventCommand } from "@sigureya/rpgtypes";
 import type { Command_ShowChoices } from "@sigureya/rpgtypes";
 import { readScript } from "./scriptEx";
 import type { TextCommandParameter } from "./fitures/types";
-import { pickSpeakerName } from "./speaker";
 import { extractTextFromActorCommand } from "./fitures/actor";
+import { extractTextParamFromMessage } from "./fitures/message";
 
 type CommandParam = TextCommandParameter;
 export const extractTextFromEventCommands = (
@@ -53,17 +53,6 @@ const extractTextMapper: TextCommandMapper<TextCommandParameter[]> = {
 
   other: () => [],
   commentBody: () => [],
-};
-
-export const extractTextParamFromMessage = (
-  messageCommand: EventCommandGroup_Message
-): Required<TextCommandParameter> => {
-  return {
-    code: messageCommand.bodyCode,
-    paramIndex: 0,
-    value: messageCommand.getBodyText(),
-    speaker: pickSpeakerName(messageCommand.header),
-  };
 };
 
 export const extractTextParamsFromChoice = (
