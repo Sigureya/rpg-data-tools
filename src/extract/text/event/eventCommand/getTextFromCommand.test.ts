@@ -1,18 +1,8 @@
-import { createMessageGroup, type CommandParameter } from "src";
+import { type CommandParameter } from "src";
 import * as RpgTypes from "@sigureya/rpgtypes";
-import type {
-  Command_ChangeName,
-  Command_ChangeNickName,
-  Command_ShowMessageBody,
-  Command_ShowMessageHeader,
-} from "@sigureya/rpgtypes";
 import {
-  CHANGE_NAME,
-  CHANGE_NICKNAME,
   makeCommandShowMessage,
-  makeCommandShowMessageBody,
   SHOW_CHOICES,
-  SHOW_MESSAGE_BODY,
   type Command_ShowMessage,
   type EventCommand,
 } from "@sigureya/rpgtypes";
@@ -22,8 +12,6 @@ import {
   extractTextParamsFromChoice,
 } from "./getTextFromCommand";
 import type { TextCommandParameter } from "./fitures";
-import { extractTextFromActorCommand } from "./fitures/actor";
-import { extractTextParamFromMessage } from "./fitures/message";
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
 const createMockCommand = <

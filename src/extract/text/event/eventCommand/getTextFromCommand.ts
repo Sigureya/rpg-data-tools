@@ -9,7 +9,6 @@ import type { EventCommand } from "@sigureya/rpgtypes";
 import type { Command_ShowChoices } from "@sigureya/rpgtypes";
 import { readScript } from "./scriptEx";
 import type { TextCommandParameter } from "./fitures/types";
-import { pickSpeakerName } from "./speaker";
 import { extractTextFromActorCommand } from "./fitures/actor";
 import { extractTextParamFromMessage } from "./fitures/message";
 
