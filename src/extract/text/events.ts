@@ -14,15 +14,15 @@ import { extractNoteText } from "./mainData";
 import {
   extractTextFromEventCommands,
   extractTextFromEventPages,
-} from "./eventCommand";
-import type { ExtractedEventText } from "./eventCommand/";
+} from "./event";
+import type { ExtractedEventText, TextCommandParameter } from "./event/";
 
 export const correctTextCommands = (
   page: { list: EventCommand[] },
   pageIndex: number,
   event: { id: number }
 ): ExtractedEventText => {
-  const list: CommandParameter<string>[][] = extractTextFromEventCommands(
+  const list: TextCommandParameter[][] = extractTextFromEventCommands(
     page.list
   );
   return {
