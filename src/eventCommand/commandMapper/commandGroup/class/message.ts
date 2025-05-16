@@ -27,7 +27,7 @@ export const createMessageGroup = (
   list: ReadonlyArray<EventCommand>,
   index: number
 ) => {
-  const { bodys, head } = extractMessageGroup(list, index);
+  const { bodies: bodys, header: head } = extractMessageGroup(list, index);
   return new SimpleEventCommandGroup<
     Command_ShowMessage,
     Command_ShowMessageBody
