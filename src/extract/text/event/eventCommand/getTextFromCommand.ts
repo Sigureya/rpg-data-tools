@@ -25,7 +25,7 @@ export const extractTextFromEventPages = (event: {
   );
 };
 
-export const extractTextMapper: TextCommandMapper<CommandParam[]> = {
+const extractTextMapper: TextCommandMapper<CommandParam[]> = {
   changeName: (command) => [pickCommandParamString(command, 1)],
   changeNickname: (command) => [pickCommandParamString(command, 1)],
   changeProfile: (command) => [pickCommandParamString(command, 1)],
