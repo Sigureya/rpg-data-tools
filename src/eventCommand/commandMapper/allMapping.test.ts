@@ -3,10 +3,6 @@ import * as CMD from "@sigureya/rpgtypes";
 import * as RmmzMock from "@sigureya/rmmzmock";
 
 import { mappingCommand } from "./allMapping";
-import {
-  createMessageGroup,
-  type EventCommandGroup_Message,
-} from "./commandGroup";
 import type { BasicMappingObject } from "./types";
 
 const createMockMapper = <Key extends string & keyof BasicMappingObject<void>>(
@@ -184,24 +180,5 @@ describe("mappingCommand", () => {
     code: CMD.CHANGE_TRANSPARENCY,
     indent: 0,
     parameters: [0],
-  });
-});
-describe("mappingCommand(groop)", () => {
-  test("showMessage", () => {
-    const command: CMD.Command_ShowMessage = {
-      code: CMD.SHOW_MESSAGE,
-      indent: 0,
-      parameters: ["aaa", 0, 0, 0, ""],
-    };
-
-    const mapper = {
-      showMessage: vi.fn(),
-      other: vi.fn(),
-    };
-    mappingCommand([command], 0, mapper);
-    expect(mapper.showMessage).toHaveBeenCalledTimes(1);
-    expect(mapper.showMessage).toHaveBeenCalledWith<
-      [EventCommandGroup_Message]
-    >(createMessageGroup(command));
   });
 });

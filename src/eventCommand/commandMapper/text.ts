@@ -10,13 +10,11 @@ import {
   SHOW_SCROLLING_TEXT,
 } from "@sigureya/rpgtypes";
 import type { EventCommand } from "@sigureya/rpgtypes";
-import {
-  handleGroupScrollingText,
-  handleGroupComment,
-  handleGroupScript,
-} from "./commandGroup";
 import type { TextCommandMapper } from "./textCommandMapper";
 import { createMessageGroup } from "./commandGroup/class/message";
+import { createScrollTextGroup } from "./commandGroup/class/scrollText";
+import { createCommentGroup } from "./commandGroup/class/comment";
+import { createScriptGroup } from "./commandGroup/class/script";
 
 export const handlerDispatch = <T>(
   array: ReadonlyArray<EventCommand>,
@@ -28,11 +26,11 @@ export const handlerDispatch = <T>(
     case SHOW_MESSAGE:
       return table.showMessage(createMessageGroup(array, index));
     case SHOW_SCROLLING_TEXT:
-      return handleGroupScrollingText(array, index, table.showScrollingText);
+      return table.showScrollingText(createScrollTextGroup(array, index));
     case COMMENT:
-      return handleGroupComment(array, index, table.comment);
+      return table.comment(createCommentGroup(array, index));
     case SCRIPT_EVAL:
-      return handleGroupScript(array, index, table.script);
+      return table.script(createScriptGroup(array, index));
 
     case SHOW_CHOICES:
       return table.showChoices(command, index, array);

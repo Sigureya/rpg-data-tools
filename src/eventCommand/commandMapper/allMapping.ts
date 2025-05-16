@@ -1,10 +1,11 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
-
-import { handleGroupScrollingText, handleGroupComment, handleGroupScript } from "./commandGroup";
 import type { CallBackFunc } from "./types";
 import type { PartialMappingObject } from "./mapperType";
 import { createMessageGroup } from "./commandGroup/class/message";
+import { createScrollTextGroup } from "./commandGroup/class/scrollText";
+import { createCommentGroup } from "./commandGroup/class/comment";
+import { createScriptGroup } from "./commandGroup/class/script";
 
 export const callHandler = <T, Command extends EventCommand>(
   command: Command,
@@ -46,7 +47,7 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.showMessageBody, table.other);
     case Code.SHOW_SCROLLING_TEXT:
       return table.showScrollingText
-        ? handleGroupScrollingText(array, index, table.showScrollingText)
+        ? table.showScrollingText(createScrollTextGroup(array, index))
         : table.other(command, index, array);
     case Code.SHOW_SCROLLING_TEXT_BODY:
       return callHandler(command, index, array, table.showScrollingTextBody, table.other);
@@ -58,13 +59,13 @@ export const mappingCommand = <T>(
     // コメント・スクリプト関連
     case Code.COMMENT_HEAD:
       return table.comment
-        ? handleGroupComment(array, index, table.comment)
+        ? table.comment(createCommentGroup(array, index))
         : table.other(command, index, array);
     case Code.COMMENT_BODY:
       return callHandler(command, index, array, table.commentBody, table.other);
     case Code.SCRIPT_EVAL:
       return table.script
-        ? handleGroupScript(array, index, table.script)
+        ? table.script(createScriptGroup(array, index))
         : table.other(command, index, array);
     case Code.SCRIPT_EVAL_BODY:
       return callHandler(command, index, array, table.scriptBody, table.other);
