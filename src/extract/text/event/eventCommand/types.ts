@@ -1,9 +1,14 @@
 import type { CommandParameter } from "src";
 
-export type TextCommandParameter = CommandParameter<string>;
+export interface TextCommandParameter extends CommandParameter<string> {
+  speaker?: string;
+  paramIndex: number;
+  value: string;
+  code: number;
+}
 
 export interface ExtractedEventText {
   eventId: number;
   pageIndex: number;
-  commands: CommandParameter<string>[];
+  commands: TextCommandParameter[];
 }
