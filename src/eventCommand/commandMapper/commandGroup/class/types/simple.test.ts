@@ -71,24 +71,24 @@ describe("SimpleEventCommandGroup - General Cases", () => {
   testSimpleEventCommandGroup(["aaa", "bbb", "ccc"], "aaa\nbbb\nccc");
   testSimpleEventCommandGroup([" aaa", "bbb\n", "ccc  "], " aaa\nbbb\nccc");
 });
-describe("", () => {
-  describe("", () => {
-    testSimpleEventCommandGroup(["   "], "");
-    testSimpleEventCommandGroup(["\n"], "");
-    testSimpleEventCommandGroup(["  ", "  "], "");
+
+describe("SimpleEventCommandGroup - Special Cases", () => {
+  describe("Empty or whitespace-only bodies", () => {
+    testSimpleEventCommandGroup(["   "], ""); // 空白のみ
+    testSimpleEventCommandGroup(["\n"], ""); // 改行のみ
+    testSimpleEventCommandGroup(["  ", "  "], ""); // 空白のみの複数ボディ
   });
 
-  describe("", () => {
-    testSimpleEventCommandGroup(["xxx  "], "xxx");
-    testSimpleEventCommandGroup(["xxx\t"], "xxx");
-    testSimpleEventCommandGroup(["aaa\nbbb"], "aaa\nbbb");
+  describe("Bodies with trailing whitespace or tabs", () => {
+    testSimpleEventCommandGroup(["xxx  "], "xxx"); // 末尾に空白
+    testSimpleEventCommandGroup(["xxx\t"], "xxx"); // 末尾にタブ
+    testSimpleEventCommandGroup(["aaa\nbbb"], "aaa\nbbb"); // 改行を含む
   });
 
-  describe("", () => {
-    testSimpleEventCommandGroup(["aaa", "bbb", "ccc"], "aaa\nbbb\nccc");
-
-    testSimpleEventCommandGroup([" aaa", "bbb\n", "ccc  "], " aaa\nbbb\nccc");
-    testSimpleEventCommandGroup([" aaa\nbbb\n", "ccc  "], " aaa\nbbb\nccc");
+  describe("Multiple bodies with mixed formatting", () => {
+    testSimpleEventCommandGroup(["aaa", "bbb", "ccc"], "aaa\nbbb\nccc"); // 複数ボディ
+    testSimpleEventCommandGroup([" aaa", "bbb\n", "ccc  "], " aaa\nbbb\nccc"); // 前後に空白や改行
+    testSimpleEventCommandGroup([" aaa\nbbb\n", "ccc  "], " aaa\nbbb\nccc"); // 複数行を含む
   });
 });
 
@@ -102,7 +102,8 @@ describe("SimpleEventCommandGroup - Edge Cases", () => {
       header,
       [] as Command_ShowMessageBody[]
     );
-    test("", () => {
+
+    test("should create a merged body with empty parameters", () => {
       const body: Command_ShowMessageBody = group.mergedBody();
       expect(body).not.toBeUndefined();
       expect(body).toEqual({
@@ -111,14 +112,18 @@ describe("SimpleEventCommandGroup - Edge Cases", () => {
         indent: 0,
       } satisfies Command_ShowMessageBody);
     });
-    test("", () => {
+
+    test("should return an empty string for body text", () => {
       expect(group.getBodyText()).toBe("");
     });
+
     const normalizedCommands: EventCommand[] = group.normalizedCommands();
-    test("", () => {
+
+    test("should return only the header in normalized commands", () => {
       expect(normalizedCommands).toEqual([header]);
     });
-    test("", () => {
+
+    test("should not include the original header object in normalized commands", () => {
       expect(normalizedCommands).not.toContain(group.header);
     });
   });
