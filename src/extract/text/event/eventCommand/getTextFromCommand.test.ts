@@ -22,7 +22,7 @@ const createMockCommand = <
     parameters: [s] as [string],
   }));
 
-const flattenExtractedText = (s: EventCommand[]): CommandParameter<string>[] =>
+const flattenExtractedText = (s: EventCommand[]) =>
   extractTextFromEventCommands(s).flat();
 
 describe("extractTextFromEventCommands", () => {
