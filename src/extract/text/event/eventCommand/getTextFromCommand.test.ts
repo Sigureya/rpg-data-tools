@@ -1,13 +1,29 @@
-import type { CommandParameter } from "src";
+import { createMessageGroup, type CommandParameter } from "src";
 import * as RpgTypes from "@sigureya/rpgtypes";
+import type {
+  Command_ChangeName,
+  Command_ChangeNickName,
+  Command_ShowMessageBody,
+  Command_ShowMessageHeader,
+} from "@sigureya/rpgtypes";
 import {
+  CHANGE_NAME,
+  CHANGE_NICKNAME,
   makeCommandShowMessage,
-  SHOW_MESSAGE,
+  makeCommandShowMessageBody,
+  SHOW_CHOICES,
+  SHOW_MESSAGE_BODY,
   type Command_ShowMessage,
   type EventCommand,
 } from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
-import { extractTextFromEventCommands } from "./getTextFromCommand";
+import {
+  extractTextFromEventCommands,
+  extractTextParamsFromChoice,
+  extractTextParamFromMessage,
+} from "./getTextFromCommand";
+import type { TextCommandParameter } from "./fitures";
+import { extractTextFromActorCommand } from "./fitures/actor";
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 
 const createMockCommand = <
@@ -25,29 +41,138 @@ const createMockCommand = <
 const flattenExtractedText = (s: EventCommand[]) =>
   extractTextFromEventCommands(s).flat();
 
-describe("extractTextFromEventCommands", () => {
+const test2 = (command: EventCommand[], expected: TextCommandParameter) => {
+  test("", () => {
+    const group = createMessageGroup(command, 0);
+    const result = extractTextParamFromMessage(group);
+    expect(result satisfies typeof expected).toEqual(expected);
+  });
+  test("", () => {
+    const result = flattenExtractedText(command);
+    expect(result).toEqual([expected] satisfies typeof result);
+  });
+};
+
+describe("extractTextParamFromMessage", () => {
+  describe("", () => {
+    const commands = [
+      makeCommandShowMessage({
+        speakerName: "abc",
+      }),
+      makeCommandShowMessageBody("xxx"),
+    ];
+    const expected: TextCommandParameter = {
+      speaker: "abc",
+      code: SHOW_MESSAGE_BODY,
+      value: "xxx",
+      paramIndex: 0,
+    };
+    test2(commands, expected);
+  });
+  describe("", () => {
+    const commands = [
+      makeCommandShowMessage({
+        speakerName: "abc",
+      }),
+      makeCommandShowMessageBody("xxx "),
+      makeCommandShowMessageBody("yyy"),
+    ];
+    const expected: TextCommandParameter = {
+      speaker: "abc",
+      code: SHOW_MESSAGE_BODY,
+      value: "xxx\nyyy",
+      paramIndex: 0,
+    };
+    test2(commands, expected);
+  });
+  describe("", () => {
+    const commands = [
+      makeCommandShowMessage({
+        speakerName: "abc",
+      }),
+      makeCommandShowMessageBody("xxx\nyyy"),
+    ];
+    const expected: TextCommandParameter = {
+      speaker: "abc",
+      code: SHOW_MESSAGE_BODY,
+      value: "xxx\nyyy",
+      paramIndex: 0,
+    };
+    test2(commands, expected);
+  });
+});
+describe("", () => {
+  const command: Command_ShowMessageHeader = makeCommandShowMessage({
+    speakerName: "abc",
+  });
+  test("", () => {
+    const group = createMessageGroup([command], 0);
+    const result = extractTextParamFromMessage(group);
+    expect(result).toEqual({
+      speaker: "abc",
+      code: SHOW_MESSAGE_BODY,
+      value: "",
+      paramIndex: 0,
+    } satisfies typeof result);
+  });
+  test("", () => {
+    const result: TextCommandParameter[] = flattenExtractedText([command]);
+    expect(result).toEqual([]);
+  });
+});
+
+describe("extractTextParamsFromChoice", () => {
+  describe("", () => {
+    const command: RpgTypes.Command_ShowChoices =
+      RpgTypes.makeCommandSetupChoice({
+        choices: [],
+      });
+    test("", () => {
+      const result = extractTextParamsFromChoice(command);
+      expect(result).toEqual([]);
+    });
+    test("", () => {
+      const result = flattenExtractedText([command]);
+      expect(result).toEqual([]);
+    });
+  });
+  describe("", () => {
+    const command: RpgTypes.Command_ShowChoices =
+      RpgTypes.makeCommandSetupChoice({
+        choices: ["choice1", "choice2"],
+      });
+    const expected: CommandParameter<string>[] = [
+      { code: SHOW_CHOICES, value: "choice1", paramIndex: 0 },
+      { code: SHOW_CHOICES, value: "choice2", paramIndex: 1 },
+    ];
+    test("", () => {
+      const result = extractTextParamsFromChoice(command);
+      expect(result).toEqual(expected);
+    });
+    test("", () => {
+      const result = flattenExtractedText([command]);
+      expect(result).toEqual(expected);
+    });
+  });
+});
+
+describe.skip("extractTextFromEventCommands", () => {
   describe("showMessage", () => {
     test("empty", () => {
       const command: Command_ShowMessage = makeCommandShowMessage({
         speakerName: "abc",
       });
       const result = flattenExtractedText([command]);
-      const expected: CommandParameter<string>[] = [
-        { code: SHOW_MESSAGE, value: "abc", paramIndex: 4 },
-      ];
-      expect(result).toEqual(expected);
-      expect(result.length).toEqual(1);
+      expect(result).toEqual([]);
     });
     test("single", () => {
       const command: [
         RpgTypes.Command_ShowMessage,
         RpgTypes.Command_ShowMessageBody
       ] = [
-        {
-          code: RpgTypes.SHOW_MESSAGE,
-          parameters: ["", 0, 0, 0, "speaker"],
-          indent: 0,
-        },
+        makeCommandShowMessage({
+          speakerName: "speaker",
+        }),
         {
           code: RpgTypes.SHOW_MESSAGE_BODY,
           parameters: ["message"],
@@ -55,25 +180,27 @@ describe("extractTextFromEventCommands", () => {
         },
       ];
       const result = flattenExtractedText(command);
-      const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.SHOW_MESSAGE, value: "speaker", paramIndex: 4 },
-        { code: RpgTypes.SHOW_MESSAGE_BODY, value: "message", paramIndex: 0 },
+      const expected: TextCommandParameter[] = [
+        {
+          speaker: "speaker",
+          code: RpgTypes.SHOW_MESSAGE_BODY,
+          value: "message",
+          paramIndex: 0,
+        },
       ];
       expect(result).toEqual(expected);
     });
     test("multi", () => {
-      const command: RpgTypes.Command_ShowMessage = {
-        code: RpgTypes.SHOW_MESSAGE,
-        parameters: ["", 0, 0, 0, "speaker"],
-        indent: 0,
-      };
+      const command: RpgTypes.Command_ShowMessage = makeCommandShowMessage({
+        speakerName: "speaker",
+      });
       const bodies: RpgTypes.Command_ShowMessageBody[] = createMockCommand(
         RpgTypes.SHOW_MESSAGE_BODY
       );
       const result = flattenExtractedText([command, ...bodies]);
-      const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.SHOW_MESSAGE, value: "speaker", paramIndex: 4 },
+      const expected: TextCommandParameter[] = [
         {
+          speaker: "speaker",
           code: RpgTypes.SHOW_MESSAGE_BODY,
           value: MockJoinedText,
           paramIndex: 0,
@@ -93,9 +220,9 @@ describe("extractTextFromEventCommands", () => {
         indent: 0,
       };
       const result = flattenExtractedText([command, ...bodies]);
-      const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.SHOW_MESSAGE, value: "speaker", paramIndex: 4 },
+      const expected: TextCommandParameter[] = [
         {
+          speaker: "speaker",
           code: RpgTypes.SHOW_MESSAGE_BODY,
           value: textList.join("\n"),
           paramIndex: 0,
