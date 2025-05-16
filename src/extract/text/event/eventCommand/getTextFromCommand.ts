@@ -5,11 +5,12 @@ import {
   pickCommandParamString,
   processEventPages,
 } from "src";
-import type { EventCommand } from "@sigureya/rpgtypes";
+import type { EventCommand, ExtractCommandByParam } from "@sigureya/rpgtypes";
 import type { Command_ShowChoices } from "@sigureya/rpgtypes";
 import { readScript } from "./scriptEx";
-import type { TextCommandParameter } from "./types";
+import type { TextCommandParameter } from "./fitures/types";
 import { pickSpeakerName } from "./speaker";
+import { extractTextFromActorCommand } from "./fitures/actor";
 
 type CommandParam = TextCommandParameter;
 export const extractTextFromEventCommands = (
@@ -28,15 +29,18 @@ export const extractTextFromEventPages = (event: {
 };
 
 const extractTextMapper: TextCommandMapper<TextCommandParameter[]> = {
-  changeName: (command) => [pickCommandParamString(command, 1)],
-  changeNickname: (command) => [pickCommandParamString(command, 1)],
-  changeProfile: (command) => [pickCommandParamString(command, 1)],
-  showChoices: (command) => commandChoice(command),
+  changeName: (command) => [extractTextFromActorCommand(command)],
+  changeNickname: (command) => [extractTextFromActorCommand(command)],
+  changeProfile: (command) => [extractTextFromActorCommand(command)],
+  showChoices: (command) => extractTextParamsFromChoice(command),
   showScrollingText: (groop) => {
     return [pickCommandParamString(groop.mergedBody(), 0)];
   },
-  showMessage: (data) => {
-    return [xxx(data)];
+  showMessage(data): TextCommandParameter[] {
+    if (data.bodies.length === 0) {
+      return [];
+    }
+    return [extractTextParamFromMessage(data)];
   },
   choiceWhen() {
     return [];
@@ -51,7 +55,7 @@ const extractTextMapper: TextCommandMapper<TextCommandParameter[]> = {
   commentBody: () => [],
 };
 
-const xxx = (
+export const extractTextParamFromMessage = (
   messageCommand: EventCommandGroup_Message
 ): Required<TextCommandParameter> => {
   return {
@@ -62,7 +66,9 @@ const xxx = (
   };
 };
 
-export const commandChoice = (command: Command_ShowChoices): CommandParam[] => {
+export const extractTextParamsFromChoice = (
+  command: Readonly<Command_ShowChoices>
+): CommandParam[] => {
   return command.parameters[0].map<CommandParam>((msg, index) => ({
     code: command.code,
     paramIndex: index,
