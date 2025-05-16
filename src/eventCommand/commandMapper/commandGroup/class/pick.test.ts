@@ -1,6 +1,5 @@
 import type { MockedFunction } from "vitest";
 import { describe, test, expect, vi } from "vitest";
-import type { ResultOfPickCommands } from "./pick";
 import { pickCommands } from "./pick";
 import type {
   Command_CommonEvent,
@@ -15,11 +14,15 @@ import {
   makeCommandShowMessageBody,
   makeCommand2_CommonEvent,
 } from "@sigureya/rpgtypes";
+import type { EventCommandGroupBase } from "./types";
 
 const pickEx = (
   commands: EventCommand[],
   index: number
-): ResultOfPickCommands<Command_ShowMessageHeader, Command_ShowMessageBody> => {
+): EventCommandGroupBase<
+  Command_ShowMessageHeader,
+  Command_ShowMessageBody
+> => {
   return pickCommands(
     commands,
     index,
@@ -41,7 +44,7 @@ const testPickCommands = (
   mockFn: MockFunctions,
   commands: EventCommand[],
   index: number,
-  expected: ResultOfPickCommands<
+  expected: EventCommandGroupBase<
     Command_ShowMessageHeader,
     Command_ShowMessageBody
   >
@@ -53,8 +56,8 @@ const testPickCommands = (
       mockFn.head as unknown as typeof isCommandShowMessage,
       mockFn.body as unknown as typeof isCommandShowMessageBody
     );
-    expect(result.head).toEqual(expected.head);
-    expect(result.bodys).toEqual(expected.bodys);
+    expect(result.header).toEqual(expected.header);
+    expect(result.bodies).toEqual(expected.bodies);
   });
 };
 
@@ -82,8 +85,8 @@ describe("pickCommands  - should handle a single head and a single body", () => 
       commands,
       0,
       {
-        head: makeCommandShowMessage({}),
-        bodys: [makeCommandShowMessageBody("bbb")],
+        header: makeCommandShowMessage({}),
+        bodies: [makeCommandShowMessageBody("bbb")],
       }
     );
     test("should call head function once with the first command", () => {
@@ -112,8 +115,8 @@ describe("pickCommands  - should handle a single head and a single body", () => 
       commands,
       0,
       {
-        head: makeCommandShowMessage({}),
-        bodys: [
+        header: makeCommandShowMessage({}),
+        bodies: [
           makeCommandShowMessageBody("bbb"),
           makeCommandShowMessageBody("ccc"),
         ],
@@ -158,8 +161,8 @@ describe("pickCommands - Complex Cases", () => {
       commands,
       0,
       {
-        head: makeCommandShowMessage({ speakerName: "alice" }),
-        bodys: [makeCommandShowMessageBody("bbb")],
+        header: makeCommandShowMessage({ speakerName: "alice" }),
+        bodies: [makeCommandShowMessageBody("bbb")],
       }
     );
   });
@@ -172,8 +175,8 @@ describe("pickCommands - Complex Cases", () => {
       commands,
       3,
       {
-        head: makeCommandShowMessage({ speakerName: "bob" }),
-        bodys: [
+        header: makeCommandShowMessage({ speakerName: "bob" }),
+        bodies: [
           makeCommandShowMessageBody("xxx"),
           makeCommandShowMessageBody("yyy"),
         ],
@@ -226,8 +229,8 @@ describe("pickCommands - Edge cases", () => {
       commands,
       0,
       {
-        head: makeCommandShowMessage({}),
-        bodys: [],
+        header: makeCommandShowMessage({}),
+        bodies: [],
       }
     );
   });

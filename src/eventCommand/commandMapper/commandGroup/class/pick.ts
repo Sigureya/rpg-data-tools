@@ -1,9 +1,5 @@
 import type { EventCommand, ExtractCommandByParam } from "@sigureya/rpgtypes";
-
-export interface ResultOfPickCommands<Head, Body> {
-  head: Head;
-  bodys: Body[];
-}
+import type { EventCommandGroupBase } from "./types";
 
 export const pickCommands = <
   Head extends EventCommand,
@@ -13,7 +9,7 @@ export const pickCommands = <
   index: number,
   headFn: (data: unknown) => data is Head,
   bodyFn: (data: unknown) => data is Body
-): ResultOfPickCommands<Head, Body> => {
+): EventCommandGroupBase<Head, Body> => {
   const head = array[index];
   if (!headFn(head)) {
     throw new Error(`Invalid head at index ${index}: ${JSON.stringify(head)}`);
@@ -27,5 +23,5 @@ export const pickCommands = <
       break;
     }
   }
-  return { head, bodys };
+  return { header: head, bodies: bodys };
 };
