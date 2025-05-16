@@ -20,6 +20,7 @@ describe("", () => {
   const commands = [
     makeCommandCommentHeader("aaa"),
     makeCommandCommentBody("bbb"),
+    makeCommand2_CommonEvent({ eventId: 6 }),
   ];
   const group = createCommentGroup(commands, 0);
   describe("", () => {
