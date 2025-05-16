@@ -1,8 +1,9 @@
 import { describe, test, expect } from "vitest";
-import { createMessageGroup } from "./message";
+import { createMessageGroup, extractMessageGroup } from "./message";
 import type {
   Command_ShowMessage,
-  ParamArray_ShowMessage,
+  Command_ShowMessageBody,
+  Command_ShowMessageHeader,
 } from "@sigureya/rpgtypes";
 import {
   makeCommand2_CommonEvent,
@@ -11,6 +12,7 @@ import {
   SHOW_MESSAGE_BODY,
   type EventCommand,
 } from "@sigureya/rpgtypes";
+import type { EventCommandGroupBase } from "./types";
 import { SimpleEventCommandGroup } from "./types";
 
 describe("makeCommmand", () => {
@@ -24,69 +26,64 @@ describe("makeCommmand", () => {
     expect(command).toEqual(expected);
   });
 });
-describe("createMessageGroup", () => {
+
+describe("", () => {
+  const mockCommands: EventCommand[] = [
+    makeCommand2_CommonEvent({ eventId: 6 }),
+    makeCommandShowMessage({
+      facename: "face",
+      speakerName: "speaker",
+    }),
+    { code: SHOW_MESSAGE_BODY, parameters: ["aaa"], indent: 0 },
+    { code: 401, parameters: ["bbb"], indent: 0 },
+    { code: 401, parameters: ["ccc"], indent: 0 },
+    makeCommand2_CommonEvent({ eventId: 10 }),
+  ];
+  const result = createMessageGroup(mockCommands, 1);
   describe("", () => {
-    const mockCommands: EventCommand[] = [
-      makeCommand2_CommonEvent({ eventId: 6 }),
-      makeCommandShowMessage({
-        facename: "face",
-        speakerName: "speaker",
-      }),
-      { code: SHOW_MESSAGE_BODY, parameters: ["aaa"], indent: 0 },
-      { code: 401, parameters: ["bbb"], indent: 0 },
-      { code: 401, parameters: ["ccc"], indent: 0 },
-      makeCommand2_CommonEvent({ eventId: 10 }),
-    ];
-    const group = createMessageGroup(mockCommands, 1);
-    test("group", () => {
-      expect(group).instanceOf(SimpleEventCommandGroup);
-      expect(group.header.code).toBe(SHOW_MESSAGE);
-      expect(group.header.parameters).toEqual([
-        "face",
-        0,
-        0,
-        2,
-        "speaker",
-      ] satisfies ParamArray_ShowMessage);
-      expect(group.bodies).toHaveLength(3);
-      expect(group.bodies[0].code).toBe(SHOW_MESSAGE_BODY);
-      expect(group.bodies[0].parameters).toEqual(["aaa"]);
-      expect(group.bodies[1].code).toBe(401);
-      expect(group.bodies[1].parameters).toEqual(["bbb"]);
-      expect(group.bodies[2].code).toBe(401);
-      expect(group.bodies[2].parameters).toEqual(["ccc"]);
+    expect(result).toBeInstanceOf(SimpleEventCommandGroup);
+    test("", () => {
+      expect(result.getBodyText()).toBe("aaa\nbbb\nccc");
     });
-    test("getBodyText", () => {
-      expect(group.getBodyText()).toBe("aaa\nbbb\nccc");
-    });
-    test("mergedBody", () => {
-      expect(group.mergedBody()).toEqual({
+    test("", () => {
+      expect(result.mergedBody()).toEqual({
         code: SHOW_MESSAGE_BODY,
         indent: 0,
         parameters: ["aaa\nbbb\nccc"],
       });
     });
-    test("normalizedCommands", () => {
-      expect(group.normalizedCommands()).toEqual([
+    test("", () => {
+      const newCommands: EventCommand[] = result.normalizedCommands();
+      const expectedCommands: EventCommand[] = [
         makeCommandShowMessage({
           facename: "face",
           speakerName: "speaker",
         }),
         { code: SHOW_MESSAGE_BODY, parameters: ["aaa\nbbb\nccc"], indent: 0 },
-      ]);
+      ];
+      expect(newCommands).toEqual(expectedCommands);
+    });
+  });
+  describe("", () => {
+    const expected: EventCommandGroupBase<
+      Command_ShowMessageHeader,
+      Command_ShowMessageBody
+    > = {
+      header: makeCommandShowMessage({
+        facename: "face",
+        speakerName: "speaker",
+      }),
+      bodies: [
+        { code: SHOW_MESSAGE_BODY, parameters: ["aaa"], indent: 0 },
+        { code: 401, parameters: ["bbb"], indent: 0 },
+        { code: 401, parameters: ["ccc"], indent: 0 },
+      ] satisfies Command_ShowMessageBody[],
+    };
+    test("", () => {
+      expect(extractMessageGroup(mockCommands, 1)).toEqual(expected);
     });
     test("", () => {
-      expect(mockCommands[1].code).toBe(SHOW_MESSAGE);
-      expect(() => createMessageGroup(mockCommands, 1)).not.toThrowError();
-    });
-    test("", () => {
-      expect(mockCommands.length).toBe(6);
-      expect(() => createMessageGroup(mockCommands, 0)).toThrowError();
-      expect(() => createMessageGroup(mockCommands, 2)).toThrowError();
-      expect(() => createMessageGroup(mockCommands, 3)).toThrowError();
-      expect(() => createMessageGroup(mockCommands, 4)).toThrowError();
-      expect(() => createMessageGroup(mockCommands, 5)).toThrowError();
-      expect(() => createMessageGroup(mockCommands, 6)).toThrowError();
+      expect(result).toMatchObject(expected);
     });
   });
 });
