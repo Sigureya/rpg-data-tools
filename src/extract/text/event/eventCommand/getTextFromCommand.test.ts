@@ -1,6 +1,11 @@
 import type { CommandParameter } from "src";
 import * as RpgTypes from "@sigureya/rpgtypes";
-import type { EventCommand } from "@sigureya/rpgtypes";
+import {
+  makeCommandShowMessage,
+  SHOW_MESSAGE,
+  type Command_ShowMessage,
+  type EventCommand,
+} from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
 import { extractTextFromEventCommands } from "./getTextFromCommand";
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
@@ -23,14 +28,12 @@ const flattenExtractedText = (s: EventCommand[]): CommandParameter<string>[] =>
 describe("extractTextFromEventCommands", () => {
   describe("showMessage", () => {
     test("empty", () => {
-      const command: RpgTypes.Command_ShowMessage = {
-        code: RpgTypes.SHOW_MESSAGE,
-        parameters: ["", 0, 0, 0, ""],
-        indent: 0,
-      };
+      const command: Command_ShowMessage = makeCommandShowMessage({
+        speakerName: "abc",
+      });
       const result = flattenExtractedText([command]);
       const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.SHOW_MESSAGE, value: "", paramIndex: 4 },
+        { code: SHOW_MESSAGE, value: "abc", paramIndex: 4 },
       ];
       expect(result).toEqual(expected);
       expect(result.length).toEqual(1);
