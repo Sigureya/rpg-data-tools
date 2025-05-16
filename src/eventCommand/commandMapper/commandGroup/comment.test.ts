@@ -15,7 +15,8 @@ import {
   makeCommand2_CommonEvent,
   COMMENT_BODY,
 } from "@sigureya/rpgtypes";
-import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./types";
+import type { EventCommandGroup_Comment } from "./core";
+import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./core";
 
 describe("extractCommentGroup - Validation Tests", () => {
   const commands = [
@@ -50,7 +51,7 @@ describe("createCommentGroup - CombinedEventCommandGroup Creation", () => {
     makeCommandCommentBody("bbb"),
     makeCommandCommentBody("ccc"),
   ];
-  const group = createCommentGroup(commands, 0);
+  const group: EventCommandGroup_Comment = createCommentGroup(commands, 0);
 
   describe("CombinedEventCommandGroup instance validation", () => {
     test("should create an instance of CombinedEventCommandGroup", () => {
@@ -79,7 +80,7 @@ describe("createCommentGroup - SimpleEventCommandGroup Creation", () => {
     makeCommandCommentHeader(CHOICE_HELP_TEXT),
     makeCommandCommentBody("Help text"),
   ];
-  const group = createCommentGroup(commands, 0);
+  const group: EventCommandGroup_Comment = createCommentGroup(commands, 0);
 
   describe("SimpleEventCommandGroup instance validation", () => {
     test("should create an instance of SimpleEventCommandGroup", () => {

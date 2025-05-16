@@ -2,10 +2,12 @@ import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
 import type { CallBackFunc } from "./types";
 import type { PartialMappingObject } from "./mapperType";
-import { createMessageGroup } from "./commandGroup/class/message";
-import { createScrollTextGroup } from "./commandGroup/class/scrollText";
-import { createCommentGroup } from "./commandGroup/class/comment";
-import { createScriptGroup } from "./commandGroup/class/script";
+import {
+  createMessageGroup,
+  createScrollTextGroup,
+  createCommentGroup,
+  createScriptGroup,
+} from "./commandGroup";
 
 export const callHandler = <T, Command extends EventCommand>(
   command: Command,

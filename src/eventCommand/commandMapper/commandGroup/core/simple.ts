@@ -1,7 +1,6 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
-import type { TextCommandBody } from "./textCommandBody";
-import type { EventCommandGroup } from "./groopTypes";
-import { textFromJoinedBodies } from "./join";
+import { textFromJoinedBodies } from "./utils/join";
+import type { EventCommandGroup, TextCommandBody } from "./types";
 
 //　メッセージとかscrollテキスト。ヘッダとbodyが異なるパターン
 export class SimpleEventCommandGroup<

@@ -10,9 +10,12 @@ import {
   COMMENT_BODY,
 } from "@sigureya/rpgtypes";
 
-import { pickCommands } from "./pick";
-import type { EventCommandGroup_Comment } from "./types";
-import { CombinedEventCommandGroup, SimpleEventCommandGroup } from "./types";
+import type { EventCommandGroup_Comment } from "./core";
+import {
+  SimpleEventCommandGroup,
+  CombinedEventCommandGroup,
+  pickCommands,
+} from "./core";
 
 export const extractCommentGroup = (
   list: ReadonlyArray<EventCommand>,

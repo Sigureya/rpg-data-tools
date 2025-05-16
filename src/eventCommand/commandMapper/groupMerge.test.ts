@@ -2,7 +2,7 @@ import * as Types from "@sigureya/rpgtypes";
 import { describe, expect, test } from "vitest";
 import { normalizedCommands } from "./groupMerge";
 import * as RmmzMock from "@sigureya/rmmzmock";
-import { CHOICE_HELP_TEXT } from "./commandGroup/class/comment";
+import { CHOICE_HELP_TEXT } from "./commandGroup";
 
 const MockJoinedText = "The quick\nbrown fox\njumps over" as const;
 

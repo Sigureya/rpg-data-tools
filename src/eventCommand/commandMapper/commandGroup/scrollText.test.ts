@@ -10,8 +10,7 @@ import {
   makeCommandScrollingTextBody,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import { SimpleEventCommandGroup } from "./types";
-import type { EventCommandGroupBase } from "./types";
+import { SimpleEventCommandGroup, type EventCommandGroupBase } from "./core";
 
 const mockCommands: EventCommand[] = [
   makeCommandScrollingTextHeader({

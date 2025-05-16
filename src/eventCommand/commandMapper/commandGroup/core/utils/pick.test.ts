@@ -14,15 +14,11 @@ import {
   makeCommandShowMessageBody,
   makeCommand2_CommonEvent,
 } from "@sigureya/rpgtypes";
-import type { EventCommandGroupBase } from "./types";
 
-const pickEx = (
-  commands: EventCommand[],
-  index: number
-): EventCommandGroupBase<
-  Command_ShowMessageHeader,
-  Command_ShowMessageBody
-> => {
+type Pair = ReturnType<
+  typeof pickCommands<Command_ShowMessageHeader, Command_ShowMessageBody>
+>;
+const pickEx = (commands: EventCommand[], index: number): Pair => {
   return pickCommands(
     commands,
     index,
@@ -44,10 +40,7 @@ const testPickCommands = (
   mockFn: MockFunctions,
   commands: EventCommand[],
   index: number,
-  expected: EventCommandGroupBase<
-    Command_ShowMessageHeader,
-    Command_ShowMessageBody
-  >
+  expected: Pair
 ) => {
   test(description, () => {
     const result = pickCommands(
