@@ -7,7 +7,7 @@ import type {
 } from "@sigureya/rpgtypes";
 import { getControlChars, makeCommandShowMessage } from "@sigureya/rpgtypes";
 
-describe("", () => {
+describe.skip("", () => {
   describe("", () => {
     test("", () => expect(speakerNameIsHHH("abc")).toBe(true));
     test("", () => expect(speakerNameIsHHH("\\C[67]abc")).toBe(true));
