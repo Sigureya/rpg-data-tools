@@ -23,8 +23,12 @@ const testSimpleEventCommandGroup = (
   );
 
   describe("SimpleEventCommandGroup - Body Text and Merged Body Validation", () => {
+    const bodyText: string = group.getBodyText();
     test("should return the correct body text", () => {
-      expect(group.getBodyText()).toEqual(expectedText);
+      expect(bodyText).toEqual(expectedText);
+    });
+    test("", () => {
+      expect(bodyText).not.toMatch(/^\s+$/);
     });
 
     const body: Command_ShowMessageBody = group.mergedBody();
@@ -71,10 +75,12 @@ describe("", () => {
   describe("", () => {
     testSimpleEventCommandGroup(["   "], "");
     testSimpleEventCommandGroup(["\n"], "");
+    testSimpleEventCommandGroup(["  ", "  "], "");
   });
 
   describe("", () => {
     testSimpleEventCommandGroup(["xxx  "], "xxx");
+    testSimpleEventCommandGroup(["xxx\t"], "xxx");
     testSimpleEventCommandGroup(["aaa\nbbb"], "aaa\nbbb");
   });
 
@@ -97,7 +103,6 @@ describe("SimpleEventCommandGroup - Edge Cases", () => {
       [] as Command_ShowMessageBody[]
     );
     test("", () => {
-      //　戻り値は常にobject型なので、この場合はやむを得ず空文字列のbodyを作成する
       const body: Command_ShowMessageBody = group.mergedBody();
       expect(body).not.toBeUndefined();
       expect(body).toEqual({
@@ -107,11 +112,11 @@ describe("SimpleEventCommandGroup - Edge Cases", () => {
       } satisfies Command_ShowMessageBody);
     });
     test("", () => {
-      expect(group.getBodyText()).toBe(""); // 空のボディの場合、空文字列を返す
+      expect(group.getBodyText()).toBe("");
     });
     const normalizedCommands: EventCommand[] = group.normalizedCommands();
     test("", () => {
-      expect(normalizedCommands).toEqual([header]); // ボディが空の場合、ヘッダーのみを返す
+      expect(normalizedCommands).toEqual([header]);
     });
     test("", () => {
       expect(normalizedCommands).not.toContain(group.header);
