@@ -9,6 +9,7 @@ import type {
   Command_ShowScrollingTextBody,
   EventCommand,
   ExtractCommandByParam,
+  SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
 
 export interface EventCommandGroupBase<
@@ -50,7 +51,7 @@ export interface EventCommandGroup<
 export type EventCommandGroup_Message = EventCommandGroup<
   Command_ShowMessage,
   Command_ShowMessageBody
->;
+> & { bodyCode: typeof SHOW_MESSAGE_BODY };
 
 export type EventCommandGroup_Comment = EventCommandGroup<
   Command_Comment,
