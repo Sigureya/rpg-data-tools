@@ -1,34 +1,16 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 
+import { pickComments, pickScripts, pickScrollText } from "./pickCommands";
 import {
-  pickComments,
-  pickMessageWithHead,
-  pickScripts,
-  pickScrollText,
-} from "./pickCommands";
-import {
-  createMessageGroup,
   createCommentGroup,
   createScriptGroup,
   createScrlloingTextGroup,
 } from "./class";
 import type {
   EventCommandGroup_Comment,
-  EventCommandGroup_Message,
   EventCommandGroup_Script,
   EventCommandGroup_ScrollingText,
 } from "./class";
-export const handleGroupMessage = <Result>(
-  array: ReadonlyArray<EventCommand>,
-  index: number,
-  func: (groop: EventCommandGroup_Message) => Result
-): Result => {
-  const pair = pickMessageWithHead(array, index);
-
-  const group = createMessageGroup(pair.head, pair.bodys);
-
-  return func(group);
-};
 
 export const handleGroupScrollingText = <Result>(
   array: ReadonlyArray<EventCommand>,

@@ -8,9 +8,9 @@ import {
 import type {
   Command_GetLocationInfo,
   Command_SelectItem,
+  Command_InputNumber,
   Command_ControlVariables,
   Operand_Variable,
-  Command_InputNumber,
 } from "@sigureya/rpgtypes";
 import {
   CONTROL_VARIABLES,

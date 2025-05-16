@@ -104,43 +104,43 @@ describe("extractTextFromEventCommands", () => {
   describe("comment", () => {
     test("empty", () => {
       const command: RpgTypes.Command_Comment = {
-        code: RpgTypes.COMMENT,
+        code: RpgTypes.COMMENT_HEAD,
         parameters: [""],
         indent: 0,
       };
       const result = flattenExtractedText([command]);
       const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.COMMENT, value: "", paramIndex: 0 },
+        { code: RpgTypes.COMMENT_HEAD, value: "", paramIndex: 0 },
       ];
       expect(result).toEqual(expected);
       expect(result.length).toEqual(1);
     });
     test("single", () => {
       const command: RpgTypes.Command_Comment = {
-        code: RpgTypes.COMMENT,
+        code: RpgTypes.COMMENT_HEAD,
         parameters: ["comment"],
         indent: 0,
       };
       const result = flattenExtractedText([command]);
       const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.COMMENT, value: "comment", paramIndex: 0 },
+        { code: RpgTypes.COMMENT_HEAD, value: "comment", paramIndex: 0 },
       ];
       expect(result).toEqual(expected);
     });
     test.skip("multi", () => {
       const command: RpgTypes.Command_Comment = {
-        code: RpgTypes.COMMENT,
+        code: RpgTypes.COMMENT_HEAD,
         parameters: ["comment"],
         indent: 0,
       };
       const bodies: RpgTypes.Command_Comment[] = createMockCommand(
-        RpgTypes.COMMENT
+        RpgTypes.COMMENT_HEAD
       );
       const result = flattenExtractedText([command, ...bodies]);
       const expected: CommandParameter<string>[] = [
-        { code: RpgTypes.COMMENT, value: "comment", paramIndex: 0 },
+        { code: RpgTypes.COMMENT_HEAD, value: "comment", paramIndex: 0 },
         {
-          code: RpgTypes.COMMENT,
+          code: RpgTypes.COMMENT_HEAD,
           value: MockJoinedText,
           paramIndex: 0,
         },

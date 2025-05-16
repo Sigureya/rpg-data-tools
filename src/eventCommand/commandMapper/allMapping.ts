@@ -1,15 +1,10 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
 
-import type { EventCommandGroup } from "./commandGroup";
-import {
-  handleGroupMessage,
-  handleGroupScrollingText,
-  handleGroupComment,
-  handleGroupScript,
-} from "./commandGroup";
+import { handleGroupScrollingText, handleGroupComment, handleGroupScript } from "./commandGroup";
 import type { CallBackFunc } from "./types";
 import type { PartialMappingObject } from "./mapperType";
+import { createMessageGroup } from "./commandGroup/class/message";
 
 export const callHandler = <T, Command extends EventCommand>(
   command: Command,
@@ -19,24 +14,6 @@ export const callHandler = <T, Command extends EventCommand>(
   fallback: CallBackFunc<EventCommand, T>
 ): T => {
   return handler ? handler(command, index, array) : fallback(command, index, array);
-};
-
-const callXXX = <
-  Result,
-  Head extends EventCommand,
-  Body extends Code.ExtractCommandByParam<[string]>
->(
-  command: Head,
-  index: number,
-  array: ReadonlyArray<EventCommand>,
-  singleHandler: CallBackFunc<Head, Result> | undefined,
-  groopHandler: ((groop: EventCommandGroup<Head, Body>) => Result) | undefined,
-  fallback: CallBackFunc<EventCommand, Result>
-) => {
-  // if (groopHandler) {
-  // }
-
-  return fallback(command, index, array);
 };
 
 export const mappingCommandList = <T>(
@@ -63,7 +40,7 @@ export const mappingCommand = <T>(
     // メッセージ関連
     case Code.SHOW_MESSAGE:
       return table.showMessage
-        ? handleGroupMessage(array, index, table.showMessage)
+        ? table.showMessage(createMessageGroup(array, index))
         : table.other(command, index, array);
     case Code.SHOW_MESSAGE_BODY:
       return callHandler(command, index, array, table.showMessageBody, table.other);
@@ -79,7 +56,7 @@ export const mappingCommand = <T>(
       return callHandler(command, index, array, table.choiceWhen, table.other);
 
     // コメント・スクリプト関連
-    case Code.COMMENT:
+    case Code.COMMENT_HEAD:
       return table.comment
         ? handleGroupComment(array, index, table.comment)
         : table.other(command, index, array);

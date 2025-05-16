@@ -11,10 +11,18 @@ import type {
   ExtractCommandByParam,
 } from "@sigureya/rpgtypes";
 
-export interface EventCommandGroup<
+export interface EventCommandGroupBase<
   Header extends EventCommand,
   Body extends ExtractCommandByParam<[string]>
 > {
+  header: Header;
+  bodies: Body[];
+}
+
+export interface EventCommandGroup<
+  Header extends EventCommand,
+  Body extends ExtractCommandByParam<[string]>
+> extends EventCommandGroupBase<Header, Body> {
   /**
    * Merges all body commands into a single command.
    * @returns A merged command containing all body text.
