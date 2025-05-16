@@ -4,26 +4,37 @@ import type { TextCommandBody } from "./textCommandBody";
 type PickedTextCommandBody = Pick<TextCommandBody, "parameters">;
 
 describe("textFromJoinedBodies", () => {
-  test("empty", () => {
+  test("should return an empty string when the input array is empty", () => {
     const result = textFromJoinedBodies([]);
     expect(result).toBe("");
   });
 
-  test("single", () => {
+  test("should return the single string when the input contains one body", () => {
     const result: string = textFromJoinedBodies([
       { parameters: ["aaa"] },
     ] satisfies PickedTextCommandBody[]);
     expect(result).toBe("aaa");
   });
 
-  test("multiple", () => {
+  test("should trim trailing whitespace from a single string", () => {
+    const result: string = textFromJoinedBodies([{ parameters: ["aaa "] }]);
+    expect(result).toBe("aaa");
+  });
+
+  test("should return the string as-is when it contains spaces", () => {
+    const result: string = textFromJoinedBodies([{ parameters: ["aaa bbb"] }]);
+    expect(result).toBe("aaa bbb");
+  });
+
+  test("should join multiple strings with a newline", () => {
     const result: string = textFromJoinedBodies([
       { parameters: ["aaa"] },
       { parameters: ["bbb"] },
     ]);
     expect(result).toBe("aaa\nbbb");
   });
-  test("multiple2", () => {
+
+  test("should handle multiple strings with trailing newlines", () => {
     const result: string = textFromJoinedBodies([
       { parameters: ["aaa\n"] },
       { parameters: ["bbb"] },
@@ -31,7 +42,7 @@ describe("textFromJoinedBodies", () => {
     expect(result).toBe("aaa\nbbb");
   });
 
-  test("empty string in parameters", () => {
+  test("should handle empty strings in parameters", () => {
     const result = textFromJoinedBodies([
       { parameters: [""] },
       { parameters: ["aaa"] },
@@ -39,7 +50,7 @@ describe("textFromJoinedBodies", () => {
     expect(result).toBe("\naaa");
   });
 
-  test("parameters with whitespace only", () => {
+  test("should handle parameters with whitespace only", () => {
     const result = textFromJoinedBodies([
       { parameters: ["   "] },
       { parameters: ["aaa"] },
@@ -47,7 +58,7 @@ describe("textFromJoinedBodies", () => {
     expect(result).toBe("\naaa");
   });
 
-  test("parameters with special characters", () => {
+  test("should handle parameters with special characters", () => {
     const result = textFromJoinedBodies([
       { parameters: ["aaa\nbbb"] },
       { parameters: ["ccc"] },
@@ -55,7 +66,7 @@ describe("textFromJoinedBodies", () => {
     expect(result).toBe("aaa\nbbb\nccc");
   });
 
-  test("long strings", () => {
+  test("should handle long strings correctly", () => {
     const longString = "a".repeat(1000);
     const result = textFromJoinedBodies([
       { parameters: [longString] },
