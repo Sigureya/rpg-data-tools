@@ -80,9 +80,10 @@ describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
         parameters: [expectedBodyText],
       } satisfies Command_ShowMessageBody);
     });
-
+  });
+  describe("", () => {
+    const newCommands: EventCommand[] = result.normalizedCommands();
     test("should return normalized commands", () => {
-      const newCommands: EventCommand[] = result.normalizedCommands();
       const expectedCommands: EventCommand[] = [
         makeCommandShowMessage({
           facename: "face",
@@ -91,6 +92,10 @@ describe("createMessageGroup - SimpleEventCommandGroup Creation", () => {
         makeCommandShowMessageBody(expectedBodyText),
       ];
       expect(newCommands).toEqual(expectedCommands);
+    });
+    test("", () => {
+      expect(newCommands[0]).not.toBe(result.header);
+      expect(newCommands[0]).toEqual(result.header);
     });
   });
 });
