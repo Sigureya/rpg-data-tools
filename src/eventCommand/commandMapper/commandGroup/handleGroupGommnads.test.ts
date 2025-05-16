@@ -1,17 +1,11 @@
 import type { MockedFunction } from "vitest";
 import { describe, it, expect, vi } from "vitest";
 import {
-  handleGroupMessage,
   handleGroupScrollingText,
   handleGroupComment,
   handleGroupScript,
 } from "./handleGroupGommnads";
-import {
-  pickMessageWithHead,
-  pickScrollText,
-  pickComments,
-  pickScripts,
-} from "./pickCommands";
+import { pickScrollText, pickComments, pickScripts } from "./pickCommands";
 import type {
   EventCommandPair_Message,
   EventCommandPair_ScrollingText,
@@ -26,35 +20,6 @@ vi.mock("./pickCommands", () => ({
   pickComments: vi.fn(),
   pickScripts: vi.fn(),
 }));
-
-describe("handleGroupMessage", () => {
-  it("should call the callback with a SimpleEventCommandGroup", () => {
-    const mockPair: EventCommandPair_Message = {
-      head: { code: 101, parameters: ["", 0, 0, 2, ""], indent: 0 },
-      bodys: [],
-    } as const;
-    (
-      pickMessageWithHead as MockedFunction<typeof pickMessageWithHead>
-    ).mockReturnValue(mockPair);
-    const callback = vi.fn();
-    const result = handleGroupMessage([], 0, callback);
-    expect(callback).toHaveBeenCalledWith(
-      new SimpleEventCommandGroup(401, mockPair.head, mockPair.bodys)
-    );
-    expect(result).toBe(callback.mock.results[0].value);
-  });
-
-  it("should throw an error when pickMessageWithHead fails", () => {
-    (
-      pickMessageWithHead as MockedFunction<typeof pickMessageWithHead>
-    ).mockImplementation(() => {
-      throw new Error("Invalid message command");
-    });
-    expect(() => handleGroupMessage([], 0, vi.fn())).toThrow(
-      "Invalid message command"
-    );
-  });
-});
 
 describe("handleGroupScrollingText", () => {
   it("should call the callback with a SimpleEventCommandGroup", () => {

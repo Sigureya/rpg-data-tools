@@ -1,7 +1,6 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
 
-import type { EventCommandGroup } from "./commandGroup";
 import { handleGroupScrollingText, handleGroupComment, handleGroupScript } from "./commandGroup";
 import type { CallBackFunc } from "./types";
 import type { PartialMappingObject } from "./mapperType";
