@@ -11,10 +11,12 @@ import {
 } from "@sigureya/rpgtypes";
 import type { EventCommand } from "@sigureya/rpgtypes";
 import type { TextCommandMapper } from "./textCommandMapper";
-import { createMessageGroup } from "./commandGroup/class/message";
-import { createScrollTextGroup } from "./commandGroup/class/scrollText";
-import { createCommentGroup } from "./commandGroup/class/comment";
-import { createScriptGroup } from "./commandGroup/class/script";
+import {
+  createMessageGroup,
+  createScrollTextGroup,
+  createCommentGroup,
+  createScriptGroup,
+} from "./commandGroup";
 
 export const handlerDispatch = <T>(
   array: ReadonlyArray<EventCommand>,

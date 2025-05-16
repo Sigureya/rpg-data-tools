@@ -1,6 +1,5 @@
-import type { EventCommandGroup } from "./groopTypes";
-import { textFromJoinedBodies } from "./join";
-import type { TextCommandBody } from "./textCommandBody";
+import type { EventCommandGroup, TextCommandBody } from "./types";
+import { textFromJoinedBodies } from "./utils/join";
 
 // 注釈やコメントなどの先頭とbodyが同じパラメータ型のパターン
 export class CombinedEventCommandGroup<

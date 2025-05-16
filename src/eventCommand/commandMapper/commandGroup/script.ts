@@ -3,9 +3,7 @@ import {
   isCommandScriptHeader,
   type EventCommand,
 } from "@sigureya/rpgtypes";
-import { pickCommands } from "./pick";
-import { CombinedEventCommandGroup } from "./types";
-
+import { pickCommands, CombinedEventCommandGroup } from "./core";
 export const extractScriptGroup = (
   list: ReadonlyArray<EventCommand>,
   index: number

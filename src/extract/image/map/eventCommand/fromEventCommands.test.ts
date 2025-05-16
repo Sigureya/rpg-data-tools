@@ -2,8 +2,8 @@ import { describe, expect, test, vi } from "vitest";
 import { extractImagesFromCommandList } from "./fromEventCommands";
 import * as RpgTypes from "@sigureya/rpgtypes";
 import type { ImageCommand } from "./types";
-import type { PartialMappingObject } from "src";
-import { flatMappingCommandList, isImageCommand } from "src";
+import type { PartialMappingObject } from "src/eventCommand";
+import { isImageCommand, flatMappingCommandList } from "src/eventCommand";
 
 const expectFlat = (commands: RpgTypes.EventCommand[]) => {
   return extractImagesFromCommandList(commands);

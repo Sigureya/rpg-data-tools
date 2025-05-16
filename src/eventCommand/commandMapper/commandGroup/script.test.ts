@@ -12,7 +12,7 @@ import {
   SCRIPT_EVAL,
   makeCommand2_CommonEvent,
 } from "@sigureya/rpgtypes";
-import { CombinedEventCommandGroup } from "./types";
+import { CombinedEventCommandGroup } from "./core";
 
 const mockCommands: EventCommand[] = [
   makeCommand2_CommonEvent({ eventId: 6 }),

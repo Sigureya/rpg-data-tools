@@ -4,8 +4,7 @@ import {
   isCommandScrollTextHead,
   SHOW_SCROLLING_TEXT_BODY,
 } from "@sigureya/rpgtypes";
-import { pickCommands } from "./pick";
-import { SimpleEventCommandGroup } from "./types";
+import { pickCommands, SimpleEventCommandGroup } from "./core";
 
 export const extractScrollTextGroup = (
   list: ReadonlyArray<EventCommand>,

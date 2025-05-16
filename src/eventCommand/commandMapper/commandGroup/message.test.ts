@@ -12,8 +12,8 @@ import {
   SHOW_MESSAGE,
   SHOW_MESSAGE_BODY,
 } from "@sigureya/rpgtypes";
-import type { EventCommandGroupBase } from "./types";
-import { SimpleEventCommandGroup } from "./types";
+import type { EventCommandGroupBase } from "./core";
+import { SimpleEventCommandGroup } from "./core";
 
 const mockCommands: EventCommand[] = [
   makeCommand2_CommonEvent({ eventId: 6 }),

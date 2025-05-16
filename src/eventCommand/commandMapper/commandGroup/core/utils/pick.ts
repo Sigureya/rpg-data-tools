@@ -1,5 +1,4 @@
 import type { EventCommand, ExtractCommandByParam } from "@sigureya/rpgtypes";
-import type { EventCommandGroupBase } from "./types";
 
 export const pickCommands = <
   Head extends EventCommand,
@@ -9,7 +8,7 @@ export const pickCommands = <
   index: number,
   headFn: (data: unknown) => data is Head,
   bodyFn: (data: unknown) => data is Body
-): EventCommandGroupBase<Head, Body> => {
+) => {
   const head = array[index];
   if (!headFn(head)) {
     throw new Error(`Invalid head at index ${index}: ${JSON.stringify(head)}`);

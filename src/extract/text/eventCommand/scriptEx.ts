@@ -1,8 +1,6 @@
 import { SCRIPT_EVAL } from "@sigureya/rpgtypes";
-import type {
-  CommandParameter,
-  EventCommandGroup_Script,
-} from "src/eventCommand";
+import type { CommandParameter } from "src/eventCommand";
+import type { EventCommandGroup_Script } from "src/eventCommand/commandMapper/commandGroup";
 type CommandParam = CommandParameter<string>;
 
 export function literalsFromScript(text: string): string[] {
