@@ -1,15 +1,10 @@
 import { describe, test, expect } from "vitest";
 import { textFromJoinedBodies } from "./join";
 import type { TextCommandBody } from "./textCommandBody";
+
 type PickedTextCommandBody = Pick<TextCommandBody, "parameters">;
 describe("textFromJoinedBodies", () => {
   describe("Normal case", () => {
-    // 基本ケース
-    test("should return an empty string when the input array is empty", () => {
-      const result = textFromJoinedBodies([]);
-      expect(result).toBe("");
-    });
-
     test("should return the single string when the input contains one body", () => {
       const result: string = textFromJoinedBodies([
         { parameters: ["aaa"] },
@@ -37,7 +32,7 @@ describe("textFromJoinedBodies", () => {
       expect(result).toBe("aaa\nbbb");
     });
   });
-  // 特殊ケース
+
   describe("Empty or whitespace-only parameters", () => {
     test("should handle empty strings in parameters", () => {
       const result = textFromJoinedBodies([
@@ -100,7 +95,6 @@ describe("textFromJoinedBodies", () => {
     });
   });
 
-  // 長い文字列や特殊文字
   describe("Special characters and long strings", () => {
     test("should handle parameters with special characters", () => {
       const result = textFromJoinedBodies([
@@ -117,6 +111,40 @@ describe("textFromJoinedBodies", () => {
         { parameters: ["bbb"] },
       ] as PickedTextCommandBody[]);
       expect(result).toBe(`${longString}\nbbb`);
+    });
+  });
+
+  describe("Edge cases with empty or whitespace-only input", () => {
+    test("should return an empty string when the input array is empty", () => {
+      const result = textFromJoinedBodies([]);
+      expect(result).toBe("");
+    });
+
+    test("should return an empty string when the input contains only newlines", () => {
+      const result = textFromJoinedBodies([{ parameters: ["\n"] }]);
+      expect(result).toBe("");
+    });
+
+    test("should return an empty string when the input contains only tabs", () => {
+      const result = textFromJoinedBodies([{ parameters: ["\t"] }]);
+      expect(result).toBe("");
+    });
+
+    test("should return an empty string when all parameters are empty strings", () => {
+      const result = textFromJoinedBodies([
+        { parameters: [""] },
+        { parameters: [""] },
+      ]);
+      expect(result).toBe("");
+    });
+
+    test("should return an empty string when all parameters are empty or newlines", () => {
+      const result = textFromJoinedBodies([
+        { parameters: [""] },
+        { parameters: ["\n\n"] },
+        { parameters: [""] },
+      ] as PickedTextCommandBody[]);
+      expect(result).toBe("");
     });
   });
 });
