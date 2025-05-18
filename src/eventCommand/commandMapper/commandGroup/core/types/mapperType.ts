@@ -10,21 +10,21 @@ export interface GroopMapper<T> {
   showMessage(
     groop: EventCommandGroup_Message,
     index: number,
-    array: EventCommand[]
+    array: ReadonlyArray<EventCommand>
   ): T;
   showScrollingText(
     groop: EventCommandGroup_ScrollingText,
     index: number,
-    array: EventCommand[]
+    array: ReadonlyArray<EventCommand>
   ): T;
   comment(
     groop: EventCommandGroup_Comment,
     index: number,
-    array: EventCommand[]
+    array: ReadonlyArray<EventCommand>
   ): T;
   script(
     groop: EventCommandGroup_Script,
     index: number,
-    array: EventCommand[]
+    array: ReadonlyArray<EventCommand>
   ): T;
 }
