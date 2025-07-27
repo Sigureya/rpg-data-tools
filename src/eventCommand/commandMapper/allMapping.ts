@@ -1,6 +1,6 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
 import * as Code from "@sigureya/rpgtypes";
-import type { CallBackFunc } from "./types";
+import type { CallBackFunc } from "./types/basicCommandsMapper";
 import type { PartialMappingObject } from "./mapperType";
 import {
   createMessageGroup,

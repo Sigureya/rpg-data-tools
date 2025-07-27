@@ -1,5 +1,8 @@
 import type { EventCommand } from "@sigureya/rpgtypes";
-import type { CallBackFunc, BasicMappingObject } from "./types";
+import type {
+  CallBackFunc,
+  BasicMappingObject,
+} from "./types/basicCommandsMapper";
 import type { GroopMapper } from "./commandGroup";
 
 export interface MappingObject<T>
